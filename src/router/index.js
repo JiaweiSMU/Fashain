@@ -14,6 +14,16 @@ const router = createRouter({
             name: "Authentication",
             component: Authentication,
         },
+        {
+            path: "/profile",
+            name: "Profile",
+            component: () => import("../views/Profile.vue"),
+        },
+        {
+            path: "/Campaign",
+            name: "Campaign",
+            component: () => import("../views/Campaign.vue"),
+        }
     ],
 });
 
