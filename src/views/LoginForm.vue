@@ -1,5 +1,6 @@
 <template>
-    <section class="vh-100">
+    <NavBar />
+    <section class="d-flex align-items-center justify-content-centre">
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5">
@@ -9,26 +10,7 @@
                         alt="Sample image" />
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form @submit.prevent="login">
-                        <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                            <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                            <button type="button" class="btn btn-primary btn-floating mx-1">
-                                <i class="fab fa-facebook-f"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-primary btn-floating mx-1">
-                                <i class="fab fa-twitter"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-primary btn-floating mx-1">
-                                <i class="fab fa-linkedin-in"></i>
-                            </button>
-                        </div>
-
-                        <div class="divider d-flex align-items-center my-4">
-                            <p class="text-center fw-bold mx-3 mb-0">Or</p>
-                        </div>
-
+                    <form href="#" @submit.prevent="logIn">
                         <!-- Email input -->
                         <div class="form-outline mb-4">
                             <input
@@ -65,13 +47,14 @@
 
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <button
-                                type="button"
+                                type="submit"
                                 class="btn btn-primary btn-lg"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem">
                                 Login
                             </button>
                             <p class="small fw-bold mt-2 pt-1 mb-0">
-                                Don't have an account? <a href="#!" class="link-danger">Register</a>
+                                Don't have an account?
+                                <a href="/signup" class="link-danger">Register</a>
                             </p>
                         </div>
                     </form>
@@ -82,23 +65,32 @@
 </template>
 
 <script>
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/init.js";
+import NavBar from "../components/NavBar.vue";
+import { ref } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default {
-    data() {
-        return {
-            email: "",
-            password: "",
+    components: { NavBar },
+    name: "LoginForm",
+    setup() {
+        const email = ref("");
+        const password = ref("");
+        const router = useRouter();
+        const store = useStore();
+        const logIn = async () => {
+            // register new user
+            try {
+                await store.dispatch("logIn", {
+                    email: email.value,
+                    password: password.value,
+                });
+                router.push("/");
+                console.log("Signed in!");
+            } catch (err) {
+                console.log(err);
+            }
         };
-    },
-    methods: {
-        login() {
-            // login user
-            signInWithEmailAndPassword(auth, this.email, this.password).then(() => {
-                // emit event for member area
-                this.$emit("loggedIn");
-            });
-        },
+        return { logIn, email, password };
     },
 };
 </script>

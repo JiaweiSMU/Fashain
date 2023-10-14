@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Authentication from "../views/Authentication.vue";
+import SignupForm from "../views/SignupForm.vue";
+import LoginForm from "../views/LoginForm.vue";
 import Home from "../views/Home.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,9 +11,14 @@ const router = createRouter({
             component: Home,
         },
         {
-            path: "/authentication",
-            name: "Authentication",
-            component: Authentication,
+            path: "/login",
+            name: "login",
+            component: LoginForm,
+        },
+        {
+            path: "/signup",
+            name: "signup",
+            component: SignupForm,
         },
         {
             path: "/profile",
@@ -23,7 +29,7 @@ const router = createRouter({
             path: "/Campaign",
             name: "Campaign",
             component: () => import("../views/Campaign.vue"),
-        }
+        },
     ],
 });
 

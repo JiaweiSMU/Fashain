@@ -43,15 +43,51 @@
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a class="btn btn-outline-success me-2" href="/authentication">Login</a>
-                    <a class="btn btn-success me-2" href="/profile">Profile</a>
+                    <a class="nav-item btn btn-success me-2" href="/profile">Profile</a>
+                    <a v-if="checkAuth == null" type="button" class="nav-item btn btn-primary" href="/login">
+                        Log In
+                    </a>
+                    <img
+                        class="nav-item"
+                        style="width: auto; height: 40px"
+                        src="./icons/shopping-cart.png"
+                        alt="shopping-cart" />
                 </div>
             </div>
         </div>
     </nav>
 </template>
 <script>
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/init.js";
+import router from "../router";
 export default {
     name: "NavBar",
+    data() {
+        return {
+            checkAuth: null,
+        };
+    },
+    methods: {
+        logout() {
+            signOut(auth)
+                .then(() => {
+                    localStorage.removeItem("uidUser");
+                    router.push("/");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+    },
+    created() {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.checkAuth = user;
+            } else {
+                this.checkAuth = null;
+            }
+        });
+    },
 };
 </script>
