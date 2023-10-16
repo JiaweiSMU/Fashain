@@ -33,7 +33,7 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="logout()">Log out</a></li>
+                        <li><a class="dropdown-item" href="#" v-on:click="logout">Log out</a></li>
                     </ul>
                 </div>
                 <button type="button" class="btn">
