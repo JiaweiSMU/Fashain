@@ -39,6 +39,7 @@ export const store = createStore({
                     name: name,
                     email: email,
                     uid: response.user.uid,
+                    cart: [],
                 });
             } else {
                 throw new Error("Unable to register user");
