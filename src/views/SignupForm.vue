@@ -10,58 +10,62 @@
                         alt="Sample image" />
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <div class="card">
-                        <form href="#" @submit.prevent="signUp">
+                    <form href="#" @submit.prevent="signUp">
+                        <!-- Email input -->
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input
+                                        type="username"
+                                        placeholder="Username"
+                                        required
+                                        v-model="username"
+                                        id="username"
+                                        class="form-control"
+                                        aria-describedby="usernameHelp" />
+                                    <label for="username">Username</label>
+                                </div>
+                            </div>
                             <!-- Email input -->
-                            <div class="form-outline mb-4">
-                                <input
-                                    type="username"
-                                    placeholder="Username"
-                                    required
-                                    v-model="username"
-                                    id="username"
-                                    class="form-control"
-                                    aria-describedby="usernameHelp" />
-                                <label class="form-label" for="username">Username</label>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        required
+                                        v-model="email"
+                                        id="email"
+                                        class="form-control"
+                                        aria-describedby="emailHelp" />
+                                    <label for="email">Email address</label>
+                                </div>
                             </div>
-                            <div class="form-outline mb-4">
-                                <input
-                                    type="email"
-                                    placeholder="Email"
-                                    required
-                                    v-model="email"
-                                    id="email"
-                                    class="form-control"
-                                    aria-describedby="emailHelp" />
-                                <label class="form-label" for="email">Email address</label>
-                            </div>
+                        </div>
+                        <!-- Password input -->
+                        <div class="form-floating mb-3">
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                required
+                                v-model="password"
+                                id="password"
+                                class="form-control" />
+                            <label for="password">Password</label>
+                        </div>
 
-                            <!-- Password input -->
-                            <div class="form-outline mb-3">
-                                <input
-                                    type="password"
-                                    placeholder="Password"
-                                    required
-                                    v-model="password"
-                                    id="password"
-                                    class="form-control" />
-                                <label class="form-label" for="password">Password</label>
-                            </div>
-
-                            <div class="text-center text-lg-start mt-4 pt-2">
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary btn-lg"
-                                    style="padding-left: 2.5rem; padding-right: 2.5rem">
-                                    Register
-                                </button>
-                                <p class="small fw-bold mt-2 pt-1 mb-0">
-                                    Already have an account?
-                                    <a href="/signup" class="link-danger">Log In</a>
-                                </p>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem">
+                                Register
+                            </button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">
+                                Already have an account?
+                                <a href="/login" class="link-danger">Log In</a>
+                            </p>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@
                 </form>
             </ul>
             <div class="d-flex">
-                <a v-if="checkAuth == null" type="button" class="btn btn-primary" href="/login"> Log In </a>
+                <a v-if="checkAuth == null" type="button" class="btn btn-primary me-2" href="/login"> Log In </a>
                 <div v-if="checkAuth != null" class="dropdown">
                     <a
                         class="m-2 nav-link dropdown-toggle"
@@ -36,7 +36,7 @@
                         <li><a class="dropdown-item" href="#" v-on:click="logout">Log out</a></li>
                     </ul>
                 </div>
-                <button type="button" class="btn">
+                <button type="button" class="btn nav-link m-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"

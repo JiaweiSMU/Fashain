@@ -26,9 +26,14 @@ const router = createRouter({
             component: () => import("../views/Profile.vue"),
         },
         {
-            path: "/Campaign",
+            path: "/campaign",
             name: "Campaign",
             component: () => import("../views/Campaign.vue"),
+        },
+        {
+            path: "/add_product",
+            name: "Add Product",
+            component: () => import("../views/AddProductForm.vue"),
         },
     ],
 });
