@@ -27,12 +27,15 @@
                                     <p>or drag photos here</p>
                                 </div>
                             </label>
-                            <ul class="mt-4 list-group list-group-horizontal" v-if="this.filelist.length" v-cloak>
-                                <li class="text-sm p-1 list-group-item" v-for="url in urlList" :key="url">
-                                    <img class="h-auto w-auto" v-if="url" :src="url" /><button
+                            <ul
+                                class="mt-4 list-group m-2 row list-group-horizontal"
+                                v-if="this.filelist.length"
+                                v-cloak>
+                                <li class="text-sm p-1 col-3 list-group-item" v-for="url in urlList" :key="url">
+                                    <img class="img-thumbnail" v-if="url" :src="url" /><button
                                         class="ml-2 btn btn-sm btn-danger"
                                         type="button"
-                                        @click="remove(filelist.indexOf(file))"
+                                        @click="remove(urlList.indexOf(url))"
                                         title="Remove file">
                                         remove
                                     </button>
@@ -47,10 +50,45 @@
                     <div class="card-body">
                         <h5 class="card-title">Category</h5>
                         <select class="form-select form-select-md m-0" aria-label=".form-select-lg example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option hidden selected disabled>Choose clothing type</option>
+
+                            <optgroup label="Women">
+                                <option value="W Top">Top</option>
+                                <option value="W Bottom">Bottom</option>
+                                <option value="W Shoes">Shoes</option>
+                                <option value="W Accessories">Accessories</option>
+                                <option value="W Underwear">Underwear</option>
+                            </optgroup>
+                            <optgroup label="Men">
+                                <option value="M Top">Top</option>
+                                <option value="M Bottom">Bottom</option>
+                                <option value="M Shoes">Shoes</option>
+                                <option value="M Accessories">Accessories</option>
+                                <option value="M Underwear">Underwear</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Type</h5>
+                        <select class="form-select form-select-md m-0" aria-label=".form-select-lg example">
+                            <option hidden selected disabled>Choose clothing type</option>
+
+                            <optgroup label="Women">
+                                <option value="W Top">Top</option>
+                                <option value="W Bottom">Bottom</option>
+                                <option value="W Shoes">Shoes</option>
+                                <option value="W Accessories">Accessories</option>
+                                <option value="W Underwear">Underwear</option>
+                            </optgroup>
+                            <optgroup label="Men">
+                                <option value="M Top">Top</option>
+                                <option value="M Bottom">Bottom</option>
+                                <option value="M Shoes">Shoes</option>
+                                <option value="M Accessories">Accessories</option>
+                                <option value="M Underwear">Underwear</option>
+                            </optgroup>
                         </select>
                     </div>
                 </div>
@@ -82,16 +120,17 @@ export default {
     },
     methods: {
         onChange() {
-            this.filelist = [...this.$refs.file.files];
-
+            console.log(this.$refs.file.files[0]);
+            var file = this.$refs.file.files[0];
+            this.filelist.push(file);
+            console.log(this.filelist);
             // Create a URL for each file
-            this.filelist.forEach((file) => {
-                this.urlList.push(URL.createObjectURL(file));
-            });
+            this.urlList.push(URL.createObjectURL(file));
         },
         remove(i) {
             this.filelist.splice(i, 1);
             this.urlList.splice(i, 1);
+            console.log(this.filelist, this.urlList, i);
         },
         dragover(event) {
             event.preventDefault();
