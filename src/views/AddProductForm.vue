@@ -1,7 +1,7 @@
 <template>
     <NavBar />
 
-    <form class="container mt-5">
+    <form class="container mt-5 m-auto" href="#" @submit.prevent="addProduct">
         <div class="row">
             <div class="col-4">
                 <div class="card text-center mb-3">
@@ -17,7 +17,7 @@
                                 name="fields[assetsFieldHandle][]"
                                 id="assetsFieldHandle"
                                 class="w-px h-px opacity-0 overflow-hidden absolute"
-                                @change="onChange"
+                                @change="onChangeImage"
                                 ref="file"
                                 accept=".pdf,.jpg,.jpeg,.png" />
 
@@ -48,7 +48,7 @@
             <div class="col-8">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Category</h5>
+                        <h5 class="card-title mb-3">Category</h5>
                         <select class="form-select form-select-md m-0" aria-label=".form-select-lg example">
                             <option hidden selected disabled>Choose clothing type</option>
 
@@ -71,39 +71,80 @@
                 </div>
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Type</h5>
-                        <select class="form-select form-select-md m-0" aria-label=".form-select-lg example">
-                            <option hidden selected disabled>Choose clothing type</option>
+                        <h5 class="card-title mb-3">Type</h5>
+                        <div class="d-flex">
+                            <input type="radio" class="btn-check" name="type" id="new" autocomplete="off" />
+                            <label class="btn btn-outline-success me-2" for="new">New</label>
 
-                            <optgroup label="Women">
-                                <option value="W Top">Top</option>
-                                <option value="W Bottom">Bottom</option>
-                                <option value="W Shoes">Shoes</option>
-                                <option value="W Accessories">Accessories</option>
-                                <option value="W Underwear">Underwear</option>
-                            </optgroup>
-                            <optgroup label="Men">
-                                <option value="M Top">Top</option>
-                                <option value="M Bottom">Bottom</option>
-                                <option value="M Shoes">Shoes</option>
-                                <option value="M Accessories">Accessories</option>
-                                <option value="M Underwear">Underwear</option>
-                            </optgroup>
-                        </select>
+                            <input type="radio" class="btn-check" name="type" id="used" autocomplete="off" />
+                            <label class="btn btn-outline-success me-2" for="used">Used</label>
+                            <input type="radio" class="btn-check" name="type" id="rental" autocomplete="off" />
+                            <label class="btn btn-outline-success" for="rental">Rental</label>
+                        </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Sizes available</h5>
+                        <div class="d-flex">
+                            <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">XS</button>
+                            <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">S</button>
+                            <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">M</button
+                            ><button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">L</button>
+                            <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">XL</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" />
+
+                <div v-if="sizeList.length" class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Quantity</h5>
+                        <div class="row m-0">
+                            <div
+                                class="form-floating col-12 col-sm-4 col-md-3 col-lg-2 ps-0 me-2"
+                                v-for="size in sizeList"
+                                :key="size">
+                                <input type="number" class="form-control" :id="size" placeholder="" />
+                                <label :for="size">{{ size }}</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                <div v-if="sizeList.length" class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Details</h5>
+                        <div class="form-floating mb-3">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                placeholder="Name"
+                                v-model="product.name" />
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="form-floating">
+                            <textarea
+                                class="form-control"
+                                id="description"
+                                style="height: 100px"
+                                placeholder="Description"
+                                v-model="product.description"></textarea>
+                            <label for="description">Description</label>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="sizeList.length" class="card mb-3">
+                    <div class="card-body">
+                        <div class="input-group">
+                            <div class="input-group-text">S$</div>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="price"
+                                placeholder="Price"
+                                v-model="product.price" />
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -111,15 +152,38 @@
     </form>
 </template>
 <script>
+import { FirebaseError } from "firebase/app";
 import NavBar from "../components/NavBar.vue";
+import { addDoc, collection, query, getFirestore, onSnapshot, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+// Create a root reference
+const storage = getStorage();
+
+const db = getFirestore();
+const q = query(collection(db, "products"));
 
 export default {
     delimiters: ["${", "}"], // Avoid Twig conflicts
     data() {
-        return { filelist: [], urlList: [] }; // Store our uploaded files
+        return {
+            filelist: [],
+            urlList: [],
+            sizeList: [],
+            uploadValue: 0,
+            product: {
+                name: "",
+                price: 0,
+                quantity: {},
+                image: [],
+                description: "",
+                brand: "",
+                uid: localStorage.getItem("uidUser"),
+            },
+        }; // Store our uploaded files
     },
     methods: {
-        onChange() {
+        //Drag and drop image upload
+        onChangeImage() {
             console.log(this.$refs.file.files[0]);
             var file = this.$refs.file.files[0];
             this.filelist.push(file);
@@ -152,6 +216,65 @@ export default {
             // Clean up
             event.currentTarget.classList.add("bg-gray-100");
             event.currentTarget.classList.remove("bg-green-300");
+        },
+
+        // Type
+        onChangeType(e) {
+            e.target.classList.toggle("btn-outline-success");
+            e.target.classList.toggle("btn-success");
+        },
+
+        // Sizing
+        onChangeSize(e) {
+            e.target.classList.toggle("btn-outline-success");
+            e.target.classList.toggle("btn-success");
+
+            if (this.sizeList.includes(e.target.textContent)) {
+                this.sizeList.splice(this.sizeList.indexOf(e.target.textContent), 1);
+            } else {
+                this.sizeList.push(e.target.textContent);
+            }
+            console.log(this.sizeList);
+        },
+
+        // Submit
+        addProduct() {
+            this.product.image = this.filelist;
+            this.sizeList.forEach((size) => {
+                var e = document.getElementById(size);
+                this.product.quantity[size] = e.value;
+            });
+
+            this.filelist.forEach((file) => {
+                const storageRef = ref(storage, `images/${file.name}`);
+
+                const uploadTask = uploadBytesResumable(storageRef, file);
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        this.uploadValue = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    },
+                    (error) => {
+                        console.log(error);
+                    },
+
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                            console.log("File available at", downloadURL);
+                            this.image.push(downloadURL);
+                        });
+                    }
+                );
+            });
+
+            addDoc(q, this.product).then(() => {
+                this.product.name = "";
+                this.product.price = "";
+                this.product.quantity = {};
+                this.filelist = "";
+                this.product.brand = "";
+                this.product.description = "";
+            });
         },
     },
     components: { NavBar },
