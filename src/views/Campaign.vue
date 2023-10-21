@@ -95,6 +95,8 @@
 <!-- https://blog.openreplay.com/building-a-custom-file-upload-component-for-vue/ -->
 <script>
 import NavBar from "../components/NavBar.vue";
+import axios from "axios";
+
 export default {
     components: { NavBar },
     name: "Campaign",
@@ -115,6 +117,8 @@ export default {
             imageError: [],
             url: null,
             listOfErrors: [],
+
+
         };
     },
     methods: {
@@ -156,15 +160,34 @@ export default {
          *
          * @return {void}
          */
-        submit() {
+        async submit() {
             this.listOfErrors = [];
-            if (this.checkDate() == true && this.checkEmpty() == true) {
-                console.log("Do push to DB");
-            }
-            else {
-                alert(this.listOfErrors);
-                console.log(this.listOfErrors);
-            }
+            // if (this.checkDate() == true && this.checkEmpty() == true) {
+            //     console.log("Do push to DB");
+            const data = {
+                campaignName: this.campaignName,
+                campaignAddress: this.campaignAddress,
+                campaignStartDate: this.campaignStartDate,
+                campaignEndDate: this.campaignEndDate,
+                campaignDesc: this.campaignDesc,
+            };
+
+
+
+            // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
+            // let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/';
+            // let data = {
+            //     campaignName: 'dsadsa',
+            //     campaignAddress: 'dsadsacx',
+            //     campaignStartDate: '10/10/2023',
+            //     campaignEndDate: '12/10/2023',
+            //     campaignDesc: 'tedsadsa',
+            // };
+            // }
+            // else {
+            //     alert(this.listOfErrors);
+            //     //console.log(this.listOfErrors);
+            // }
             // console.log(this.campaignName + " " + this.campaignDesc);
         },
 
@@ -187,7 +210,7 @@ export default {
                     this.isImage = ["png", "jpg", "jpeg"].includes(
                         this.imageExt
                     );
-                    console.log(this.imageName, this.imageExt, this.isImage);
+                    //console.log(this.imageName, this.imageExt, this.isImage);
                     this.url = URL.createObjectURL(img);
                 } else {
                     console.log('Invalid file');
@@ -201,12 +224,12 @@ export default {
          * @param {string} imageExt - The extension of the image file.
          */
         isImageTypeValid(imageExt) {
-            console.log(imageExt);
+            //console.log(imageExt);
             let validType = ["png", "jpg", "jpeg"];
             if (validType.includes(imageExt)) {
                 console.log("Image type is valid");
             } else {
-                console.log(this.imageError);
+                //console.log(this.imageError);
                 this.imageError.push(`Image type is not valid`);
             }
         },
@@ -219,15 +242,16 @@ export default {
          */
         isImageValid(image) {
             this.isImageTypeValid(image.name.split(".").pop());
-            console.log(this.imageError.length);
+            //console.log(this.imageError.length);
             if (this.imageError.length === 0) {
                 return true;
             } else {
                 return false;
             }
         },
-    }
+    },
 };
+// };
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
