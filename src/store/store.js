@@ -11,6 +11,7 @@ export const store = createStore({
         user: {
             loggedIn: false,
             data: null,
+            userType: null,
         },
     },
 
@@ -33,7 +34,7 @@ export const store = createStore({
         async signUp(context, { email, password, name }) {
             const response = await createUserWithEmailAndPassword(auth, email, password);
             if (response) {
-                context.commit("SET_USER", response.user);
+                localStorage.setItem("user_uid", response.user.uid);
                 updateProfile(response.user, { displayName: name });
                 addDoc(dbRef, {
                     name: name,
@@ -49,7 +50,7 @@ export const store = createStore({
         async logIn(context, { email, password }) {
             const response = await signInWithEmailAndPassword(auth, email, password);
             if (response) {
-                context.commit("SET_USER", response.user);
+                localStorage.setItem("user_uid", response.user.uid);
             } else {
                 throw new Error("login failed");
             }

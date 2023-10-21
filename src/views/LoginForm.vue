@@ -75,6 +75,7 @@ export default {
                 });
                 router.push("/");
                 console.log("Signed in!");
+                console.log(store.state.user);
             } catch (err) {
                 console.log(err);
             }

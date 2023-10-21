@@ -11,6 +11,21 @@
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <form href="#" @submit.prevent="signUp">
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="form-check mb-3">
+                                    <input
+                                        type="checkbox"
+                                        placeholder="Username"
+                                        required
+                                        v-model="business"
+                                        id="business"
+                                        class="form-check-input"
+                                        aria-describedby="usernameHelp" />
+                                    <label class="form-check-label" for="business">Are you a business?</label>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Email input -->
                         <div class="row">
                             <div class="col-md">
@@ -46,6 +61,31 @@
                             <input
                                 type="password"
                                 placeholder="Password"
+                                required
+                                v-model="password"
+                                id="password"
+                                class="form-control" />
+                            <label for="password">Password</label>
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem">
+                                Register
+                            </button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">
+                                Already have an account?
+                                <a href="/login" class="link-danger">Log In</a>
+                            </p>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-floating mb-3">
+                            <input
+                                type="text"
+                                placeholder=""
                                 required
                                 v-model="password"
                                 id="password"
