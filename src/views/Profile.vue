@@ -15,7 +15,7 @@
                         <h1>Camila Smith</h1>
                         <p>deydey@theEmail.com</p>
                     </div>
-<!-- 
+                    <!-- 
                     <ul class="nav nav-pills nav-stacked">
                         <li class="active"><a href="#"> <i class="fa fa-user"></i> Profile</a></li>
                         <li><a href="#"> <i class="fa fa-calendar"></i> Recent Activity <span
@@ -135,8 +135,8 @@
                                     <div class="bio-chart">
                                         <div style="display:inline;width:100px;height:100px;"><canvas width="100"
                                                 height="100px"></canvas><input class="knob" data-width="100" disabled
-                                                data-height="100" data-displayprevious="true" data-thickness=".2" value="192"
-                                                data-fgcolor="#4CC5CD" data-bgcolor="#e8e8e8"
+                                                data-height="100" data-displayprevious="true" data-thickness=".2"
+                                                value="192" data-fgcolor="#4CC5CD" data-bgcolor="#e8e8e8"
                                                 style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(76, 197, 205); padding: 0px; -webkit-appearance: none; background: none;">
                                         </div>
                                     </div>
@@ -154,8 +154,8 @@
                                     <div class="bio-chart">
                                         <div style="display:inline;width:100px;height:100px;"><canvas width="100"
                                                 height="100px"></canvas><input class="knob" data-width="100" disabled
-                                                data-height="100" data-displayprevious="true" data-thickness=".2" value="231"
-                                                data-fgcolor="#96be4b" data-bgcolor="#e8e8e8"
+                                                data-height="100" data-displayprevious="true" data-thickness=".2"
+                                                value="231" data-fgcolor="#96be4b" data-bgcolor="#e8e8e8"
                                                 style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(150, 190, 75); padding: 0px; -webkit-appearance: none; background: none;">
                                         </div>
                                     </div>
@@ -189,18 +189,22 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <div class="container">
-        <p>add something here</p>
-        <a class="btn btn-outline-secondary me-2" href="/Edit_Profile">Edit Profile</a>
-        <a v-if="userType == 'business'" class="btn btn-outline-success me-2" href="/campaign">Create Campaign</a>
-        <a v-if="userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add Product</a>
+            <p>add something here</p>
+            <a class="btn btn-outline-secondary me-2" href="/Edit_Profile">Edit Profile</a>
+            <a v-if="userType == 'business'" class="btn btn-outline-success me-2" href="/campaign">Create Campaign</a>
+            <a v-if="userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add Product</a>
+        </div>
     </div>
-    </div>
-
-
-    </template>
+    <!--    <table>
+        <tr>
+            <th>hi</th>
+        </tr>
+    </table>
+    -->
+</template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
@@ -223,5 +227,7 @@ export default {
 };
 </script>
 <!-- Style sheet -->
-<style>@import '../assets/profile.css';</style>
+<style>
+@import '../assets/profile.css';
+</style>
 
