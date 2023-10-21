@@ -16,13 +16,11 @@
                                 <div class="form-check mb-3">
                                     <input
                                         type="checkbox"
-                                        placeholder="Username"
-                                        required
-                                        v-model="business"
-                                        id="business"
+                                        v-model="type"
+                                        id="type"
                                         class="form-check-input"
-                                        aria-describedby="usernameHelp" />
-                                    <label class="form-check-label" for="business">Are you a business?</label>
+                                        @click="onChange" />
+                                    <label class="form-check-label" for="type">Are you a business?</label>
                                 </div>
                             </div>
                         </div>
@@ -38,7 +36,7 @@
                                         id="username"
                                         class="form-control"
                                         aria-describedby="usernameHelp" />
-                                    <label for="username">Username</label>
+                                    <label id="usernameLabel" for="username">Username</label>
                                 </div>
                             </div>
                             <!-- Email input -->
@@ -68,31 +66,51 @@
                             <label for="password">Password</label>
                         </div>
 
-                        <div class="text-center text-lg-start mt-4 pt-2">
-                            <button
-                                type="submit"
-                                class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem">
-                                Register
-                            </button>
-                            <p class="small fw-bold mt-2 pt-1 mb-0">
-                                Already have an account?
-                                <a href="/login" class="link-danger">Log In</a>
-                            </p>
+                        <div class="form-floating mb-3">
+                            <vue-google-autocomplete
+                                id="map"
+                                classname="form-control"
+                                ref="address"
+                                v-on:placechanged="getAddressData"
+                                :country="['sg']"></vue-google-autocomplete>
+                            <label for="postcode">Address</label>
                         </div>
-
-                        <!-- Password input -->
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input
+                                        type="text"
+                                        placeholder="Block Number"
+                                        required
+                                        v-model="blockNumber"
+                                        id="blockNumber"
+                                        class="form-control" />
+                                    <label for="blockNumber">Block Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input
+                                        type="text"
+                                        placeholder="Postal Code"
+                                        required
+                                        v-model="postcode"
+                                        id="postcode"
+                                        class="form-control" />
+                                    <label for="postcode">Postal Code</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-floating mb-3">
                             <input
                                 type="text"
-                                placeholder=""
+                                placeholder="Contact No."
                                 required
-                                v-model="password"
-                                id="password"
+                                v-model="contactno"
+                                id="contactno"
                                 class="form-control" />
-                            <label for="password">Password</label>
+                            <label for="contactno">Contact No.</label>
                         </div>
-
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <button
                                 type="submit"
@@ -113,35 +131,55 @@
 </template>
 
 <script>
+import VueGoogleAutocomplete from "vue-google-autocomplete";
 import NavBar from "../components/NavBar.vue";
-import { ref } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import router from "../router";
 export default {
-    components: { NavBar },
-    setup() {
-        const username = ref("");
-        const email = ref("");
-        const password = ref("");
-        const router = useRouter();
-        const store = useStore();
-        const signUp = async () => {
-            // register new user
-
+    components: { NavBar, VueGoogleAutocomplete },
+    data() {
+        return {
+            username: "",
+            email: "",
+            password: "",
+            address: "",
+            blockNumber: "",
+            postcode: "",
+            contactno: "",
+            type: false,
+        };
+    },
+    methods: {
+        onChange() {
+            let e = document.getElementById("type");
+            let username = document.getElementById("usernameLabel");
+            if (e.checked) {
+                username.textContent = "Business Name";
+            } else {
+                username.textContent = "Username";
+            }
+        },
+        async signUp() {
+            let business = this.type ? "business" : "user";
             try {
-                await store.dispatch("signUp", {
-                    email: email.value,
-                    password: password.value,
-                    name: username.value,
+                await this.$store.dispatch("signUp", {
+                    email: this.email,
+                    password: this.password,
+                    name: this.username,
+                    type: business,
+                    address: this.address,
+                    blockNumber: this.blockNumber,
+                    postcode: this.postcode,
+                    contactno: this.contactno,
                 });
                 router.push("/");
                 console.log("User signed up successfully!");
-                console.log(store.state.user);
             } catch (err) {
                 console.log(err);
             }
-        };
-        return { signUp, username, email, password };
+        },
+        getAddressData: function (addressData, placeResultData, id) {
+            this.address = addressData;
+        },
     },
 };
 </script>

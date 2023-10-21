@@ -31,7 +31,7 @@ export const store = createStore({
     },
 
     actions: {
-        async signUp(context, { email, password, name }) {
+        async signUp(context, { email, password, name, type, address, blockNumber, postcode, contactno }) {
             const response = await createUserWithEmailAndPassword(auth, email, password);
             if (response) {
                 localStorage.setItem("user_uid", response.user.uid);
@@ -40,6 +40,11 @@ export const store = createStore({
                     name: name,
                     email: email,
                     uid: response.user.uid,
+                    userType: type,
+                    address: address,
+                    blockNumber: blockNumber,
+                    postcode: postcode,
+                    contactno: contactno,
                     cart: [],
                 });
             } else {
