@@ -391,6 +391,8 @@ export default {
                 userType: "user",
             --- Business ---
                 userType: "business",
+                just to pull
+
             */
             user: {
                 uid: localStorage.getItem("user_uid"),
