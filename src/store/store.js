@@ -11,6 +11,7 @@ export const store = createStore({
         user: {
             loggedIn: false,
             data: null,
+            userType: null,
         },
     },
 
@@ -30,15 +31,20 @@ export const store = createStore({
     },
 
     actions: {
-        async signUp(context, { email, password, name }) {
+        async signUp(context, { email, password, name, type, address, blockNumber, postcode, contactno }) {
             const response = await createUserWithEmailAndPassword(auth, email, password);
             if (response) {
-                context.commit("SET_USER", response.user);
+                localStorage.setItem("user_uid", response.user.uid);
                 updateProfile(response.user, { displayName: name });
                 addDoc(dbRef, {
                     name: name,
                     email: email,
                     uid: response.user.uid,
+                    userType: type,
+                    address: address,
+                    blockNumber: blockNumber,
+                    postcode: postcode,
+                    contactno: contactno,
                     cart: [],
                 });
             } else {
@@ -49,7 +55,7 @@ export const store = createStore({
         async logIn(context, { email, password }) {
             const response = await signInWithEmailAndPassword(auth, email, password);
             if (response) {
-                context.commit("SET_USER", response.user);
+                localStorage.setItem("user_uid", response.user.uid);
             } else {
                 throw new Error("login failed");
             }
