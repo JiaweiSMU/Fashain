@@ -95,11 +95,12 @@
 <!-- https://blog.openreplay.com/building-a-custom-file-upload-component-for-vue/ -->
 <script>
 import NavBar from "../components/NavBar.vue";
-import axios from "axios";
-
+import { doc, onSnapshot, updateDoc, setDoc, deleteDoc, collection, serverTimestamp, getDocs, query, where, orderBy, limit, CollectionReference, arrayUnion } from "firebase/firestore";
+import db from '../firebase/init.js';
 export default {
     components: { NavBar },
     name: "Campaign",
+
     data() {
         return {
             campaignName: "",
@@ -117,8 +118,6 @@ export default {
             imageError: [],
             url: null,
             listOfErrors: [],
-
-
         };
     },
     methods: {
@@ -161,21 +160,31 @@ export default {
          * @return {void}
          */
         async submit() {
+            const userDbRef = collection(db, 'users');
             this.listOfErrors = [];
             // if (this.checkDate() == true && this.checkEmpty() == true) {
             //     console.log("Do push to DB");
-            const data = {
-                campaignName: this.campaignName,
-                campaignAddress: this.campaignAddress,
-                campaignStartDate: this.campaignStartDate,
-                campaignEndDate: this.campaignEndDate,
-                campaignDesc: this.campaignDesc,
-            };
+            // const data = {
+            //     campaignName: this.campaignName,
+            //     campaignAddress: this.campaignAddress,
+            //     campaignStartDate: this.campaignStartDate,
+            //     campaignEndDate: this.campaignEndDate,
+            //     campaignDesc: this.campaignDesc,
+            // };
 
-
+            try {
+                console.log('hi');
+                const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
+                await updateDoc(uidRef, {
+                    listOfCampaign: arrayUnion({name: 'dsa'})
+                });
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
 
             // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
-            // let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/';
+            //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/bfjimnRLI6GBpYwxlKMB';
+
             // let data = {
             //     campaignName: 'dsadsa',
             //     campaignAddress: 'dsadsacx',
