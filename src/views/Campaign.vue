@@ -75,7 +75,7 @@
                             <!-- Display Image once Image uploaded -->
                             <div class="container-fluid">
                                 <div class="row">
-                                    <img class="rounded" v-if="url" :src="url" />
+                                    <img class="rounded" v-if="image.url" :src="image.url" />
                                 </div>
                             </div>
                         </div>
@@ -141,6 +141,8 @@ export default {
             //     campaignEndDate: this.campaignEndDate,
             //     campaignDesc: this.campaignDesc,
             // };
+
+            // Solve DateTime Tmr
             console.log(typeof (this.campaignStartDate));
             let data = {
                 campaignName: 'hehdsadadsadsadasdsase',
@@ -204,39 +206,30 @@ export default {
             }
         },
 
-
         /**
-         * Uploads an image and returns its URL.
+         * Uploads an image and returns the URL.
          *
-         * @param {img} img - The image to be uploaded.
-         * @return {boolean} - A boolean value indicating whether the upload was successful return to handleImageUpload
+         * @param {type} img - the image to upload
+         * @return {type} Promise - a promise that resolves with the image URL
          */
-        uploadImageAndReturnURL(img) {
+        async uploadImageAndReturnURL(img) {
             const storage = getStorage();
             const storageRef = ref(storage, 'folder/campaign/' + this.imageName + '.' + this.imageExt);
-            uploadBytes(storageRef, img).then((snapshot) => {
-                console.log('Uploaded a blob or file!');
-                return true;
+            await uploadBytes(storageRef, img).then((snapshot) => {
+                console.log('Image uploaded');
             }).catch((error) => {
                 console.log(error);
-                return false;
             }),
-                // getDownloadURL(storageRef).then((url) => {
-                //     console.log(url);
-                //     this.url = url;
-                // })
-                // storageRef = ref(storage, 'folder/campaign' + '/' + this.imageName + '.' + this.imageExt);
-                // getDownloadURL(storageRef).then((url) => {
-                //     console.log(url);
-                //     this.url = url;
-                // })
-                console.log(this.url);
+                await getDownloadURL(storageRef).then((url) => {
+                    this.image.url = url;
+                    console.log(this.image.url);
+                })
         },
 
         /**
          * Handles the image upload.
          *
-         * @param {type} image - The uploaded image.
+         * @param {Object} image - The image to be uploaded.
          */
         handleImageUpload(image) {
             // this.uploadedImage = event.target.files[0];
@@ -246,23 +239,15 @@ export default {
 
             if (image.target.files && image.target.files[0]) {
                 if (this.isImageValid(image.target.files[0])) {
-
+                    console.log('hello inside image is valid');
                     const img = image.target.files[0];
                     this.imageExt = img.name.split(".").pop();
                     this.imageName = img.name.split(".").shift();
                     this.isImage = ["png", "jpg", "jpeg"].includes(
                         this.imageExt
                     );
-                    if (this.uploadImageAndReturnURL(image.target.files[0]) == true) {
-                        console.log('inside get url');
-                        getDownloadURL(this.storageRef).then((url) => {
-                            console.log(url);
-                            this.url = url;
-                        })
-                        console.log('Image uploaded successfully');
-                    }
-                    console.log(this.imageName + this.imageExt, this.isImage);
-
+                    this.uploadImageAndReturnURL(image.target.files[0]);
+                    // console.log(this.imageName + this.imageExt, this.isImage);
                 } else {
                     console.log('Invalid file');
                 }
