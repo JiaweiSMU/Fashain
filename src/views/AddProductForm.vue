@@ -49,7 +49,10 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title mb-3">Category</h5>
-                        <select class="form-select form-select-md m-0" aria-label=".form-select-lg example">
+                        <select
+                            class="form-select form-select-md m-0"
+                            v-model="product.category"
+                            aria-label=".form-select-lg example">
                             <option hidden selected disabled>Choose clothing type</option>
 
                             <optgroup label="Women">
@@ -73,12 +76,33 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Type</h5>
                         <div class="d-flex">
-                            <input type="radio" class="btn-check" name="type" id="new" autocomplete="off" />
+                            <input
+                                type="radio"
+                                class="btn-check"
+                                name="type"
+                                v-model="product.type"
+                                value="New"
+                                id="new"
+                                autocomplete="off" />
                             <label class="btn btn-outline-success me-2" for="new">New</label>
 
-                            <input type="radio" class="btn-check" name="type" id="used" autocomplete="off" />
+                            <input
+                                type="radio"
+                                class="btn-check"
+                                name="type"
+                                value="Used"
+                                v-model="product.type"
+                                id="used"
+                                autocomplete="off" />
                             <label class="btn btn-outline-success me-2" for="used">Used</label>
-                            <input type="radio" class="btn-check" name="type" id="rental" autocomplete="off" />
+                            <input
+                                type="radio"
+                                class="btn-check"
+                                name="type"
+                                value="Rental"
+                                v-model="product.type"
+                                id="rental"
+                                autocomplete="off" />
                             <label class="btn btn-outline-success" for="rental">Rental</label>
                         </div>
                     </div>
@@ -156,6 +180,7 @@ import { FirebaseError } from "firebase/app";
 import NavBar from "../components/NavBar.vue";
 import { addDoc, collection, query, getFirestore, onSnapshot, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import router from "../router";
 // Create a root reference
 const storage = getStorage();
 
@@ -174,10 +199,11 @@ export default {
                 name: "",
                 price: 0,
                 quantity: {},
-                image: [],
+                category: "",
+                images: [],
                 description: "",
-                brand: "",
-                uid: localStorage.getItem("uidUser"),
+                type: "",
+                uid: localStorage.getItem("user_uid"),
             },
         }; // Store our uploaded files
     },
@@ -212,7 +238,8 @@ export default {
         drop(event) {
             event.preventDefault();
             this.$refs.file.files = event.dataTransfer.files;
-            this.onChange(); // Trigger the onChange event manually
+            this.onChangeImage(); // Trigger the onChange event manually
+            console.log("drop");
             // Clean up
             event.currentTarget.classList.add("bg-gray-100");
             event.currentTarget.classList.remove("bg-green-300");
@@ -239,14 +266,14 @@ export default {
 
         // Submit
         addProduct() {
-            this.product.image = this.filelist;
             this.sizeList.forEach((size) => {
                 var e = document.getElementById(size);
                 this.product.quantity[size] = e.value;
             });
 
             this.filelist.forEach((file) => {
-                const storageRef = ref(storage, `images/${file.name}`);
+                const path = `folder/products/${file.name}`;
+                const storageRef = ref(storage, path);
 
                 const uploadTask = uploadBytesResumable(storageRef, file);
                 uploadTask.on(
@@ -256,24 +283,14 @@ export default {
                     },
                     (error) => {
                         console.log(error);
-                    },
-
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                            console.log("File available at", downloadURL);
-                            this.image.push(downloadURL);
-                        });
                     }
                 );
+                this.product.images.push(path);
             });
-
+            console.log(this.product);
             addDoc(q, this.product).then(() => {
-                this.product.name = "";
-                this.product.price = "";
-                this.product.quantity = {};
-                this.filelist = "";
-                this.product.brand = "";
-                this.product.description = "";
+                console.log("Document successfully written!");
+                router.push("/");
             });
         },
     },
