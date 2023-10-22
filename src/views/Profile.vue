@@ -16,12 +16,16 @@
                     <div class="card-body text-center">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                             class="rounded-circle img-fluid" style="width: 150px" />
-                        <h5 class="my-3">{{ user.name }}</h5> 
+                        <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
-                        <p class="text-muted mb-4">Sustainability Rating: {{ user.rating }}</p>
-                        <a class="btn btn-primary btn-sm" href="/edit_profile" >Edit Profile 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 2 24 24"><path d="M20.548 3.452a1.542 1.542 0 0 1 0 2.182l-7.636 7.636-3.273 1.091 1.091-3.273 7.636-7.636a1.542 1.542 0 0 1 2.182 0zM4 21h15a1 1 0 0 0 1-1v-8a1 1 0 0 0-2 0v7H5V6h7a1 1 0 0 0 0-2H4a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1z"/></svg>
-                        </a> 
+                        <p class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
+                        <a class="btn btn-primary btn-sm" href="/edit_profile">Edit Profile
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 2 24 24">
+                                <path
+                                    d="M20.548 3.452a1.542 1.542 0 0 1 0 2.182l-7.636 7.636-3.273 1.091 1.091-3.273 7.636-7.636a1.542 1.542 0 0 1 2.182 0zM4 21h15a1 1 0 0 0 1-1v-8a1 1 0 0 0-2 0v7H5V6h7a1 1 0 0 0 0-2H4a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1z" />
+                            </svg>
+                        </a>
                         <ul class="list-group list-group-flush rounded-3">
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -50,8 +54,8 @@
                                 <p class="mb-0"></p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-instagram fa-lg" style="color: #ac2bac"></i>
-                                <p class="mb-0">mdbootstrap</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32" xml:space="preserve"><path d="M12 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zM1 32a1 1 0 0 1-1-1v-6.115c0-4.93 4.012-8.943 8.942-8.943h6.116c1.229 0 2.42.246 3.54.729a1 1 0 1 1-.792 1.836 6.91 6.91 0 0 0-2.748-.565H8.942A6.95 6.95 0 0 0 2 24.885V31a1 1 0 0 1-1 1zM25 19a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm3.052 5.332-2.75 2.75a1 1 0 0 1-1.413 0l-1.251-1.25a1 1 0 1 1 1.414-1.415l.544.544 2.042-2.043a1 1 0 1 1 1.414 1.414z"/><g><path d="M25 32c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z"/></g></svg>
+                                <p class="mb-0">{{ joinDate }}</p>
                             </li>
                         </ul>
                     </div>
@@ -62,127 +66,128 @@
             </div>
             <div class="col-lg-8">
                 <div class="card mb-0">
-                     <!-- 
+                    <!-- 
                         Tabs for businesses products, campaigns
                      -->
-                    <div v-if="user.userType=='business'">
-                            <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                        aria-selected="true">All Products</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-new-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-new" type="button" role="tab"
-                                        aria-controls="pills-new" aria-selected="false">New</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-used-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-used" type="button" role="tab"
-                                        aria-controls="pills-used" aria-selected="false">Used</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-rental-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-rental" type="button" role="tab"
-                                        aria-controls="pills-rental" aria-selected="false">Rental</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-campaign-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-campaign" type="button" role="tab"
-                                        aria-controls="pills-campaign" aria-selected="false">Campaign</button>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                    aria-labelledby="pills-home-tab">
-                                    <div class="container py-5">
-                                        <div class="row">
-                                            <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
-                                                <div class="card text-black">
-                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img1.webp"
-                                                        class="card-img-top" alt="iPhone" />
-                                                    <div class="card-body">
-                                                        <div class="text-center mt-1">
-                                                            <h4 class="card-title">iPhone X</h4>
-                                                            <h6 class="text-primary mb-1 pb-3">Starting at $399</h6>
-                                                        </div>
-
-                                                        <div class="d-flex flex-row">
-                                                            <button type="button" class="btn btn-primary flex-fill me-1">
-                                                                Edit
-                                                            </button>
-                                                            <button type="button"
-                                                                class="btn btn-danger flex-fill ms-1">Delete</button>
-                                                        </div>
+                    <div v-if="user.userType == 'business'">
+                        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                    aria-selected="true">All Products</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-new-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
+                                    aria-selected="false">New</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-used-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-used" type="button" role="tab" aria-controls="pills-used"
+                                    aria-selected="false">Used</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-rental-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-rental" type="button" role="tab" aria-controls="pills-rental"
+                                    aria-selected="false">Rental</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-campaign-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-campaign" type="button" role="tab" aria-controls="pills-campaign"
+                                    aria-selected="false">Campaign</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                aria-labelledby="pills-home-tab">
+                                <div class="container py-5">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
+                                            <div class="card text-black">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img1.webp"
+                                                    class="card-img-top" alt="iPhone" />
+                                                <div class="card-body">
+                                                    <div class="text-center mt-1">
+                                                        <h4 class="card-title">iPhone X</h4>
+                                                        <h6 class="text-primary mb-1 pb-3">Starting at $399</h6>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-                                                <div class="card text-black">
-                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img2.webp"
-                                                        class="card-img-top" alt="iPhone" />
-                                                    <div class="card-body">
-                                                        <div class="text-center mt-1">
-                                                            <h4 class="card-title">iPhone 11</h4>
-                                                            <h6 class="text-primary mb-1 pb-3">Starting at $499</h6>
-                                                        </div>
 
-
-                                                        <div class="d-flex flex-row">
-                                                            <button type="button" class="btn btn-primary flex-fill me-1">
-                                                                Edit
-                                                            </button>
-                                                            <button type="button"
-                                                                class="btn btn-danger flex-fill ms-1">Delete</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-                                                <div class="card text-black">
-                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img3.webp"
-                                                        class="card-img-top" alt="iPhone" />
-                                                    <div class="card-body">
-                                                        <div class="text-center mt-1">
-                                                            <h4 class="card-title">iPhone 11 Pro</h4>
-                                                            <h6 class="text-primary mb-1 pb-3">Starting at $599</h6>
-                                                        </div>
-
-
-
-                                                        <div class="d-flex flex-row">
-                                                            <button type="button" class="btn btn-primary flex-fill me-1">
-                                                                Edit
-                                                            </button>
-                                                            <button type="button"
-                                                                class="btn btn-danger flex-fill ms-1">Delete</button>
-                                                        </div>
+                                                    <div class="d-flex flex-row">
+                                                        <button type="button" class="btn btn-primary flex-fill me-1">
+                                                            Edit
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-danger flex-fill ms-1">Delete</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
+                                            <div class="card text-black">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img2.webp"
+                                                    class="card-img-top" alt="iPhone" />
+                                                <div class="card-body">
+                                                    <div class="text-center mt-1">
+                                                        <h4 class="card-title">iPhone 11</h4>
+                                                        <h6 class="text-primary mb-1 pb-3">Starting at $499</h6>
+                                                    </div>
 
+
+                                                    <div class="d-flex flex-row">
+                                                        <button type="button" class="btn btn-primary flex-fill me-1">
+                                                            Edit
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-danger flex-fill ms-1">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
+                                            <div class="card text-black">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img3.webp"
+                                                    class="card-img-top" alt="iPhone" />
+                                                <div class="card-body">
+                                                    <div class="text-center mt-1">
+                                                        <h4 class="card-title">iPhone 11 Pro</h4>
+                                                        <h6 class="text-primary mb-1 pb-3">Starting at $599</h6>
+                                                    </div>
+
+
+
+                                                    <div class="d-flex flex-row">
+                                                        <button type="button" class="btn btn-primary flex-fill me-1">
+                                                            Edit
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-danger flex-fill ms-1">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                                <div class="tab-pane fade" id="pills-new" role="tabpanel"
-                                    aria-labelledby="pills-new-tab">new</div>
-                                <div class="tab-pane fade" id="pills-used" role="tabpanel"
-                                    aria-labelledby="pills-used-tab">te1st</div>
-                                <div class="tab-pane fade" id="pills-rental" role="tabpanel"
-                                    aria-labelledby="pills-rental-tab">test</div>
-                                <div class="tab-pane fade" id="pills-campaign" role="tabpanel"
-                                    aria-labelledby="pills-campaign-tab">...</div>
                             </div>
-                        
+                            <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">new
+                            </div>
+                            <div class="tab-pane fade" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
+                                te1st</div>
+                            <div class="tab-pane fade" id="pills-rental" role="tabpanel" aria-labelledby="pills-rental-tab">
+                                test</div>
+                            <div class="tab-pane fade" id="pills-campaign" role="tabpanel"
+                                aria-labelledby="pills-campaign-tab">...</div>
                         </div>
+
+                    </div>
 
                 </div>
             </div>
             <div class="container">
-                <br>    
-                <a v-if="user.userType=='business'" class="btn btn-outline-success me-2" href="/campaign">Create Campaign</a>
-                <a v-if="user.userType=='business'" class="btn btn-outline-success me-2" href="/add_product">Add Product</a>
+                <br>
+                <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/campaign">Create
+                    Campaign</a>
+                <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add Product</a>
             </div>
         </div>
 
@@ -190,6 +195,7 @@
 </template>
 
 <script>
+
 import NavBar from "../components/NavBar.vue";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import router from "../router";
@@ -209,7 +215,7 @@ export default {
             just to pull
             
             */
-            
+
             user: {
                 uid: localStorage.getItem("user_uid"),
                 name: "",
@@ -219,13 +225,17 @@ export default {
                 postcode: "",
                 blockNumber: "",
                 contactno: "",
+                rating: '',
+                joindate: null, // Initialize joindate as null
+                campaignsCount: 0 // Add a property to store the campaign count
+
             },
         };
     },
 
     created() {
         const q = query(collection(db, "users"), where("uid", "==", this.user.uid));
-
+        
         getDocs(q).then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 this.user.name = doc.data().name;
@@ -236,9 +246,50 @@ export default {
                 this.user.blockNumber = doc.data().blockNumber;
                 this.user.contactno = doc.data().contactno;
                 this.user.rating = doc.data().rating;
+                this.user.joindate = doc.data().joindate.toDate();
+          
             });
         });
+        
+
+
     },
+    computed: {
+        // To display stars
+        rating() {
+            let x = "⭐";
+            return x.repeat(Number(this.user.rating));
+        },
+        // Calculate join date
+        joinDate() {
+        
+            const currentDate = new Date();
+            const timestamp = new Date(this.user.joindate)
+            const timeDifference = currentDate - timestamp;
+
+            const secondsDifference = timeDifference / 1000;
+            const monthsDifference = secondsDifference / (60 * 60 * 24 * 30.44);
+
+            const years = Math.floor(monthsDifference / 12);
+            const months = Math.floor(monthsDifference % 12);
+            let str_m = ''
+            let str_y = ''
+            if (years > 0) {
+                str_y = `${years} Years `;
+            }
+            if (months > 0) {
+                str_m = `${months} Month `;
+            }
+            let gotAnd = '';
+            if(months > 0 && years > 0)
+            {
+                gotAnd = "& ";
+            }
+            return `Joined: ${str_y}${gotAnd}${str_m}Ago`;
+        }
+
+    }
+
 };
 </script>
 <!-- Style sheet -->
