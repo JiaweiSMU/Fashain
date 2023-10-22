@@ -32,7 +32,7 @@
                                 </svg>
                                 <p class="mb-0">
                                     {{
-                                        `${user.address.street_number} ${user.address.route} ${user.blockNumber}
+                                        `${user.address.street_number} ${user.address.route}, ${user.blockNumber},
                                                                         ${user.address.postal_code}`
                                     }}
                                 </p>
@@ -53,10 +53,6 @@
                                 <i class="fab fa-instagram fa-lg" style="color: #ac2bac"></i>
                                 <p class="mb-0">mdbootstrap</p>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-facebook-f fa-lg" style="color: #3b5998"></i>
-                                <p class="mb-0">mdbootstrap</p>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -66,6 +62,9 @@
             </div>
             <div class="col-lg-8">
                 <div class="card mb-0">
+                     <!-- 
+                        Tabs for businesses products, campaigns
+                     -->
                     <div v-if="user.userType=='business'">
                             <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -181,8 +180,7 @@
                 </div>
             </div>
             <div class="container">
-                <br>
-                <a class="btn btn-outline-secondary me-2" href="/edit_profile">Edit Profile</a>
+                <br>    
                 <a v-if="user.userType=='business'" class="btn btn-outline-success me-2" href="/campaign">Create Campaign</a>
                 <a v-if="user.userType=='business'" class="btn btn-outline-success me-2" href="/add_product">Add Product</a>
             </div>
