@@ -75,7 +75,7 @@
                             <!-- Display Image once Image uploaded -->
                             <div class="container-fluid">
                                 <div class="row">
-                                    <img class="rounded" v-if="url" :src="url" />
+                                    <img class="rounded" v-if="image.url" :src="image.url" />
                                 </div>
                             </div>
                         </div>
@@ -141,6 +141,8 @@ export default {
             //     campaignEndDate: this.campaignEndDate,
             //     campaignDesc: this.campaignDesc,
             // };
+
+            // Solve DateTime Tmr
             console.log(typeof (this.campaignStartDate));
             let data = {
                 campaignName: 'hehdsadadsadsadasdsase',
@@ -205,46 +207,29 @@ export default {
         },
 
         /**
-         * Uploads an image and returns its URL.
-         *
-         * @param {img} img - The image to be uploaded.
-         * @return {boolean} - A boolean value indicating whether the upload was successful return to handleImageUpload
-         */
-
-        // getDownloadURL(storageRef).then((url) => {
-        //     console.log(url);
-        //     this.url = url;
-        // })
-        // storageRef = ref(storage, 'folder/campaign' + '/' + this.imageName + '.' + this.imageExt);
-        // getDownloadURL(storageRef).then((url) => {
-        //     console.log(url);
-        //     this.url = url;
-        // })
-
-        /**
          * Uploads an image and returns the URL.
          *
-         * @param {Object} img - The image to be uploaded.
-         * @return {boolean} Returns true if the image is uploaded successfully, otherwise false.
+         * @param {type} img - the image to upload
+         * @return {type} Promise - a promise that resolves with the image URL
          */
-        uploadImageAndReturnURL(img) {
+        async uploadImageAndReturnURL(img) {
             const storage = getStorage();
             const storageRef = ref(storage, 'folder/campaign/' + this.imageName + '.' + this.imageExt);
-            uploadBytes(storageRef, img).then((snapshot) => {
-                console.log('uploaded true');
+            await uploadBytes(storageRef, img).then((snapshot) => {
+                console.log('Image uploaded');
             }).catch((error) => {
                 console.log(error);
-            }), () => {
-                getDownloadURL(storageRef).then((url) => {
-                    console.log(url);
+            }),
+                await getDownloadURL(storageRef).then((url) => {
+                    this.image.url = url;
+                    console.log(this.image.url);
                 })
-            }
         },
 
         /**
          * Handles the image upload.
          *
-         * @param {type} image - The uploaded image.
+         * @param {Object} image - The image to be uploaded.
          */
         handleImageUpload(image) {
             // this.uploadedImage = event.target.files[0];
@@ -261,17 +246,8 @@ export default {
                     this.isImage = ["png", "jpg", "jpeg"].includes(
                         this.imageExt
                     );
-                    
-                    console.log(this.imageName + this.imageExt, this.isImage);
-                    if (this.uploadImageAndReturnURL(image.target.files[0])) {
-                        console.log('inside get url');
-                        getDownloadURL(this.storageRef).then((url) => {
-                            console.log(url);
-                            this.url = url;
-                        })
-                        console.log('Image uploaded successfully');
-                    }
-
+                    this.uploadImageAndReturnURL(image.target.files[0]);
+                    // console.log(this.imageName + this.imageExt, this.isImage);
                 } else {
                     console.log('Invalid file');
                 }
