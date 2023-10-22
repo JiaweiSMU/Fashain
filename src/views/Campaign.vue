@@ -204,33 +204,41 @@ export default {
             }
         },
 
-
         /**
          * Uploads an image and returns its URL.
          *
          * @param {img} img - The image to be uploaded.
          * @return {boolean} - A boolean value indicating whether the upload was successful return to handleImageUpload
          */
+
+        // getDownloadURL(storageRef).then((url) => {
+        //     console.log(url);
+        //     this.url = url;
+        // })
+        // storageRef = ref(storage, 'folder/campaign' + '/' + this.imageName + '.' + this.imageExt);
+        // getDownloadURL(storageRef).then((url) => {
+        //     console.log(url);
+        //     this.url = url;
+        // })
+
+        /**
+         * Uploads an image and returns the URL.
+         *
+         * @param {Object} img - The image to be uploaded.
+         * @return {boolean} Returns true if the image is uploaded successfully, otherwise false.
+         */
         uploadImageAndReturnURL(img) {
             const storage = getStorage();
             const storageRef = ref(storage, 'folder/campaign/' + this.imageName + '.' + this.imageExt);
             uploadBytes(storageRef, img).then((snapshot) => {
-                console.log('Uploaded a blob or file!');
-                return true;
+                console.log('uploaded true');
             }).catch((error) => {
                 console.log(error);
-                return false;
-            }),
-                // getDownloadURL(storageRef).then((url) => {
-                //     console.log(url);
-                //     this.url = url;
-                // })
-                // storageRef = ref(storage, 'folder/campaign' + '/' + this.imageName + '.' + this.imageExt);
-                // getDownloadURL(storageRef).then((url) => {
-                //     console.log(url);
-                //     this.url = url;
-                // })
-                console.log(this.url);
+            }), () => {
+                getDownloadURL(storageRef).then((url) => {
+                    console.log(url);
+                })
+            }
         },
 
         /**
@@ -246,14 +254,16 @@ export default {
 
             if (image.target.files && image.target.files[0]) {
                 if (this.isImageValid(image.target.files[0])) {
-
+                    console.log('hello inside image is valid');
                     const img = image.target.files[0];
                     this.imageExt = img.name.split(".").pop();
                     this.imageName = img.name.split(".").shift();
                     this.isImage = ["png", "jpg", "jpeg"].includes(
                         this.imageExt
                     );
-                    if (this.uploadImageAndReturnURL(image.target.files[0]) == true) {
+                    
+                    console.log(this.imageName + this.imageExt, this.isImage);
+                    if (this.uploadImageAndReturnURL(image.target.files[0])) {
                         console.log('inside get url');
                         getDownloadURL(this.storageRef).then((url) => {
                             console.log(url);
@@ -261,7 +271,6 @@ export default {
                         })
                         console.log('Image uploaded successfully');
                     }
-                    console.log(this.imageName + this.imageExt, this.isImage);
 
                 } else {
                     console.log('Invalid file');
