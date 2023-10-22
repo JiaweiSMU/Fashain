@@ -55,9 +55,7 @@
 <script>
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/init.js";
-import { useStore } from "vuex";
 import router from "../router";
-const store = useStore();
 export default {
     name: "NavBar",
     data() {
@@ -70,7 +68,6 @@ export default {
             signOut(auth).then(() => {
                 localStorage.removeItem("user_uid");
                 router.push("/");
-                console.log(this.$store.state.user);
             });
         },
     },
@@ -78,7 +75,6 @@ export default {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.checkAuth = user;
-                console.log(user);
             } else {
                 this.checkAuth = null;
             }
