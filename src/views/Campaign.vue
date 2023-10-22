@@ -95,8 +95,10 @@
 <!-- https://blog.openreplay.com/building-a-custom-file-upload-component-for-vue/ -->
 <script>
 import NavBar from "../components/NavBar.vue";
-import { doc, onSnapshot, updateDoc, setDoc, deleteDoc, collection, serverTimestamp, getDocs, query, where, orderBy, limit, CollectionReference, arrayUnion } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, setDoc, deleteDoc, collection, serverTimestamp, getDocs, query, where, orderBy, limit, CollectionReference, arrayUnion, Timestamp } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import db from '../firebase/init.js';
+import storage from '../firebase/init.js';
 export default {
     components: { NavBar },
     name: "Campaign",
@@ -111,7 +113,7 @@ export default {
             image: {
                 imageName: "",
                 imageExt: "",
-                url: "",
+                url: "https://placehold.co/400",
                 isImage: false,
                 //isUploaded: false,
             },
@@ -121,6 +123,54 @@ export default {
         };
     },
     methods: {
+        /**
+         * Submits the form data to the server after performing validation.
+         *
+         * @return {void}
+         */
+        // https://www.youtube.com/watch?v=-yrnWnN0g9o&t=554s good example
+        async submit() {
+            const userDbRef = collection(db, 'users');
+            this.listOfErrors = [];
+            // if (this.checkDate() == true && this.checkEmpty() == true) {
+            //     console.log("Do push to DB");
+            // const data = {
+            //     campaignName: this.campaignName,
+            //     campaignAddress: this.campaignAddress,
+            //     campaignStartDate: this.campaignStartDate,
+            //     campaignEndDate: this.campaignEndDate,
+            //     campaignDesc: this.campaignDesc,
+            // };
+            console.log(typeof (this.campaignStartDate));
+            let data = {
+                campaignName: 'hehdsadadsadsadasdsase',
+                campaignAddress: 'dsadsacx',
+                campaignStartDate: new Date(10 / 10 / 2023).getTime(),
+                campaignEndDate: Timestamp.fromDate(new Date(12 / 10 / 2023)),
+                campaignDesc: 'tedsadsa',
+            };
+            try {
+                console.log('hi');
+                // 2nd Field is the UID
+                const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
+                await updateDoc(uidRef, {
+                    listOfCampaign: arrayUnion(data)
+                });
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+            // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
+            //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/bfjimnRLI6GBpYwxlKMB';
+
+
+            // }
+            // else {
+            //     alert(this.listOfErrors);
+            //     //console.log(this.listOfErrors);
+            // }
+            // console.log(this.campaignName + " " + this.campaignDesc);
+        },
+
         /**
          * A function to check if the campaign end date is greater than or equal to the campaign start date.
          *
@@ -154,50 +204,33 @@ export default {
             }
         },
 
+
         /**
-         * Submits the form data to the server after performing validation.
+         * Uploads an image and returns its URL.
          *
-         * @return {void}
+         * @param {img} img - The image to be uploaded.
+         * @return {boolean} - A boolean value indicating whether the upload was successful return to handleImageUpload
          */
-        async submit() {
-            const userDbRef = collection(db, 'users');
-            this.listOfErrors = [];
-            // if (this.checkDate() == true && this.checkEmpty() == true) {
-            //     console.log("Do push to DB");
-            // const data = {
-            //     campaignName: this.campaignName,
-            //     campaignAddress: this.campaignAddress,
-            //     campaignStartDate: this.campaignStartDate,
-            //     campaignEndDate: this.campaignEndDate,
-            //     campaignDesc: this.campaignDesc,
-            // };
-
-            try {
-                console.log('hi');
-                const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
-                await updateDoc(uidRef, {
-                    listOfCampaign: arrayUnion({name: 'dsa'})
-                });
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
-
-            // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
-            //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/bfjimnRLI6GBpYwxlKMB';
-
-            // let data = {
-            //     campaignName: 'dsadsa',
-            //     campaignAddress: 'dsadsacx',
-            //     campaignStartDate: '10/10/2023',
-            //     campaignEndDate: '12/10/2023',
-            //     campaignDesc: 'tedsadsa',
-            // };
-            // }
-            // else {
-            //     alert(this.listOfErrors);
-            //     //console.log(this.listOfErrors);
-            // }
-            // console.log(this.campaignName + " " + this.campaignDesc);
+        uploadImageAndReturnURL(img) {
+            const storage = getStorage();
+            const storageRef = ref(storage, 'folder/campaign/' + this.imageName + '.' + this.imageExt);
+            uploadBytes(storageRef, img).then((snapshot) => {
+                console.log('Uploaded a blob or file!');
+                return true;
+            }).catch((error) => {
+                console.log(error);
+                return false;
+            }),
+                // getDownloadURL(storageRef).then((url) => {
+                //     console.log(url);
+                //     this.url = url;
+                // })
+                // storageRef = ref(storage, 'folder/campaign' + '/' + this.imageName + '.' + this.imageExt);
+                // getDownloadURL(storageRef).then((url) => {
+                //     console.log(url);
+                //     this.url = url;
+                // })
+                console.log(this.url);
         },
 
         /**
@@ -213,14 +246,23 @@ export default {
 
             if (image.target.files && image.target.files[0]) {
                 if (this.isImageValid(image.target.files[0])) {
+
                     const img = image.target.files[0];
                     this.imageExt = img.name.split(".").pop();
                     this.imageName = img.name.split(".").shift();
                     this.isImage = ["png", "jpg", "jpeg"].includes(
                         this.imageExt
                     );
-                    //console.log(this.imageName, this.imageExt, this.isImage);
-                    this.url = URL.createObjectURL(img);
+                    if (this.uploadImageAndReturnURL(image.target.files[0]) == true) {
+                        console.log('inside get url');
+                        getDownloadURL(this.storageRef).then((url) => {
+                            console.log(url);
+                            this.url = url;
+                        })
+                        console.log('Image uploaded successfully');
+                    }
+                    console.log(this.imageName + this.imageExt, this.isImage);
+
                 } else {
                     console.log('Invalid file');
                 }
