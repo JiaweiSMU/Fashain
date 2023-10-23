@@ -60,25 +60,29 @@ export const store = createStore({
     ) {
       const response = createUserWithEmailAndPassword(auth, email, password);
       if (response) {
-        // const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
-        let respUid = response.user.uid;
-        // const dbWithDocId = doc(dbRef, respUid);
-        console.log(response.user.uid);
-        localStorage.setItem("user_uid", response.user.uid);
-        updateProfile(response.user, { displayName: name });
-        const setGenUid = doc(dbRef, respUid);
-        await setDoc(setGenUid, {
+        // localStorage.setItem("user_uid", response.user.uid);
+        updateProfile(response.user.id, { displayName: name });
+        await setDoc(dbRef, response.user.uid, {
           name: name,
           email: email,
-          uid: respUid,
+          uid: response.user.uid,
           userType: type,
           address: address,
           blockNumber: blockNumber,
           postcode: postcode,
           contactno: contactno,
           cart: [],
-          
         });
+        // Get the 'id' property from the 'docId' object
+        // const uid = docId.id;
+
+        // // Construct a reference to the document with the 'uid' value
+        // const updateUid = doc(dbRef, uid);
+
+        // // Update the document with the 'uid' value, setting the 'uid' field to the same value
+        // await updateDoc(updateUid, {
+        //   uid: uid,
+        // });
       } else {
         throw new Error("Unable to register user");
       }
