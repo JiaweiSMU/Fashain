@@ -56,6 +56,7 @@ export const store = createStore({
       context,
       { email, password, name, type, address, blockNumber, postcode, contactno }
     ) {
+      //test
       const response = createUserWithEmailAndPassword(auth, email, password);
       if (response) {
         // localStorage.setItem("user_uid", response.user.uid);
@@ -70,6 +71,7 @@ export const store = createStore({
           postcode: postcode,
           contactno: contactno,
           cart: [],
+          
         });
         // Get the 'id' property from the 'docId' object
         const uid = docId.id;
