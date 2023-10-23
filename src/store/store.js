@@ -58,14 +58,23 @@ export const store = createStore({
       context,
       { email, password, name, type, address, blockNumber, postcode, contactno }
     ) {
-      const response = createUserWithEmailAndPassword(auth, email, password);
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       if (response) {
-        // localStorage.setItem("user_uid", response.user.uid);
-        updateProfile(response.user.id, { displayName: name });
-        await setDoc(dbRef, response.user.uid, {
+        // const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
+        let respUid = response.user.uid;
+        // const dbWithDocId = doc(dbRef, respUid);
+        console.log(response.user.uid);
+        localStorage.setItem("user_uid", response.user.uid);
+        updateProfile(response.user, { displayName: name });
+        const setGenUid = doc(dbRef, respUid);
+        await setDoc(setGenUid, {
           name: name,
           email: email,
-          uid: response.user.uid,
+          uid: respUid,
           userType: type,
           address: address,
           blockNumber: blockNumber,
@@ -73,16 +82,6 @@ export const store = createStore({
           contactno: contactno,
           cart: [],
         });
-        // Get the 'id' property from the 'docId' object
-        // const uid = docId.id;
-
-        // // Construct a reference to the document with the 'uid' value
-        // const updateUid = doc(dbRef, uid);
-
-        // // Update the document with the 'uid' value, setting the 'uid' field to the same value
-        // await updateDoc(updateUid, {
-        //   uid: uid,
-        // });
       } else {
         throw new Error("Unable to register user");
       }
