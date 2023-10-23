@@ -154,7 +154,8 @@ export default {
             try {
                 console.log('hi');
                 // 2nd Field is the UID
-                const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
+                // change for now ZOxhPvxo8odRRu3po7FZ
+                const uidRef = doc(userDbRef, 'sLMohi7AUYxO8Xw45FRh', 'campaigns', 'campaign');
                 await updateDoc(uidRef, {
                     listOfCampaign: arrayUnion(data)
                 });
