@@ -133,7 +133,7 @@ export default {
             const userDbRef = collection(db, 'users');
             //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/ZOxhPvxo8odRRu3po7FZ/campaigns';
             this.listOfErrors = [];
-            console.log(auth.currentUser);
+            console.log(localStorage.getItem('uid'));
             // if (this.checkDate() == true && this.checkEmpty() == true) {
             //     console.log("Do push to DB");
             //     const data = {
