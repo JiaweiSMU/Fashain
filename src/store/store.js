@@ -8,6 +8,7 @@ import {
   addDoc,
   doc,
   updateDoc,
+  setDoc,
 } from "firebase/firestore";
 const db = getFirestore();
 const dbRef = collection(db, "users");
@@ -52,19 +53,24 @@ export const store = createStore({
      * @param {string} params.contactno - the contact number of the user
      * @throws {Error} if unable to register the user
      */
+
     async signUp(
       context,
       { email, password, name, type, address, blockNumber, postcode, contactno }
     ) {
-      //test
       const response = createUserWithEmailAndPassword(auth, email, password);
       if (response) {
-        // localStorage.setItem("user_uid", response.user.uid);
+        // const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
+        let respUid = response.user.uid;
+        // const dbWithDocId = doc(dbRef, respUid);
+        console.log(response.user.uid);
+        localStorage.setItem("user_uid", response.user.uid);
         updateProfile(response.user, { displayName: name });
-        const docId = await addDoc(dbRef, {
+        const setGenUid = doc(dbRef, respUid);
+        await setDoc(setGenUid, {
           name: name,
           email: email,
-          // uid: dbRef.id,
+          uid: respUid,
           userType: type,
           address: address,
           blockNumber: blockNumber,
@@ -73,21 +79,10 @@ export const store = createStore({
           cart: [],
           
         });
-        // Get the 'id' property from the 'docId' object
-        const uid = docId.id;
-
-        // Construct a reference to the document with the 'uid' value
-        const updateUid = doc(dbRef, uid);
-
-        // Update the document with the 'uid' value, setting the 'uid' field to the same value
-        await updateDoc(updateUid, {
-          uid: uid,
-        });
       } else {
         throw new Error("Unable to register user");
       }
     },
-
     async logIn(context, { email, password }) {
       const response = await signInWithEmailAndPassword(auth, email, password);
       if (response) {
