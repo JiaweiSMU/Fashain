@@ -136,31 +136,37 @@ export default {
             console.log(localStorage.getItem('uid'));
             // if (this.checkDate() == true && this.checkEmpty() == true) {
             //     console.log("Do push to DB");
-            //     const data = {
-            //         campaignName: this.campaignName,
-            //         campaignAddress: this.campaignAddress,
-            //         campaignStartDate: new Date(this.campaignStartDate).getTime(),
-            //         campaignEndDate: new Date(this.campaignEndDate).getTime(),
-            //         campaignDesc: this.campaignDesc,
-            //         campaignImg : this.image.url,
-            //     };
-            //     //Testing Data
-            //     // let data = {
-            //     //     campaignName: 'hehdsadadsadsadasdsase',
-            //     //     campaignAddress: 'dsadsacx',
-            //     //     campaignStartDate: new Date(this.campaignStartDate).getTime(),
-            //     //     campaignEndDate: Timestamp.fromDate(new Date(12/10/2023)),
-            //     //     campaignDesc: 'tedsadsa',
-            //     // };
-            //     try {
-            //         // 2nd Field is the UID
-            //         const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
-            //         await updateDoc(uidRef, {
-            //             listOfCampaign: arrayUnion(data)
-            //         });
-            //     } catch (e) {
-            //         console.error("Error adding document: ", e);
-            //     }
+            // const data = {
+            //     campaignName: this.campaignName,
+            //     campaignAddress: this.campaignAddress,
+            //     campaignStartDate: this.campaignStartDate,
+            //     campaignEndDate: this.campaignEndDate,
+            //     campaignDesc: this.campaignDesc,
+            // };
+
+            // Solve DateTime Tmr
+            console.log(typeof (this.campaignStartDate));
+            let data = {
+                campaignName: 'hehdsadadsadsadasdsase',
+                campaignAddress: 'dsadsacx',
+                campaignStartDate: new Date(10 / 10 / 2023).getTime(),
+                campaignEndDate: Timestamp.fromDate(new Date(12 / 10 / 2023)),
+                campaignDesc: 'tedsadsa',
+            };
+            try {
+                console.log('hi');
+                // 2nd Field is the UID
+                const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
+                await updateDoc(uidRef, {
+                    listOfCampaign: arrayUnion(data)
+                });
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+            // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
+            //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/bfjimnRLI6GBpYwxlKMB';
+
+
             // }
             // else {
             //     alert(this.listOfErrors);

@@ -51,7 +51,7 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                 <i class="fab fa-twitter fa-lg" style="color: #55acee"></i>
-                                <p class="mb-0"></p>
+                                <p class="mb-0">{{ user.campaignsCount}}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32" xml:space="preserve"><path d="M12 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zM1 32a1 1 0 0 1-1-1v-6.115c0-4.93 4.012-8.943 8.942-8.943h6.116c1.229 0 2.42.246 3.54.729a1 1 0 1 1-.792 1.836 6.91 6.91 0 0 0-2.748-.565H8.942A6.95 6.95 0 0 0 2 24.885V31a1 1 0 0 1-1 1zM25 19a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm3.052 5.332-2.75 2.75a1 1 0 0 1-1.413 0l-1.251-1.25a1 1 0 1 1 1.414-1.415l.544.544 2.042-2.043a1 1 0 1 1 1.414 1.414z"/><g><path d="M25 32c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z"/></g></svg>
@@ -197,7 +197,7 @@
 <script>
 
 import NavBar from "../components/NavBar.vue";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import router from "../router";
 const db = getFirestore();
 
@@ -232,24 +232,46 @@ export default {
             },
         };
     },
-
+    // sLMohi7AUYxO8Xw45FRh
     created() {
         const q = query(collection(db, "users"), where("uid", "==", this.user.uid));
-        
+        const userDocRef = collection(db, "users");
+        // by right suppose to be this.user.id
+        const uidRef = doc(userDocRef, 'sLMohi7AUYxO8Xw45FRh', 'campaigns', 'campaign');
+        // bok yan i modify the doc name as it clashes with the function
         getDocs(q).then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                this.user.name = doc.data().name;
-                this.user.email = doc.data().email;
-                this.user.userType = doc.data().userType;
-                this.user.address = doc.data().address;
-                this.user.postcode = doc.data().postcode;
-                this.user.blockNumber = doc.data().blockNumber;
-                this.user.contactno = doc.data().contactno;
-                this.user.rating = doc.data().rating;
-                this.user.joindate = doc.data().joindate.toDate();
-          
+            querySnapshot.forEach((user_details) => {
+                this.user.name = user_details.data().name;
+                this.user.email = user_details.data().email;
+                this.user.userType = user_details.data().userType;
+                this.user.address = user_details.data().address;
+                this.user.postcode = user_details.data().postcode;
+                this.user.blockNumber = user_details.data().blockNumber;
+                this.user.contactno = user_details.data().contactno;
+                this.user.rating = user_details.data().rating;
+                this.user.joindate = user_details.data().joindate.toDate();
+                 // Access and count the "campaigns" subcollection
+  
+                
+            
             });
         });
+        getDoc(uidRef)
+            .then((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    const campaignData = docSnapshot.data();
+                    this.user.campaignsCount = campaignData.listOfCampaign.length
+                    console.log(campaignData.listOfCampaign.length)
+                    console.log(this.user.uid);
+                } else {
+                    // The document with the specified reference does not exist.
+                    // Handle the case when the document doesn't exist.
+                }
+            })
+            .catch((error) => {
+                console.error("Error getting document:", error);
+            });
+
         
 
 
