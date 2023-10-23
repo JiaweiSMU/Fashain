@@ -97,7 +97,7 @@
 import NavBar from "../components/NavBar.vue";
 import { doc, onSnapshot, updateDoc, setDoc, deleteDoc, collection, serverTimestamp, getDocs, query, where, orderBy, limit, CollectionReference, arrayUnion, Timestamp } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
-import db from '../firebase/init.js';
+import db, { auth } from '../firebase/init.js';
 import storage from '../firebase/init.js';
 export default {
     components: { NavBar },
@@ -131,7 +131,9 @@ export default {
         // https://www.youtube.com/watch?v=-yrnWnN0g9o&t=554s good example
         async submit() {
             const userDbRef = collection(db, 'users');
+            //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/ZOxhPvxo8odRRu3po7FZ/campaigns';
             this.listOfErrors = [];
+            console.log(auth.currentUser);
             // if (this.checkDate() == true && this.checkEmpty() == true) {
             //     console.log("Do push to DB");
             // const data = {
@@ -154,8 +156,7 @@ export default {
             try {
                 console.log('hi');
                 // 2nd Field is the UID
-                // change for now ZOxhPvxo8odRRu3po7FZ
-                const uidRef = doc(userDbRef, 'sLMohi7AUYxO8Xw45FRh', 'campaigns', 'campaign');
+                const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
                 await updateDoc(uidRef, {
                     listOfCampaign: arrayUnion(data)
                 });
@@ -171,7 +172,30 @@ export default {
             //     alert(this.listOfErrors);
             //     //console.log(this.listOfErrors);
             // }
-            // console.log(this.campaignName + " " + this.campaignDesc);
+
+            //To get Data
+            // const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
+            // const docSnap = await getDoc(uidRef);
+
+            // if (docSnap.exists()) {
+            //     console.log("Document data:", docSnap.data());
+            // }
+            // else
+            // {
+            //     console.log("No such document!");
+            // }
+            // await updateDoc(uidRef, {
+            //     listOfCampaign: arrayUnion(data)
+            // });
+
+
+
+            // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
+
+
+
+            // }
+
         },
 
         /**
