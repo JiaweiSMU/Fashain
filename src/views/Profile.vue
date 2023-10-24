@@ -50,11 +50,19 @@
                                 <p class="mb-0">{{ user.contactno }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-twitter fa-lg" style="color: #55acee"></i>
-                                <p class="mb-0">{{ user.campaignsCount}}</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" viewBox="6 0 64 64" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2"><path d="M16 36v4.642a2.091 2.091 0 0 0 2.545 2.041l29.819-6.64A2.09 2.09 0 0 0 50 34.002v-8.004c0-.98-.68-1.828-1.636-2.041l-29.819-6.64A2.092 2.092 0 0 0 16 19.358V22.5" style="fill:none;stroke:#222a33;stroke-width:3px"/><path d="M8.069 28.044A1.387 1.387 0 0 1 9.1 26.257c1.933-.352 5.458-.621 8.548 1.164 3.091 1.784 4.621 4.971 5.282 6.821a1.387 1.387 0 0 1-1.032 1.787c-1.933.352-5.457.621-8.548-1.163-3.09-1.785-4.62-4.972-5.281-6.822zM23.154 35.535c.165.285.443.487.766.555 1.619.295 4.572.52 7.16-.975 2.589-1.494 3.87-4.164 4.424-5.713a1.16 1.16 0 0 0-.864-1.497c-1.619-.295-4.571-.52-7.16.974a8.406 8.406 0 0 0-1.594 1.199M23.011 35.402l-8.413-4.871M50 35.046c0 .518.206 1.015.572 1.382.367.366.864.572 1.382.572h2.751C55.42 37 56 36.42 56 35.705v-11.41C56 23.58 55.42 23 54.705 23h-2.751M51 37l1.723 13.787A1.97 1.97 0 0 1 50.769 53h-8.41a1.97 1.97 0 0 1-1.937-2.321L42 42M46 30v.001a3.073 3.073 0 0 1-1.824 2.808L41.5 34" style="fill:none;stroke:#222a33;stroke-width:3px"/></svg>
+                                <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32" xml:space="preserve"><path d="M12 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zM1 32a1 1 0 0 1-1-1v-6.115c0-4.93 4.012-8.943 8.942-8.943h6.116c1.229 0 2.42.246 3.54.729a1 1 0 1 1-.792 1.836 6.91 6.91 0 0 0-2.748-.565H8.942A6.95 6.95 0 0 0 2 24.885V31a1 1 0 0 1-1 1zM25 19a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm3.052 5.332-2.75 2.75a1 1 0 0 1-1.413 0l-1.251-1.25a1 1 0 1 1 1.414-1.415l.544.544 2.042-2.043a1 1 0 1 1 1.414 1.414z"/><g><path d="M25 32c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z"/></g></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    viewBox="0 0 32 32" style="enable-background:new 0 0 32 32" xml:space="preserve">
+                                    <path
+                                        d="M12 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zM1 32a1 1 0 0 1-1-1v-6.115c0-4.93 4.012-8.943 8.942-8.943h6.116c1.229 0 2.42.246 3.54.729a1 1 0 1 1-.792 1.836 6.91 6.91 0 0 0-2.748-.565H8.942A6.95 6.95 0 0 0 2 24.885V31a1 1 0 0 1-1 1zM25 19a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm3.052 5.332-2.75 2.75a1 1 0 0 1-1.413 0l-1.251-1.25a1 1 0 1 1 1.414-1.415l.544.544 2.042-2.043a1 1 0 1 1 1.414 1.414z" />
+                                    <g>
+                                        <path
+                                            d="M25 32c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
+                                    </g>
+                                </svg>
                                 <p class="mb-0">{{ joinDate }}</p>
                             </li>
                         </ul>
@@ -187,7 +195,8 @@
                 <br>
                 <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/campaign">Create
                     Campaign</a>
-                <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add Product</a>
+                <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add
+                    Product</a>
             </div>
         </div>
 
@@ -198,6 +207,7 @@
 
 import NavBar from "../components/NavBar.vue";
 import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import  { auth } from '../firebase/init.js';
 import router from "../router";
 const db = getFirestore();
 
@@ -227,7 +237,8 @@ export default {
                 contactno: "",
                 rating: '',
                 joindate: null, // Initialize joindate as null
-                campaignsCount: 0 // Add a property to store the campaign count
+                campaignsCount: 0, // Add a property to store the campaign count
+                documentID: "",
 
             },
         };
@@ -237,10 +248,13 @@ export default {
         const q = query(collection(db, "users"), where("uid", "==", this.user.uid));
         const userDocRef = collection(db, "users");
         // by right suppose to be this.user.id
-        const uidRef = doc(userDocRef, 'sLMohi7AUYxO8Xw45FRh', 'campaigns', 'campaign');
+
+        
         // bok yan i modify the doc name as it clashes with the function
         getDocs(q).then((querySnapshot) => {
             querySnapshot.forEach((user_details) => {
+                console.log(user_details.id);
+                this.user.documentID = user_details.id;
                 this.user.name = user_details.data().name;
                 this.user.email = user_details.data().email;
                 this.user.userType = user_details.data().userType;
@@ -250,29 +264,32 @@ export default {
                 this.user.contactno = user_details.data().contactno;
                 this.user.rating = user_details.data().rating;
                 this.user.joindate = user_details.data().joindate.toDate();
-                 // Access and count the "campaigns" subcollection
-  
-                
-            
+                console.log(this.user.documentID);
+                // Retrieval of campaigns
+                const uidRef = doc(userDocRef, this.user.documentID, 'campaigns', 'campaign');
+                getDoc(uidRef)
+                    .then((docSnapshot) => {
+                        if (docSnapshot.exists()) {
+                            const campaignData = docSnapshot.data();
+                            this.user.campaignsCount = campaignData.listOfCampaign.length
+                            console.log(campaignData.listOfCampaign.length)
+                            console.log(this.user.uid);
+                        } else {
+                            // The document with the specified reference does not exist.
+                            // Handle the case when the document doesn't exist.
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error getting document:", error);
+                    });
+
             });
         });
-        getDoc(uidRef)
-            .then((docSnapshot) => {
-                if (docSnapshot.exists()) {
-                    const campaignData = docSnapshot.data();
-                    this.user.campaignsCount = campaignData.listOfCampaign.length
-                    console.log(campaignData.listOfCampaign.length)
-                    console.log(this.user.uid);
-                } else {
-                    // The document with the specified reference does not exist.
-                    // Handle the case when the document doesn't exist.
-                }
-            })
-            .catch((error) => {
-                console.error("Error getting document:", error);
-            });
 
-        
+
+
+
+
 
 
     },
@@ -284,7 +301,7 @@ export default {
         },
         // Calculate join date
         joinDate() {
-        
+
             const currentDate = new Date();
             const timestamp = new Date(this.user.joindate)
             const timeDifference = currentDate - timestamp;
@@ -303,8 +320,7 @@ export default {
                 str_m = `${months} Month `;
             }
             let gotAnd = '';
-            if(months > 0 && years > 0)
-            {
+            if (months > 0 && years > 0) {
                 gotAnd = "& ";
             }
             return `Joined: ${str_y}${gotAnd}${str_m}Ago`;
