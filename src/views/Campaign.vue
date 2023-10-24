@@ -118,7 +118,6 @@ export default {
                 //isUploaded: false,
             },
             imageError: [],
-            url: null,
             listOfErrors: [],
         };
     },
@@ -130,7 +129,7 @@ export default {
          */
         // https://www.youtube.com/watch?v=-yrnWnN0g9o&t=554s good example
         async submit() {
-            const userDbRef = collection(db, 'users');
+            const userDbRef = collection(db, 'campaigns');
             //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/ZOxhPvxo8odRRu3po7FZ/campaigns';
             this.listOfErrors = [];
             console.log(localStorage.getItem('uid'));
@@ -144,25 +143,29 @@ export default {
             //     campaignDesc: this.campaignDesc,
             // };
 
-            // Solve DateTime Tmr
             console.log(typeof (this.campaignStartDate));
             let data = {
-                campaignName: 'hehdsadadsadsadasdsase',
+                campaignName: 'test',
                 campaignAddress: 'dsadsacx',
-                campaignStartDate: new Date(10 / 10 / 2023).getTime(),
-                campaignEndDate: Timestamp.fromDate(new Date(12 / 10 / 2023)),
+                campaignStartDate: new Date(10/10/2023).getTime(),
+                campaignEndDate: new Date(10/11/2023).getTime(),
                 campaignDesc: 'tedsadsa',
+                campaignImage: this.image.url,
             };
-            try {
-                console.log('hi');
-                // 2nd Field is the UID
-                const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
-                await updateDoc(uidRef, {
-                    listOfCampaign: arrayUnion(data)
-                });
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
+            const uidRef = doc(userDbRef, auth.currentUser.uid);
+            await setDoc(uidRef, { listOfCampaign: arrayUnion(data) }, {merge : true} )
+
+
+            // try {
+            //     console.log('hi');
+            //     // 2nd Field is the UID
+            //     const uidRef = doc(userDbRef, auth.currentUser.uid, 'campaigns', 'campaign');
+            //     await setDoc(uidRef, {
+            //         listOfCampaign: arrayUnion(data)
+            //     });
+            // } catch (e) {
+            //     console.error("Error adding document: ", e);
+            // }
             // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
             //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/bfjimnRLI6GBpYwxlKMB';
 
