@@ -66,11 +66,7 @@
                                 <div class="form-group">
                                     <label for="ecoFriendlyPackaging">Do you use eco-friendly packaging?</label>
                                     <select class="form-control" id="ecoFriendlyPackaging" name="ecoFriendlyPackaging" v-model="form.ecoFriendlyPackaging">
-<<<<<<< HEAD
                                         <option value="" disabled selected hidden>---Select an option---</option>
-=======
-                                        <option value="Select an Option" disabled selected hidden>--Select an Option--</option>
->>>>>>> e047b711cc9271116af997bf6827a643b92188c8
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
@@ -138,15 +134,6 @@ export default {
     data() {
         return {
             form: {
-<<<<<<< HEAD
-                recycledMaterials: 'yes',
-                organicMaterials: 'yes',
-                ecoFriendlyProduction: 'yes',
-                fairLaborPractices: 'yes',
-                ecoFriendlyPackaging: '',
-                sustainabilityPolicy: 'yes',
-                sustainabilityCommitmentRating: '3'
-=======
                 recycledMaterials: 'Select an Option',
                 organicMaterials: 'Select an Option',
                 ecoFriendlyProduction: 'Select an Option',
@@ -154,7 +141,6 @@ export default {
                 ecoFriendlyPackaging: 'Select an Option',
                 sustainabilityPolicy: 'Select an Option',
                 sustainabilityCommitmentRating: 'Select an Option'
->>>>>>> e047b711cc9271116af997bf6827a643b92188c8
             },
 
             sustainabilityRating: '',
