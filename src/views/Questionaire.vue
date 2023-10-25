@@ -62,7 +62,8 @@
                                 <div class="form-group">
                                     <label for="ecoFriendlyPackaging">Do you use eco-friendly packaging?</label>
                                     <select class="form-control" id="ecoFriendlyPackaging" name="ecoFriendlyPackaging" v-model="form.ecoFriendlyPackaging">
-                                        <option value="yes" selected>Yes</option>
+                                        <option value="" disabled selected hidden>---Select an option---</option>
+                                        <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
                                 </div>
@@ -131,7 +132,7 @@ export default {
                 organicMaterials: 'yes',
                 ecoFriendlyProduction: 'yes',
                 fairLaborPractices: 'yes',
-                ecoFriendlyPackaging: 'yes',
+                ecoFriendlyPackaging: '',
                 sustainabilityPolicy: 'yes',
                 sustainabilityCommitmentRating: '3'
             },
