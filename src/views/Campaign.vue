@@ -97,7 +97,7 @@
 import NavBar from "../components/NavBar.vue";
 import { doc, onSnapshot, updateDoc, setDoc, deleteDoc, collection, serverTimestamp, getDocs, query, where, orderBy, limit, CollectionReference, arrayUnion, Timestamp } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
-import db from '../firebase/init.js';
+import db, { auth } from '../firebase/init.js';
 import storage from '../firebase/init.js';
 export default {
     components: { NavBar },
@@ -118,7 +118,6 @@ export default {
                 //isUploaded: false,
             },
             imageError: [],
-            url: null,
             listOfErrors: [],
         };
     },
@@ -130,8 +129,10 @@ export default {
          */
         // https://www.youtube.com/watch?v=-yrnWnN0g9o&t=554s good example
         async submit() {
-            const userDbRef = collection(db, 'users');
+            const userDbRef = collection(db, 'campaigns');
+            //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/ZOxhPvxo8odRRu3po7FZ/campaigns';
             this.listOfErrors = [];
+            console.log(localStorage.getItem('uid'));
             // if (this.checkDate() == true && this.checkEmpty() == true) {
             //     console.log("Do push to DB");
             // const data = {
@@ -142,25 +143,29 @@ export default {
             //     campaignDesc: this.campaignDesc,
             // };
 
-            // Solve DateTime Tmr
             console.log(typeof (this.campaignStartDate));
             let data = {
-                campaignName: 'hehdsadadsadsadasdsase',
+                campaignName: 'test',
                 campaignAddress: 'dsadsacx',
-                campaignStartDate: new Date(10 / 10 / 2023).getTime(),
-                campaignEndDate: Timestamp.fromDate(new Date(12 / 10 / 2023)),
+                campaignStartDate: new Date(10/10/2023).getTime(),
+                campaignEndDate: new Date(10/11/2023).getTime(),
                 campaignDesc: 'tedsadsa',
+                campaignImage: this.image.url,
             };
-            try {
-                console.log('hi');
-                // 2nd Field is the UID
-                const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
-                await updateDoc(uidRef, {
-                    listOfCampaign: arrayUnion(data)
-                });
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
+            const uidRef = doc(userDbRef, auth.currentUser.uid);
+            await setDoc(uidRef, { listOfCampaign: arrayUnion(data) }, {merge : true} )
+
+
+            // try {
+            //     console.log('hi');
+            //     // 2nd Field is the UID
+            //     const uidRef = doc(userDbRef, auth.currentUser.uid, 'campaigns', 'campaign');
+            //     await setDoc(uidRef, {
+            //         listOfCampaign: arrayUnion(data)
+            //     });
+            // } catch (e) {
+            //     console.error("Error adding document: ", e);
+            // }
             // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
             //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/bfjimnRLI6GBpYwxlKMB';
 
@@ -170,7 +175,30 @@ export default {
             //     alert(this.listOfErrors);
             //     //console.log(this.listOfErrors);
             // }
-            // console.log(this.campaignName + " " + this.campaignDesc);
+
+            //To get Data
+            // const uidRef = doc(userDbRef, 'ZOxhPvxo8odRRu3po7FZ', 'campaigns', 'campaign');
+            // const docSnap = await getDoc(uidRef);
+
+            // if (docSnap.exists()) {
+            //     console.log("Document data:", docSnap.data());
+            // }
+            // else
+            // {
+            //     console.log("No such document!");
+            // }
+            // await updateDoc(uidRef, {
+            //     listOfCampaign: arrayUnion(data)
+            // });
+
+
+
+            // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
+
+
+
+            // }
+
         },
 
         /**

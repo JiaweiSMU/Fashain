@@ -19,6 +19,9 @@
                             class="rounded-circle img-fluid"
                             style="width: 150px" />
                         <h5 class="my-3">{{ user.name }}</h5>
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                            class="rounded-circle img-fluid" style="width: 150px" />
+                        <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
                         <p class="text-muted mb-4">Sustainability Rating: {{ user.rating }}</p>
                         <a class="btn btn-primary btn-sm" href="/edit_profile"
@@ -28,6 +31,14 @@
                                 width="16"
                                 height="16"
                                 fill="currentColor"
+                                viewBox="0 2 24 24">
+                                <path
+                                    d="M20.548 3.452a1.542 1.542 0 0 1 0 2.182l-7.636 7.636-3.273 1.091 1.091-3.273 7.636-7.636a1.542 1.542 0 0 1 2.182 0zM4 21h15a1 1 0 0 0 1-1v-8a1 1 0 0 0-2 0v7H5V6h7a1 1 0 0 0 0-2H4a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1z" />
+                            </svg>
+                        </a>
+                        <p class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
+                        <a class="btn btn-primary btn-sm" href="/edit_profile">Edit Profile
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 viewBox="0 2 24 24">
                                 <path
                                     d="M20.548 3.452a1.542 1.542 0 0 1 0 2.182l-7.636 7.636-3.273 1.091 1.091-3.273 7.636-7.636a1.542 1.542 0 0 1 2.182 0zM4 21h15a1 1 0 0 0 1-1v-8a1 1 0 0 0-2 0v7H5V6h7a1 1 0 0 0 0-2H4a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1z" />
@@ -48,7 +59,7 @@
                                 </svg>
                                 <p class="mb-0">
                                     {{
-                                        `${user.address.street_number} ${user.address.route} ${user.blockNumber}
+                                        `${user.address.street_number} ${user.address.route}, ${user.blockNumber},
                                                                         ${user.address.postal_code}`
                                     }}
                                 </p>
@@ -67,16 +78,46 @@
                                 <p class="mb-0">{{ user.contactno }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-twitter fa-lg" style="color: #55acee"></i>
-                                <p class="mb-0"></p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="23"
+                                    height="23"
+                                    fill="currentColor"
+                                    viewBox="6 0 64 64"
+                                    xml:space="preserve"
+                                    style="
+                                        fill-rule: evenodd;
+                                        clip-rule: evenodd;
+                                        stroke-linecap: round;
+                                        stroke-linejoin: round;
+                                        stroke-miterlimit: 2;
+                                    ">
+                                    <path
+                                        d="M16 36v4.642a2.091 2.091 0 0 0 2.545 2.041l29.819-6.64A2.09 2.09 0 0 0 50 34.002v-8.004c0-.98-.68-1.828-1.636-2.041l-29.819-6.64A2.092 2.092 0 0 0 16 19.358V22.5"
+                                        style="fill: none; stroke: #222a33; stroke-width: 3px" />
+                                    <path
+                                        d="M8.069 28.044A1.387 1.387 0 0 1 9.1 26.257c1.933-.352 5.458-.621 8.548 1.164 3.091 1.784 4.621 4.971 5.282 6.821a1.387 1.387 0 0 1-1.032 1.787c-1.933.352-5.457.621-8.548-1.163-3.09-1.785-4.62-4.972-5.281-6.822zM23.154 35.535c.165.285.443.487.766.555 1.619.295 4.572.52 7.16-.975 2.589-1.494 3.87-4.164 4.424-5.713a1.16 1.16 0 0 0-.864-1.497c-1.619-.295-4.571-.52-7.16.974a8.406 8.406 0 0 0-1.594 1.199M23.011 35.402l-8.413-4.871M50 35.046c0 .518.206 1.015.572 1.382.367.366.864.572 1.382.572h2.751C55.42 37 56 36.42 56 35.705v-11.41C56 23.58 55.42 23 54.705 23h-2.751M51 37l1.723 13.787A1.97 1.97 0 0 1 50.769 53h-8.41a1.97 1.97 0 0 1-1.937-2.321L42 42M46 30v.001a3.073 3.073 0 0 1-1.824 2.808L41.5 34"
+                                        style="fill: none; stroke: #222a33; stroke-width: 3px" />
+                                </svg>
+                                <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-instagram fa-lg" style="color: #ac2bac"></i>
-                                <p class="mb-0">mdbootstrap</p>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <i class="fab fa-facebook-f fa-lg" style="color: #3b5998"></i>
-                                <p class="mb-0">mdbootstrap</p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    viewBox="0 0 32 32"
+                                    style="enable-background: new 0 0 32 32"
+                                    xml:space="preserve">
+                                    <path
+                                        d="M12 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zM1 32a1 1 0 0 1-1-1v-6.115c0-4.93 4.012-8.943 8.942-8.943h6.116c1.229 0 2.42.246 3.54.729a1 1 0 1 1-.792 1.836 6.91 6.91 0 0 0-2.748-.565H8.942A6.95 6.95 0 0 0 2 24.885V31a1 1 0 0 1-1 1zM25 19a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm3.052 5.332-2.75 2.75a1 1 0 0 1-1.413 0l-1.251-1.25a1 1 0 1 1 1.414-1.415l.544.544 2.042-2.043a1 1 0 1 1 1.414 1.414z" />
+                                    <g>
+                                        <path
+                                            d="M25 32c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
+                                    </g>
+                                </svg>
+                                <p class="mb-0">{{ joinDate }}</p>
                             </li>
                         </ul>
                     </div>
@@ -112,7 +153,7 @@
                                     role="tab"
                                     aria-controls="pills-new"
                                     aria-selected="false">
-                                    Brand New
+                                    New
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -125,7 +166,7 @@
                                     role="tab"
                                     aria-controls="pills-used"
                                     aria-selected="false">
-                                    Pre-loved
+                                    Used
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -197,6 +238,26 @@
                                                         <h4 class="card-title">iPhone 11</h4>
                                                         <h6 class="text-primary mb-1 pb-3">Starting at $499</h6>
                                                     </div>
+                                                    <div class="d-flex flex-row">
+                                                        <button type="button" class="btn btn-primary flex-fill me-1">
+                                                            Edit
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-danger flex-fill ms-1">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
+                                            <div class="card text-black">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img2.webp"
+                                                    class="card-img-top" alt="iPhone" />
+                                                <div class="card-body">
+                                                    <div class="text-center mt-1">
+                                                        <h4 class="card-title">iPhone 11</h4>
+                                                        <h6 class="text-primary mb-1 pb-3">Starting at $499</h6>
+                                                    </div>
+
 
                                                     <div class="d-flex flex-row">
                                                         <button type="button" class="btn btn-primary flex-fill me-1">
@@ -220,6 +281,27 @@
                                                         <h4 class="card-title">iPhone 11 Pro</h4>
                                                         <h6 class="text-primary mb-1 pb-3">Starting at $599</h6>
                                                     </div>
+                                                    <div class="d-flex flex-row">
+                                                        <button type="button" class="btn btn-primary flex-fill me-1">
+                                                            Edit
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-danger flex-fill ms-1">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
+                                            <div class="card text-black">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img3.webp"
+                                                    class="card-img-top" alt="iPhone" />
+                                                <div class="card-body">
+                                                    <div class="text-center mt-1">
+                                                        <h4 class="card-title">iPhone 11 Pro</h4>
+                                                        <h6 class="text-primary mb-1 pb-3">Starting at $599</h6>
+                                                    </div>
+
+
 
                                                     <div class="d-flex flex-row">
                                                         <button type="button" class="btn btn-primary flex-fill me-1">
@@ -257,6 +339,32 @@
                             </div>
                         </div>
                     </div>
+                                                    <div class="d-flex flex-row">
+                                                        <button type="button" class="btn btn-primary flex-fill me-1">
+                                                            Edit
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-danger flex-fill ms-1">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">new
+                            </div>
+                            <div class="tab-pane fade" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
+                                te1st</div>
+                            <div class="tab-pane fade" id="pills-rental" role="tabpanel" aria-labelledby="pills-rental-tab">
+                                test</div>
+                            <div class="tab-pane fade" id="pills-campaign" role="tabpanel"
+                                aria-labelledby="pills-campaign-tab">...</div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
             <div class="container">
@@ -268,6 +376,11 @@
                 <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/add_product"
                     >Add Product</a
                 >
+                <br>
+                <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/campaign">Create
+                    Campaign</a>
+                <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add
+                    Product</a>
             </div>
         </div>
     </div>
@@ -275,7 +388,8 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { auth } from "../firebase/init.js";
 import router from "../router";
 const db = getFirestore();
 
@@ -303,25 +417,85 @@ export default {
                 postcode: "",
                 blockNumber: "",
                 contactno: "",
+                rating: "",
+                joindate: null, // Initialize joindate as null
+                campaignsCount: 0, // Add a property to store the campaign count
+                documentID: "",
             },
         };
     },
-
+    // sLMohi7AUYxO8Xw45FRh
     created() {
         const q = query(collection(db, "users"), where("uid", "==", this.user.uid));
+        const userDocRef = collection(db, "users");
+        // by right suppose to be this.user.id
 
+        // bok yan i modify the doc name as it clashes with the function
         getDocs(q).then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                this.user.name = doc.data().name;
-                this.user.email = doc.data().email;
-                this.user.userType = doc.data().userType;
-                this.user.address = doc.data().address;
-                this.user.postcode = doc.data().postcode;
-                this.user.blockNumber = doc.data().blockNumber;
-                this.user.contactno = doc.data().contactno;
-                this.user.rating = doc.data().rating;
+            querySnapshot.forEach((user_details) => {
+                console.log(user_details.id);
+                this.user.documentID = user_details.id;
+                this.user.name = user_details.data().name;
+                this.user.email = user_details.data().email;
+                this.user.userType = user_details.data().userType;
+                this.user.address = user_details.data().address;
+                this.user.postcode = user_details.data().postcode;
+                this.user.blockNumber = user_details.data().blockNumber;
+                this.user.contactno = user_details.data().contactno;
+                this.user.rating = user_details.data().rating;
+                this.user.joindate = user_details.data().joindate.toDate();
+                console.log(this.user.documentID);
+                // Retrieval of campaigns
+                const uidRef = doc(userDocRef, this.user.documentID, "campaigns", "campaign");
+                getDoc(uidRef)
+                    .then((docSnapshot) => {
+                        if (docSnapshot.exists()) {
+                            const campaignData = docSnapshot.data();
+                            this.user.campaignsCount = campaignData.listOfCampaign.length;
+                            console.log(campaignData.listOfCampaign.length);
+                            console.log(this.user.uid);
+                        } else {
+                            // The document with the specified reference does not exist.
+                            // Handle the case when the document doesn't exist.
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error getting document:", error);
+                    });
             });
         });
+    },
+    computed: {
+        // To display stars
+        rating() {
+            let x = "⭐";
+            return x.repeat(Number(this.user.rating));
+        },
+        // Calculate join date
+        joinDate() {
+            const currentDate = new Date();
+            const timestamp = new Date(this.user.joindate);
+            const timeDifference = currentDate - timestamp;
+
+            const secondsDifference = timeDifference / 1000;
+            const monthsDifference = secondsDifference / (60 * 60 * 24 * 30.44);
+
+            const years = Math.floor(monthsDifference / 12);
+            const months = Math.floor(monthsDifference % 12);
+            let str_m = "";
+            let str_y = "";
+            if (years > 0) {
+                str_y = `${years} Years `;
+            }
+            if (months > 0) {
+                str_m = `${months} Month `;
+            }
+            let gotAnd = "";
+            if (months > 0 && years > 0) {
+                gotAnd = "& ";
+            }
+            return `Joined: ${str_y}${gotAnd}${str_m}Ago`;
+        },
     },
 };
 </script>
