@@ -77,7 +77,8 @@
                     <!-- 
                         Tabs for businesses products, campaigns
                      -->
-                    <div v-if="user.userType == 'business'">
+                    <div>
+                    <!-- <div v-if="user.userType == 'business'"> -->
                         <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
