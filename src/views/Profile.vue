@@ -79,31 +79,31 @@
                      -->
                     <div>
                     <!-- <div v-if="user.userType == 'business'"> -->
-                        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills nav-justified navbar-dark bg-success" id="pills-tab" role="tablist" style="border-radius: 5px;">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">All Products</button>
+                                    aria-selected="true" style="color: white;">All Products</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-new-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
-                                    aria-selected="false">New</button>
+                                    aria-selected="false" style="color: white;">New</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-used-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-used" type="button" role="tab" aria-controls="pills-used"
-                                    aria-selected="false">Used</button>
+                                    aria-selected="false" style="color: white;">Used</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-rental-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-rental" type="button" role="tab" aria-controls="pills-rental"
-                                    aria-selected="false">Rental</button>
+                                    aria-selected="false" style="color: white;">Rental</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-campaign-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-campaign" type="button" role="tab" aria-controls="pills-campaign"
-                                    aria-selected="false">Campaign</button>
+                                    aria-selected="false" style="color: white;">Campaign</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
