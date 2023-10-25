@@ -1,7 +1,9 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Fashain</a>
+            <a class="navbar-brand m-0 p-0" href="/"
+                ><img src="../assets/icon.png" style="width: 30px; height: 30px"
+            /></a>
             <ul class="navbar-nav">
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
