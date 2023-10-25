@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import SignupForm from "../views/SignupForm.vue";
 import LoginForm from "../views/LoginForm.vue";
 import Home from "../views/Home.vue";
+import Questionaire from "../views/Questionaire.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -44,6 +45,11 @@ const router = createRouter({
             path: "/add_product",
             name: "Add Product",
             component: () => import("../views/AddProductForm.vue"),
+        },
+        {
+            path: "/Questionaire",
+            name: "Questionaire",
+            component: Questionaire,
         },
     ],
 });
