@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container-fluid">
             <a class="navbar-brand m-0 p-0" href="/"
-                ><img src="../assets/icon.png" style="width: 30px; height: 30px"
+                ><img src="../assets/fashainIcon.png" style="width: 40px; height: 40px"
             /></a>
             <ul class="navbar-nav">
                 <form class="d-flex">
