@@ -6,19 +6,10 @@
             <div class="col-4">
                 <div class="card text-center mb-3">
                     <div class="card-body">
-                        <div
-                            class="p-2 p-12 bg-gray-100 border border-gray-300"
-                            @dragover="dragover"
-                            @dragleave="dragleave"
+                        <div class="p-2 p-12 bg-gray-100 border border-gray-300" @dragover="dragover" @dragleave="dragleave"
                             @drop="drop">
-                            <input
-                                type="file"
-                                multiple
-                                name="fields[assetsFieldHandle][]"
-                                id="assetsFieldHandle"
-                                class="w-px h-px opacity-0 overflow-hidden absolute"
-                                @change="onChangeImage"
-                                ref="file"
+                            <input type="file" multiple name="fields[assetsFieldHandle][]" id="assetsFieldHandle"
+                                class="w-px h-px opacity-0 overflow-hidden absolute" @change="onChangeImage" ref="file"
                                 accept=".pdf,.jpg,.jpeg,.png" />
 
                             <label for="assetsFieldHandle" class="block cursor-pointer">
@@ -27,16 +18,11 @@
                                     <p>or drag photos here</p>
                                 </div>
                             </label>
-                            <ul
-                                class="mt-4 list-group m-2 row list-group-horizontal"
-                                v-if="this.filelist.length"
-                                v-cloak>
+                            <ul class="mt-4 list-group m-2 row list-group-horizontal" v-if="this.filelist.length" v-cloak>
                                 <li class="text-sm p-1 col-3 list-group-item" v-for="url in urlList" :key="url">
                                     <img class="img-thumbnail" v-if="url" :src="url" /><button
-                                        class="ml-2 btn btn-sm btn-danger"
-                                        type="button"
-                                        @click="remove(urlList.indexOf(url))"
-                                        title="Remove file">
+                                        class="ml-2 btn btn-sm btn-danger" type="button"
+                                        @click="remove(urlList.indexOf(url))" title="Remove file">
                                         remove
                                     </button>
                                 </li>
@@ -49,9 +35,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title mb-3">Category</h5>
-                        <select
-                            class="form-select form-select-md m-0"
-                            v-model="product.category"
+                        <select class="form-select form-select-md m-0" v-model="product.category"
                             aria-label=".form-select-lg example">
                             <option hidden selected disabled>Choose clothing type</option>
 
@@ -76,33 +60,15 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Type</h5>
                         <div class="d-flex">
-                            <input
-                                type="radio"
-                                class="btn-check"
-                                name="type"
-                                v-model="product.type"
-                                value="New"
-                                id="new"
+                            <input type="radio" class="btn-check" name="type" v-model="product.type" value="New" id="new"
                                 autocomplete="off" />
                             <label class="btn btn-outline-success me-2" for="new">New</label>
 
-                            <input
-                                type="radio"
-                                class="btn-check"
-                                name="type"
-                                value="Used"
-                                v-model="product.type"
-                                id="used"
+                            <input type="radio" class="btn-check" name="type" value="Used" v-model="product.type" id="used"
                                 autocomplete="off" />
                             <label class="btn btn-outline-success me-2" for="used">Used</label>
-                            <input
-                                type="radio"
-                                class="btn-check"
-                                name="type"
-                                value="Rental"
-                                v-model="product.type"
-                                id="rental"
-                                autocomplete="off" />
+                            <input type="radio" class="btn-check" name="type" value="Rental" v-model="product.type"
+                                id="rental" autocomplete="off" />
                             <label class="btn btn-outline-success" for="rental">Rental</label>
                         </div>
                     </div>
@@ -113,8 +79,9 @@
                         <div class="d-flex">
                             <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">XS</button>
                             <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">S</button>
-                            <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">M</button
-                            ><button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">L</button>
+                            <button type="button" @click="onChangeSize"
+                                class="me-1 btn btn-outline-success">M</button><button type="button" @click="onChangeSize"
+                                class="me-1 btn btn-outline-success">L</button>
                             <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">XL</button>
                         </div>
                     </div>
@@ -124,9 +91,7 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Quantity</h5>
                         <div class="row m-0">
-                            <div
-                                class="form-floating col-12 col-sm-4 col-md-3 col-lg-2 ps-0 me-2"
-                                v-for="size in sizeList"
+                            <div class="form-floating col-12 col-sm-4 col-md-3 col-lg-2 ps-0 me-2" v-for="size in sizeList"
                                 :key="size">
                                 <input type="number" class="form-control" :id="size" placeholder="" />
                                 <label :for="size">{{ size }}</label>
@@ -138,20 +103,11 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Details</h5>
                         <div class="form-floating mb-3">
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="name"
-                                placeholder="Name"
-                                v-model="product.name" />
+                            <input type="text" class="form-control" id="name" placeholder="Name" v-model="product.name" />
                             <label for="name">Name</label>
                         </div>
                         <div class="form-floating">
-                            <textarea
-                                class="form-control"
-                                id="description"
-                                style="height: 100px"
-                                placeholder="Description"
+                            <textarea class="form-control" id="description" style="height: 100px" placeholder="Description"
                                 v-model="product.description"></textarea>
                             <label for="description">Description</label>
                         </div>
@@ -161,11 +117,7 @@
                     <div class="card-body">
                         <div class="input-group">
                             <div class="input-group-text">S$</div>
-                            <input
-                                type="number"
-                                class="form-control"
-                                id="price"
-                                placeholder="Price"
+                            <input type="number" class="form-control" id="price" placeholder="Price"
                                 v-model="product.price" />
                         </div>
                     </div>
@@ -179,7 +131,7 @@
 import { FirebaseError } from "firebase/app";
 import NavBar from "../components/NavBar.vue";
 import { addDoc, collection, query, getFirestore, onSnapshot, updateDoc, doc, deleteDoc } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import router from "../router";
 // Create a root reference
 const storage = getStorage();
@@ -191,8 +143,9 @@ export default {
     delimiters: ["${", "}"], // Avoid Twig conflicts
     data() {
         return {
-            filelist: [],
-            urlList: [],
+            filelist: [], //Store file information
+            urlList: [], //Stores image direct url for displaying
+            imageToDelList: [], //Stores imagename+ext to be used for deleting
             sizeList: [],
             uploadValue: 0,
             product: {
@@ -205,6 +158,10 @@ export default {
                 type: "",
                 uid: localStorage.getItem("user_uid"),
             },
+            image: {
+                imageName: "",
+                imageExt: "",
+            },
         }; // Store our uploaded files
     },
     methods: {
@@ -213,15 +170,70 @@ export default {
             console.log(this.$refs.file.files[0]);
             var file = this.$refs.file.files[0];
             this.filelist.push(file);
+            this.imageExt = file.name.split(".").pop();
+            this.imageName = file.name.split(".").shift();
+
             console.log(this.filelist);
             // Create a URL for each file
-            this.urlList.push(URL.createObjectURL(file));
+            this.uploadImageAndReturnURL(file);
         },
+
+        /**
+         * Uploads an image and returns its URL.
+         *
+         * @param {Object} img - The image to be uploaded.
+         * @return {Promise} A promise that resolves with the URL of the uploaded image.
+         */
+        async uploadImageAndReturnURL(img) {
+            const storage = getStorage();
+            const storageRef = ref(storage, 'folder/products/' + this.imageName + '.' + this.imageExt);
+            await uploadBytes(storageRef, img).then((snapshot) => {
+                console.log('Image uploaded');
+            }).catch((error) => {
+                console.log(error);
+            }),
+                await getDownloadURL(storageRef).then((url) => {
+                    let imageUrl = this.imageName + "." + this.imageExt;
+                    this.urlList.push(url);
+                    this.imageToDelList.push(imageUrl);
+                    console.log(this.urlList);
+                })
+        },
+
+        /**
+         * Removes an element from the filelist and urlList arrays at the specified index.
+         *
+         * @param {number} i - The index of the element to be removed.
+         * @return {void} This function does not return anything.
+         */
         remove(i) {
             this.filelist.splice(i, 1);
             this.urlList.splice(i, 1);
+
+            let toBeDelImage = this.imageToDelList.splice(i, 1);
+            console.log(toBeDelImage);
+            this.deleteImage(toBeDelImage);
+
             console.log(this.filelist, this.urlList, i);
         },
+
+        /**
+         * Deletes an image from storage.
+         *
+         * @param {string} deleteImage - The name of the image to be deleted.
+         * @return {Promise} A promise that resolves when the image is deleted.
+         */
+        deleteImage(deleteImage) {
+            const storage = getStorage();
+            const storageRef = ref(storage, 'folder/products/' + deleteImage);
+
+            deleteObject(storageRef).then(() => {
+                console.log('Image deleted');
+            }).catch((error) => {
+                console.log(error);
+            })
+        },
+
         dragover(event) {
             event.preventDefault();
             // Add some visual fluff to show the user can drop its files
@@ -235,6 +247,12 @@ export default {
             event.currentTarget.classList.add("bg-gray-100");
             event.currentTarget.classList.remove("bg-green-300");
         },
+        /**
+         * Handles the drop event.
+         *
+         * @param {Event} event - The drop event object.
+         * @return {void}
+         */
         drop(event) {
             event.preventDefault();
             this.$refs.file.files = event.dataTransfer.files;
