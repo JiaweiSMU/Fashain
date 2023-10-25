@@ -1,44 +1,157 @@
 <template>
     <NavBar />
-    <div class="container mt-5">
+    <div class="container">
         <div class="row">
             <div class="col-3">
                 <Sidebar />
             </div>
             <div class="col-9">
-                <div class="row" style="height: 450px">
+                <ul class="nav nav-pills nav-justified sticky-top mt-5 bg-success" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link text-light"
+                            id="pills-new-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-new"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-new"
+                            aria-selected="true">
+                            Brand New
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link text-light"
+                            id="pills-used-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-used"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-used"
+                            aria-selected="false">
+                            Pre-loved
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link text-light"
+                            id="pills-rental-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-rental"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-rental"
+                            aria-selected="false">
+                            Rental
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
                     <div
-                        class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
-                        v-for="product in this.products"
-                        :key="product">
-                        <div class="card h-100">
-                            <div
-                                class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-                                data-mdb-ripple-color="light">
-                                <img :src="product.image" class="w-100" />
-                                <a href="#!">
-                                    <div class="mask">
-                                        <div class="d-flex justify-content-start align-items-end h-100">
-                                            <h5>
-                                                <span class="badge bg-dark ms-2">{{ product.category }}</span>
-                                            </h5>
+                        class="tab-pane fade show active"
+                        id="pills-new"
+                        role="tabpanel"
+                        aria-labelledby="pills-new-tab">
+                        <div class="container py-5">
+                            <div class="row" style="height: 450px">
+                                <div
+                                    class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
+                                    v-for="product in this.products"
+                                    :key="product">
+                                    <div class="card h-100" v-if="product.type == 'New'">
+                                        <div
+                                            class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                                            data-mdb-ripple-color="light">
+                                            <img :src="product.image" class="w-100" />
+                                            <a href="#!">
+                                                <div class="mask">
+                                                    <div class="d-flex justify-content-start align-items-end h-100">
+                                                        <h5>
+                                                            <span class="badge bg-dark ms-2">{{
+                                                                product.category
+                                                            }}</span>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="hover-overlay">
+                                                    <div
+                                                        class="mask"
+                                                        style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="" class="text-reset">
+                                                <h5 class="card-title mb-2">{{ product.name }}</h5>
+                                            </a>
+                                            <a href="" class="text-reset">
+                                                <p>Shirt</p>
+                                            </a>
+                                            <h6 class="mb-3 price">${{ product.price }}</h6>
                                         </div>
                                     </div>
-                                    <div class="hover-overlay">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <a href="" class="text-reset">
-                                    <h5 class="card-title mb-2">{{ product.name }}</h5>
-                                </a>
-                                <a href="" class="text-reset">
-                                    <p>Shirt</p>
-                                </a>
-                                <h6 class="mb-3 price">${{ product.price }}</h6>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <div
+                        class="tab-pane fade show active"
+                        id="pills-used"
+                        role="tabpanel"
+                        aria-labelledby="pills-used-tab">
+                        <div class="container py-5">
+                            <div class="row" style="height: 450px">
+                                <div
+                                    class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
+                                    v-for="product in this.products"
+                                    :key="product">
+                                    <div class="card h-100" v-if="product.type == 'Pre-loved'">
+                                        <div
+                                            class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                                            data-mdb-ripple-color="light">
+                                            <img :src="product.image" class="w-100" />
+                                            <a href="#!">
+                                                <div class="mask">
+                                                    <div class="d-flex justify-content-start align-items-end h-100">
+                                                        <h5>
+                                                            <span class="badge bg-dark ms-2">{{
+                                                                product.category
+                                                            }}</span>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="hover-overlay">
+                                                    <div
+                                                        class="mask"
+                                                        style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="" class="text-reset">
+                                                <h5 class="card-title mb-2">{{ product.name }}</h5>
+                                            </a>
+                                            <a href="" class="text-reset">
+                                                <p>Shirt</p>
+                                            </a>
+                                            <h6 class="mb-3 price">${{ product.price }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <div
+                        class="tab-pane fade show active"
+                        id="pills-rental"
+                        role="tabpanel"
+                        aria-labelledby="pills-rental-tab">
+                        <div class="container py-5"></div>
                     </div>
                 </div>
             </div>
