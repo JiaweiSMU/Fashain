@@ -14,7 +14,8 @@
                                 <div class="form-group mb-3">
                                     <label for="recycledMaterials">Are your products made from recycled or upcycled materials?</label>
                                     <select class="form-control" id="recycledMaterials" name="recycledMaterials" v-model="form.recycledMaterials">
-                                        <option value="yes" selected>Yes</option>
+                                        <option value="Select an Option" disabled selected hidden>--Select an Option--</option>
+                                        <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
                                 </div>
@@ -22,7 +23,8 @@
                                 <div class="form-group">
                                     <label for="organicMaterials">Do you use organic, non-toxic, and/or renewable materials?</label>
                                     <select class="form-control" id="organicMaterials" name="organicMaterials" v-model="form.organicMaterials">
-                                        <option value="yes" selected>Yes</option>
+                                        <option value="Select an Option" disabled selected hidden>--Select an Option--</option>
+                                        <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
                                 </div>
@@ -35,7 +37,8 @@
                                 <div class="form-group">
                                     <label for="ecoFriendlyProduction">Is your manufacturing process eco-friendly?</label>
                                     <select class="form-control" id="ecoFriendlyProduction" name="ecoFriendlyProduction" v-model="form.ecoFriendlyProduction">
-                                        <option value="yes" selected>Yes</option>
+                                        <option value="Select an Option" disabled selected hidden>--Select an Option--</option>
+                                        <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
                                 </div>
@@ -49,6 +52,7 @@
                                 <div class="form-group">
                                     <label for="fairLaborPractices">Do you have fair labor practices?</label>
                                     <select class="form-control" id="fairLaborPractices" name="fairLaborPractices" v-model="form.fairLaborPractices">
+                                        <option value="Select an Option" disabled selected hidden>--Select an Option--</option>
                                         <option value="yes" selected>Yes</option>
                                         <option value="no">No</option>
                                     </select>
@@ -62,7 +66,11 @@
                                 <div class="form-group">
                                     <label for="ecoFriendlyPackaging">Do you use eco-friendly packaging?</label>
                                     <select class="form-control" id="ecoFriendlyPackaging" name="ecoFriendlyPackaging" v-model="form.ecoFriendlyPackaging">
+<<<<<<< HEAD
                                         <option value="" disabled selected hidden>---Select an option---</option>
+=======
+                                        <option value="Select an Option" disabled selected hidden>--Select an Option--</option>
+>>>>>>> e047b711cc9271116af997bf6827a643b92188c8
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
@@ -76,7 +84,8 @@
                                 <div class="form-group">
                                     <label for="sustainabilityPolicy">Do you have a formal sustainability policy?</label>
                                     <select class="form-control" id="sustainabilityPolicy" name="sustainabilityPolicy" v-model="form.sustainabilityPolicy">
-                                        <option value="yes" selected>Yes</option>
+                                        <option value="Select an Option" disabled selected hidden>--Select an Option---</option>
+                                        <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
                                 </div>
@@ -84,9 +93,10 @@
                                 <div class="form-group">
                                     <label for="sustainabilityCommitmentRating">How would you rate your company's commitment to sustainability on a scale of 1 to 5?</label>
                                     <select class="form-control" id="sustainabilityCommitmentRating" name="sustainabilityCommitmentRating" v-model="form.sustainabilityCommitmentRating">
+                                        <option value="Select an Option" disabled selected hidden>--Select an Option--</option>
                                         <option value="1">1 (Lowest Commitment)</option>
                                         <option value="2">2</option>
-                                        <option value="3" selected>3</option>
+                                        <option value="3">3</option>
                                         <option value="4">4</option>
                                         <option value="5">5 (Highest Commitment)</option>
                                     </select>
@@ -128,6 +138,7 @@ export default {
     data() {
         return {
             form: {
+<<<<<<< HEAD
                 recycledMaterials: 'yes',
                 organicMaterials: 'yes',
                 ecoFriendlyProduction: 'yes',
@@ -135,6 +146,15 @@ export default {
                 ecoFriendlyPackaging: '',
                 sustainabilityPolicy: 'yes',
                 sustainabilityCommitmentRating: '3'
+=======
+                recycledMaterials: 'Select an Option',
+                organicMaterials: 'Select an Option',
+                ecoFriendlyProduction: 'Select an Option',
+                fairLaborPractices: 'Select an Option',
+                ecoFriendlyPackaging: 'Select an Option',
+                sustainabilityPolicy: 'Select an Option',
+                sustainabilityCommitmentRating: 'Select an Option'
+>>>>>>> e047b711cc9271116af997bf6827a643b92188c8
             },
 
             sustainabilityRating: '',
@@ -163,32 +183,32 @@ export default {
 
                 if (score > 33) {
                     message = 'Your Sustainability Rating is 5⭐'
-                    carried = '⭐⭐⭐⭐⭐';
+                    carried = 5;
                 }
 
                 else if (score > 29 && score <= 33) {
                     message = 'Your Sustainability Rating is 4⭐'
-                    carried = '⭐⭐⭐⭐';
+                    carried = 4;
                 }
 
                 else if (score > 24 && score <= 29) {
                     message = 'Your Sustainability Rating is 3⭐'
-                    carried = '⭐⭐⭐';
+                    carried = 3;
                 }
 
                 else if (score > 19 && score <= 24) {
                     message = 'Your Sustainability Rating is 2⭐'
-                    carried = '⭐⭐';
+                    carried = 2;
                 }
 
                 else if (score > 17 && score <= 19) {
                     message = 'Your Sustainability Rating is 1⭐'
-                    carried = '⭐';
+                    carried = 1;
                 }
 
                 else {
                     message = 'Consider reviewing your policies and exploring more eco-friendly options. Every step towards sustainability makes a difference!'
-                    carried = '';
+                    carried = 0;
                 }
 
                 console.log(carried);
