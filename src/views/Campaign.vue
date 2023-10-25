@@ -153,7 +153,7 @@ export default {
                 campaignImage: this.image.url,
             };
             const uidRef = doc(userDbRef, auth.currentUser.uid);
-            await setDoc(uidRef, { listOfCampaign: arrayUnion(data) }, {merge : true} )
+            await setDoc(uidRef, { listOfCampaign: arrayUnion(data) }, { merge: true })
 
 
             // try {
