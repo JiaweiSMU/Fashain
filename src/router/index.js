@@ -3,6 +3,7 @@ import SignupForm from "../views/SignupForm.vue";
 import LoginForm from "../views/LoginForm.vue";
 import Home from "../views/Home.vue";
 import Questionaire from "../views/Questionaire.vue";
+import Map from "../views/Map.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -55,6 +56,11 @@ const router = createRouter({
             path: "/Questionaire",
             name: "Questionaire",
             component: Questionaire,
+        },
+        {
+            path: "/Map",
+            name: "Map",
+            component: Map,
         },
     ],
 });
