@@ -63,7 +63,7 @@
                             <div
                                 class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
                                 data-mdb-ripple-color="light">
-                                <img :src="product.image" class="w-100" />
+                                <img :src="product.images[0]" class="w-100" />
                                 <a href="#!">
                                     <div class="mask">
                                         <div class="d-flex justify-content-start align-items-end h-100">
