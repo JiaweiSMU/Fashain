@@ -32,7 +32,7 @@
                                 v-if="this.filelist.length"
                                 v-cloak>
                                 <li
-                                    class="text-sm p-1 col-12 col-md-6 col-lg-4 col-xl-3 list-group-item"
+                                    class="text-sm p-1 col-12 col-sm-6 col-md-4 col-lg-3 list-group-item"
                                     v-for="url in urlList"
                                     :key="url">
                                     <img class="img-thumbnail" v-if="url" :src="url" /><button
@@ -40,7 +40,18 @@
                                         type="button"
                                         @click="remove(urlList.indexOf(url))"
                                         title="Remove file">
-                                        remove
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="currentColor"
+                                            class="bi bi-trash"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                            <path
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                        </svg>
                                     </button>
                                 </li>
                             </ul>
@@ -53,6 +64,7 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Category</h5>
                         <select
+                            required
                             class="form-select form-select-md m-0"
                             v-model="product.category"
                             aria-label=".form-select-lg example">
@@ -127,7 +139,7 @@
                                 class="form-floating col-12 col-sm-4 col-md-3 col-lg-2 ps-0 me-2"
                                 v-for="size in sizeList"
                                 :key="size">
-                                <input type="number" class="form-control" :id="size" placeholder="" />
+                                <input type="number" class="form-control" required :id="size" placeholder="" />
                                 <label :for="size">{{ size }}</label>
                             </div>
                         </div>
@@ -141,6 +153,7 @@
                                 type="text"
                                 class="form-control"
                                 id="name"
+                                required
                                 placeholder="Name"
                                 v-model="product.name" />
                             <label for="name">Name</label>
@@ -149,6 +162,7 @@
                             <textarea
                                 class="form-control"
                                 id="description"
+                                required
                                 style="height: 100px"
                                 placeholder="Description"
                                 v-model="product.description"></textarea>
@@ -163,6 +177,7 @@
                             <input
                                 type="number"
                                 class="form-control"
+                                required
                                 id="price"
                                 placeholder="Price"
                                 v-model="product.price" />
@@ -176,23 +191,25 @@
 </template>
 <script>
 import NavBar from "../components/NavBar.vue";
-import { addDoc, collection, query, getFirestore } from "firebase/firestore";
-import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { setDoc, query, getFirestore, onSnapshot, updateDoc, doc, deleteDoc, arrayUnion } from "firebase/firestore";
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import router from "../router";
+import { toRaw } from "vue";
 // Create a root reference
 const storage = getStorage();
 
 const db = getFirestore();
-const q = query(collection(db, "products"));
 
 export default {
     delimiters: ["${", "}"], // Avoid Twig conflicts
     data() {
         return {
-            filelist: [],
-            urlList: [],
+            filelist: [], //Store file information
+            urlList: [], //Stores image direct url for displaying
             sizeList: [],
             uploadValue: 0,
+            // set a new unique id for every form
+            unique_id: Math.random().toString(36).substr(2, 9),
             product: {
                 name: "",
                 price: 0,
@@ -211,14 +228,33 @@ export default {
             console.log(this.$refs.file.files[0]);
             var file = this.$refs.file.files[0];
             this.filelist.push(file);
-            console.log(this.filelist);
-            // Create a URL for each file
-            this.urlList.push(URL.createObjectURL(file));
+            this.uploadImageAndReturnURL(file);
         },
+
+        /**
+         * Removes an element from the filelist and urlList arrays at the specified index.
+         *
+         * @param {number} i - The index of the element to be removed.
+         * @return {void} This function does not return anything.
+         */
         remove(i) {
-            this.filelist.splice(i, 1);
+            let file = this.filelist.splice(i, 1);
+
             this.urlList.splice(i, 1);
-            console.log(this.filelist, this.urlList, i);
+            this.deleteImage(file);
+        },
+        deleteImage(deleteImage) {
+            const path = `folder/products/${this.unique_id}/${deleteImage[0].name}`;
+            console.log(path);
+            const storageRef = ref(storage, path);
+
+            deleteObject(storageRef)
+                .then(() => {
+                    console.log("Image deleted");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
         dragover(event) {
             event.preventDefault();
@@ -233,6 +269,12 @@ export default {
             event.currentTarget.classList.add("bg-gray-100");
             event.currentTarget.classList.remove("bg-green-300");
         },
+        /**
+         * Handles the drop event.
+         *
+         * @param {Event} event - The drop event object.
+         * @return {void}
+         */
         drop(event) {
             event.preventDefault();
             this.$refs.file.files = event.dataTransfer.files;
@@ -259,36 +301,36 @@ export default {
             } else {
                 this.sizeList.push(e.target.textContent);
             }
-            console.log(this.sizeList);
         },
 
+        async uploadImageAndReturnURL(file) {
+            const storage = getStorage();
+            const path = `folder/products/${this.unique_id}/${file.name}`;
+            const storageRef = ref(storage, path);
+            console.log(path);
+            await uploadBytes(storageRef, file)
+                .then((snapshot) => {
+                    console.log("Image uploaded");
+                })
+                .catch((error) => {
+                    console.log(error);
+                }),
+                await getDownloadURL(storageRef).then((url) => {
+                    this.urlList.push(url);
+                    console.log(url);
+                });
+        },
         // Submit
-        addProduct() {
+        async addProduct() {
+            const productRef = doc(db, "products", this.product.name);
             this.sizeList.forEach((size) => {
                 var e = document.getElementById(size);
                 this.product.quantity[size] = e.value;
             });
-
-            this.filelist.forEach((file) => {
-                const path = `folder/products/${this.product.name}/${file.name}`;
-                const storageRef = ref(storage, path);
-
-                const uploadTask = uploadBytesResumable(storageRef, file);
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        this.uploadValue = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    },
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-                this.product.images.push(path);
-            });
-            console.log(this.product);
-            addDoc(q, this.product).then(() => {
+            this.product.images = this.urlList;
+            console.log(this.product.images);
+            await setDoc(productRef, this.product).then(() => {
                 console.log("Document successfully written!");
-                router.push("/");
             });
         },
     },
