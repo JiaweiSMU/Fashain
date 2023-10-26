@@ -6,10 +6,19 @@
             <div class="col-4">
                 <div class="card text-center mb-3">
                     <div class="card-body">
-                        <div class="p-2 p-12 bg-gray-100 border border-gray-300" @dragover="dragover" @dragleave="dragleave"
+                        <div
+                            class="p-2 p-12 bg-gray-100 border border-gray-300"
+                            @dragover="dragover"
+                            @dragleave="dragleave"
                             @drop="drop">
-                            <input type="file" multiple name="fields[assetsFieldHandle][]" id="assetsFieldHandle"
-                                class="w-px h-px opacity-0 overflow-hidden absolute" @change="onChangeImage" ref="file"
+                            <input
+                                type="file"
+                                multiple
+                                name="fields[assetsFieldHandle][]"
+                                id="assetsFieldHandle"
+                                class="w-px h-px opacity-0 overflow-hidden absolute"
+                                @change="onChangeImage"
+                                ref="file"
                                 accept=".pdf,.jpg,.jpeg,.png" />
 
                             <label for="assetsFieldHandle" class="block cursor-pointer">
@@ -18,12 +27,31 @@
                                     <p>or drag photos here</p>
                                 </div>
                             </label>
-                            <ul class="mt-4 list-group m-2 row list-group-horizontal" v-if="this.filelist.length" v-cloak>
-                                <li class="text-sm p-1 col-3 list-group-item" v-for="url in urlList" :key="url">
+                            <ul
+                                class="mt-4 list-group m-2 row list-group-horizontal"
+                                v-if="this.filelist.length"
+                                v-cloak>
+                                <li
+                                    class="text-sm p-1 col-12 col-sm-6 col-md-4 col-lg-3 list-group-item"
+                                    v-for="url in urlList"
+                                    :key="url">
                                     <img class="img-thumbnail" v-if="url" :src="url" /><button
-                                        class="ml-2 btn btn-sm btn-danger" type="button"
-                                        @click="remove(urlList.indexOf(url))" title="Remove file">
-                                        remove
+                                        class="ml-2 btn btn-sm btn-danger"
+                                        type="button"
+                                        @click="remove(urlList.indexOf(url))"
+                                        title="Remove file">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="currentColor"
+                                            class="bi bi-trash"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                            <path
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                        </svg>
                                     </button>
                                 </li>
                             </ul>
@@ -35,7 +63,10 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title mb-3">Category</h5>
-                        <select class="form-select form-select-md m-0" v-model="product.category"
+                        <select
+                            required
+                            class="form-select form-select-md m-0"
+                            v-model="product.category"
                             aria-label=".form-select-lg example">
                             <option hidden selected disabled>Choose clothing type</option>
 
@@ -60,15 +91,33 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Type</h5>
                         <div class="d-flex">
-                            <input type="radio" class="btn-check" name="type" v-model="product.type" value="New" id="new"
+                            <input
+                                type="radio"
+                                class="btn-check"
+                                name="type"
+                                v-model="product.type"
+                                value="New"
+                                id="new"
                                 autocomplete="off" />
                             <label class="btn btn-outline-success me-2" for="new">New</label>
 
-                            <input type="radio" class="btn-check" name="type" value="Used" v-model="product.type" id="used"
+                            <input
+                                type="radio"
+                                class="btn-check"
+                                name="type"
+                                value="Used"
+                                v-model="product.type"
+                                id="used"
                                 autocomplete="off" />
                             <label class="btn btn-outline-success me-2" for="used">Used</label>
-                            <input type="radio" class="btn-check" name="type" value="Rental" v-model="product.type"
-                                id="rental" autocomplete="off" />
+                            <input
+                                type="radio"
+                                class="btn-check"
+                                name="type"
+                                value="Rental"
+                                v-model="product.type"
+                                id="rental"
+                                autocomplete="off" />
                             <label class="btn btn-outline-success" for="rental">Rental</label>
                         </div>
                     </div>
@@ -79,9 +128,8 @@
                         <div class="d-flex">
                             <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">XS</button>
                             <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">S</button>
-                            <button type="button" @click="onChangeSize"
-                                class="me-1 btn btn-outline-success">M</button><button type="button" @click="onChangeSize"
-                                class="me-1 btn btn-outline-success">L</button>
+                            <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">M</button
+                            ><button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">L</button>
                             <button type="button" @click="onChangeSize" class="me-1 btn btn-outline-success">XL</button>
                         </div>
                     </div>
@@ -91,9 +139,11 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Quantity</h5>
                         <div class="row m-0">
-                            <div class="form-floating col-12 col-sm-4 col-md-3 col-lg-2 ps-0 me-2" v-for="size in sizeList"
+                            <div
+                                class="form-floating col-12 col-sm-4 col-md-3 col-lg-2 ps-0 me-2"
+                                v-for="size in sizeList"
                                 :key="size">
-                                <input type="number" class="form-control" :id="size" placeholder="" />
+                                <input type="number" class="form-control" required :id="size" placeholder="" />
                                 <label :for="size">{{ size }}</label>
                             </div>
                         </div>
@@ -103,11 +153,22 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Details</h5>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="name" placeholder="Name" v-model="product.name" />
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                required
+                                placeholder="Name"
+                                v-model="product.name" />
                             <label for="name">Name</label>
                         </div>
                         <div class="form-floating">
-                            <textarea class="form-control" id="description" style="height: 100px" placeholder="Description"
+                            <textarea
+                                class="form-control"
+                                id="description"
+                                required
+                                style="height: 100px"
+                                placeholder="Description"
                                 v-model="product.description"></textarea>
                             <label for="description">Description</label>
                         </div>
@@ -117,7 +178,12 @@
                     <div class="card-body">
                         <div class="input-group">
                             <div class="input-group-text">S$</div>
-                            <input type="number" class="form-control" id="price" placeholder="Price"
+                            <input
+                                type="number"
+                                class="form-control"
+                                required
+                                id="price"
+                                placeholder="Price"
                                 v-model="product.price" />
                         </div>
                     </div>
@@ -130,14 +196,14 @@
 <script>
 import { FirebaseError } from "firebase/app";
 import NavBar from "../components/NavBar.vue";
-import { addDoc, collection, query, getFirestore, onSnapshot, updateDoc, doc, deleteDoc } from "firebase/firestore";
-import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { setDoc, query, getFirestore, onSnapshot, updateDoc, doc, deleteDoc, arrayUnion } from "firebase/firestore";
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import router from "../router";
+import { toRaw } from "vue";
 // Create a root reference
 const storage = getStorage();
 
 const db = getFirestore();
-const q = query(collection(db, "products"));
 
 export default {
     delimiters: ["${", "}"], // Avoid Twig conflicts
@@ -145,9 +211,10 @@ export default {
         return {
             filelist: [], //Store file information
             urlList: [], //Stores image direct url for displaying
-            imageToDelList: [], //Stores imagename+ext to be used for deleting
             sizeList: [],
             uploadValue: 0,
+            // set a new unique id for every form
+            unique_id: Math.random().toString(36).substr(2, 9),
             product: {
                 name: "",
                 price: 0,
@@ -158,10 +225,6 @@ export default {
                 type: "",
                 uid: localStorage.getItem("user_uid"),
             },
-            image: {
-                imageName: "",
-                imageExt: "",
-            },
         }; // Store our uploaded files
     },
     methods: {
@@ -170,34 +233,7 @@ export default {
             console.log(this.$refs.file.files[0]);
             var file = this.$refs.file.files[0];
             this.filelist.push(file);
-            this.imageExt = file.name.split(".").pop();
-            this.imageName = file.name.split(".").shift();
-
-            console.log(this.filelist);
-            // Create a URL for each file
             this.uploadImageAndReturnURL(file);
-        },
-
-        /**
-         * Uploads an image and returns its URL.
-         *
-         * @param {Object} img - The image to be uploaded.
-         * @return {Promise} A promise that resolves with the URL of the uploaded image.
-         */
-        async uploadImageAndReturnURL(img) {
-            const storage = getStorage();
-            const storageRef = ref(storage, 'folder/products/' + this.imageName + '.' + this.imageExt);
-            await uploadBytes(storageRef, img).then((snapshot) => {
-                console.log('Image uploaded');
-            }).catch((error) => {
-                console.log(error);
-            }),
-                await getDownloadURL(storageRef).then((url) => {
-                    let imageUrl = this.imageName + "." + this.imageExt;
-                    this.urlList.push(url);
-                    this.imageToDelList.push(imageUrl);
-                    console.log(this.urlList);
-                })
         },
 
         /**
@@ -207,33 +243,24 @@ export default {
          * @return {void} This function does not return anything.
          */
         remove(i) {
-            this.filelist.splice(i, 1);
+            let file = this.filelist.splice(i, 1);
+
             this.urlList.splice(i, 1);
-
-            let toBeDelImage = this.imageToDelList.splice(i, 1);
-            console.log(toBeDelImage);
-            this.deleteImage(toBeDelImage);
-
-            console.log(this.filelist, this.urlList, i);
+            this.deleteImage(file);
         },
-
-        /**
-         * Deletes an image from storage.
-         *
-         * @param {string} deleteImage - The name of the image to be deleted.
-         * @return {Promise} A promise that resolves when the image is deleted.
-         */
         deleteImage(deleteImage) {
-            const storage = getStorage();
-            const storageRef = ref(storage, 'folder/products/' + deleteImage);
+            const path = `folder/products/${this.unique_id}/${deleteImage[0].name}`;
+            console.log(path);
+            const storageRef = ref(storage, path);
 
-            deleteObject(storageRef).then(() => {
-                console.log('Image deleted');
-            }).catch((error) => {
-                console.log(error);
-            })
+            deleteObject(storageRef)
+                .then(() => {
+                    console.log("Image deleted");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
-
         dragover(event) {
             event.preventDefault();
             // Add some visual fluff to show the user can drop its files
@@ -279,34 +306,35 @@ export default {
             } else {
                 this.sizeList.push(e.target.textContent);
             }
-            console.log(this.sizeList);
         },
 
+        async uploadImageAndReturnURL(file) {
+            const storage = getStorage();
+            const path = `folder/products/${this.unique_id}/${file.name}`;
+            const storageRef = ref(storage, path);
+            console.log(path);
+            await uploadBytes(storageRef, file)
+                .then((snapshot) => {
+                    console.log("Image uploaded");
+                })
+                .catch((error) => {
+                    console.log(error);
+                }),
+                await getDownloadURL(storageRef).then((url) => {
+                    this.urlList.push(url);
+                    console.log(url);
+                });
+        },
         // Submit
-        addProduct() {
+        async addProduct() {
+            const productRef = doc(db, "products", this.product.name);
             this.sizeList.forEach((size) => {
                 var e = document.getElementById(size);
                 this.product.quantity[size] = e.value;
             });
-
-            this.filelist.forEach((file) => {
-                const path = `folder/products/${file.name}`;
-                const storageRef = ref(storage, path);
-
-                const uploadTask = uploadBytesResumable(storageRef, file);
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-                        this.uploadValue = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    },
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-                this.product.images.push(path);
-            });
-            console.log(this.product);
-            addDoc(q, this.product).then(() => {
+            this.product.images = this.urlList;
+            console.log(this.product.images);
+            await setDoc(productRef, this.product).then(() => {
                 console.log("Document successfully written!");
                 router.push("/");
             });
