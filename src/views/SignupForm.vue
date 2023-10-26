@@ -131,7 +131,7 @@
 </template>
 
 <script>
-// import VueGoogleAutocomplete from "vue-google-autocomplete";
+import VueGoogleAutocomplete from "vue-google-autocomplete";
 import NavBar from "../components/NavBar.vue";
 import router from "../router";
 export default {
