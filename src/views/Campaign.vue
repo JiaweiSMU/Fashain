@@ -11,19 +11,15 @@
                     <!-- Campaign Name -->
                     <div class="formbold-input-flex">
                         <div>
-                            <label for="camName" class="formbold-form-label"> Campaign name </label>
-                            <input
-                                v-model="campaignName"
-                                type="text"
-                                name="campaignName"
-                                id="campaignName"
+                            <label for="camName" class="formbold-form-label">
+                                Campaign name
+                            </label>
+                            <input v-model="campaignName" type="text" name="campaignName" id="campaignName"
                                 class="formbold-form-input" />
-                            <label for="campaignAddress" class="formbold-form-label"> Campaign Address </label>
-                            <input
-                                v-model="campaignAddress"
-                                type="text"
-                                name="campaignAddress"
-                                id="campaignAddress"
+                            <label for="campaignAddress" class="formbold-form-label">
+                                Campaign Address
+                            </label>
+                            <input v-model="campaignAddress" type="text" name="campaignAddress" id="campaignAddress"
                                 class="formbold-form-input" />
                         </div>
                     </div>
@@ -32,32 +28,21 @@
                     <div class="formbold-input-flex">
                         <div>
                             <label for="dob" class="formbold-form-label"> Start Date </label>
-                            <input
-                                v-model="campaignStartDate"
-                                type="date"
-                                name="dob"
-                                id="dob"
+                            <input v-model="campaignStartDate" type="date" name="dob" id="dob"
                                 class="formbold-form-input" />
                         </div>
                         <div>
                             <label for="dob" class="formbold-form-label"> End Date </label>
-                            <input
-                                v-model="campaignEndDate"
-                                type="date"
-                                name="dob"
-                                id="dob"
-                                class="formbold-form-input" />
+                            <input v-model="campaignEndDate" type="date" name="dob" id="dob" class="formbold-form-input" />
                         </div>
                     </div>
 
                     <!-- Campaign Description -->
                     <div class="formbold-mb-3">
-                        <label for="message" class="formbold-form-label"> Campaign Description </label>
-                        <textarea
-                            v-model="campaignDesc"
-                            rows="6"
-                            name="message"
-                            id="message"
+                        <label for="message" class="formbold-form-label">
+                            Campaign Description
+                        </label>
+                        <textarea v-model="campaignDesc" rows="6" name="message" id="message"
                             class="formbold-form-input"></textarea>
                     </div>
 
@@ -65,11 +50,7 @@
                     <div class="formbold-input-file">
                         <div class="formbold-filename-wrapper">
                             <label for="upload" class="formbold-input-label">
-                                <svg
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 20 20"
-                                    fill="none"
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_1670_1531)">
                                         <path
@@ -83,13 +64,8 @@
                                     </defs>
                                 </svg>
                                 Attach files
-                                <input
-                                    type="file"
-                                    ref="fileInput"
-                                    accept="image/*"
-                                    name="upload"
-                                    id="upload"
-                                    @change="handleImageUpload($event)" />
+                                <input type="file" ref="fileInput" accept="image/*" name="upload" id="upload"
+                                    @change="handleImageUpload($event)">
                             </label>
                             <div v-if="imageError.length > 0">
                                 <div v-for="(error, index) in imageError" :key="index">
@@ -119,26 +95,10 @@
 <!-- https://blog.openreplay.com/building-a-custom-file-upload-component-for-vue/ -->
 <script>
 import NavBar from "../components/NavBar.vue";
-import {
-    doc,
-    onSnapshot,
-    updateDoc,
-    setDoc,
-    deleteDoc,
-    collection,
-    serverTimestamp,
-    getDocs,
-    query,
-    where,
-    orderBy,
-    limit,
-    CollectionReference,
-    arrayUnion,
-    Timestamp,
-} from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, setDoc, deleteDoc, collection, serverTimestamp, getDocs, query, where, orderBy, limit, CollectionReference, arrayUnion, Timestamp } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
-import db, { auth } from "../firebase/init.js";
-import storage from "../firebase/init.js";
+import db, { auth } from '../firebase/init.js';
+import storage from '../firebase/init.js';
 export default {
     components: { NavBar },
     name: "Campaign",
@@ -169,10 +129,10 @@ export default {
          */
         // https://www.youtube.com/watch?v=-yrnWnN0g9o&t=554s good example
         async submit() {
-            const userDbRef = collection(db, "campaigns");
+            const userDbRef = collection(db, 'campaigns');
             //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/ZOxhPvxo8odRRu3po7FZ/campaigns';
             this.listOfErrors = [];
-
+            console.log(localStorage.getItem('uid'));
             // if (this.checkDate() == true && this.checkEmpty() == true) {
             //     console.log("Do push to DB");
             // const data = {
@@ -183,17 +143,18 @@ export default {
             //     campaignDesc: this.campaignDesc,
             // };
 
-            console.log(typeof this.campaignStartDate);
+            console.log(typeof (this.campaignStartDate));
             let data = {
-                campaignName: "test",
-                campaignAddress: "dsadsacx",
-                campaignStartDate: new Date(10 / 10 / 2023).getTime(),
-                campaignEndDate: new Date(10 / 11 / 2023).getTime(),
-                campaignDesc: "tedsadsa",
+                campaignName: 'test',
+                campaignAddress: 'dsadsacx',
+                campaignStartDate: new Date(10/10/2023).getTime(),
+                campaignEndDate: new Date(10/11/2023).getTime(),
+                campaignDesc: 'tedsadsa',
                 campaignImage: this.image.url,
             };
             const uidRef = doc(userDbRef, auth.currentUser.uid);
-            await setDoc(uidRef, { listOfCampaign: arrayUnion(data) }, { merge: true });
+            await setDoc(uidRef, { listOfCampaign: arrayUnion(data) }, { merge: true })
+
 
             // try {
             //     console.log('hi');
@@ -207,6 +168,7 @@ export default {
             // }
             // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
             //let fUrl = 'https://firestore.googleapis.com/v1/projects/fashain/databases/(default)/documents/users/bfjimnRLI6GBpYwxlKMB';
+
 
             // }
             // else {
@@ -229,9 +191,14 @@ export default {
             //     listOfCampaign: arrayUnion(data)
             // });
 
+
+
             // https://www.codingbeautydev.com/blog/vue-prevent-form-submission
 
+
+
             // }
+
         },
 
         /**
@@ -247,7 +214,7 @@ export default {
                 return true;
             } else {
                 // console.log(false);
-                this.listOfErrors.push("Invalid date");
+                this.listOfErrors.push('Invalid date');
                 return false;
             }
         },
@@ -258,16 +225,11 @@ export default {
          * @return {boolean} Returns `true` if all fields are filled, `false` otherwise.
          */
         checkEmpty() {
-            if (
-                this.campaignName == "" ||
-                this.campaignAddress == "" ||
-                this.campaignStartDate == "" ||
-                this.campaignEndDate == "" ||
-                this.campaignDesc == ""
-            ) {
-                this.listOfErrors.push("There is one or more empty fields");
+            if (this.campaignName == "" || this.campaignAddress == "" || this.campaignStartDate == "" || this.campaignEndDate == "" || this.campaignDesc == "") {
+                this.listOfErrors.push('There is one or more empty fields');
                 return false;
-            } else {
+            }
+            else {
                 return true;
             }
         },
@@ -280,18 +242,16 @@ export default {
          */
         async uploadImageAndReturnURL(img) {
             const storage = getStorage();
-            const storageRef = ref(storage, "folder/campaign/" + this.imageName + "." + this.imageExt);
-            await uploadBytes(storageRef, img)
-                .then((snapshot) => {
-                    console.log("Image uploaded");
-                })
-                .catch((error) => {
-                    console.log(error);
-                }),
+            const storageRef = ref(storage, 'folder/campaign/' + this.imageName + '.' + this.imageExt);
+            await uploadBytes(storageRef, img).then((snapshot) => {
+                console.log('Image uploaded');
+            }).catch((error) => {
+                console.log(error);
+            }),
                 await getDownloadURL(storageRef).then((url) => {
                     this.image.url = url;
                     console.log(this.image.url);
-                });
+                })
         },
 
         /**
@@ -307,15 +267,17 @@ export default {
 
             if (image.target.files && image.target.files[0]) {
                 if (this.isImageValid(image.target.files[0])) {
-                    console.log("hello inside image is valid");
+                    console.log('hello inside image is valid');
                     const img = image.target.files[0];
                     this.imageExt = img.name.split(".").pop();
                     this.imageName = img.name.split(".").shift();
-                    this.isImage = ["png", "jpg", "jpeg"].includes(this.imageExt);
+                    this.isImage = ["png", "jpg", "jpeg"].includes(
+                        this.imageExt
+                    );
                     this.uploadImageAndReturnURL(image.target.files[0]);
                     // console.log(this.imageName + this.imageExt, this.isImage);
                 } else {
-                    console.log("Invalid file");
+                    console.log('Invalid file');
                 }
             }
         },
@@ -356,7 +318,7 @@ export default {
 // };
 </script>
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -365,7 +327,7 @@ export default {
 }
 
 body {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 .formbold-main-wrapper {
@@ -465,7 +427,7 @@ body {
     margin-bottom: 15px;
 }
 
-.formbold-input-flex > div {
+.formbold-input-flex>div {
     width: 100%;
 }
 
