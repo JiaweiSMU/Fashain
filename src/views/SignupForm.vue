@@ -1,5 +1,21 @@
 <template>
     <NavBar />
+    <div class="container">
+        <div class="sidebar-step-container">
+            <span class="sidebar-step-number" :class="{ active: active }">{{ step.number }}</span>
+            <div class="sidebar-step">
+                <span>STEP {{ step.number }}</span>
+                <span>{{ step.label }}</span>
+            </div>
+        </div>
+
+        <div class="main-container">
+            <div class="main-content">
+                <slot />
+            </div>
+            <NavButtons v-if="stepStore.step < 5" />
+        </div>
+    </div>
     <section class="mt-5 d-flex align-items-center justify-content-centre">
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -131,11 +147,12 @@
 </template>
 
 <script>
-// import VueGoogleAutocomplete from "vue-google-autocomplete";
+//import VueGoogleAutocomplete from "vue-google-autocomplete";
 import NavBar from "../components/NavBar.vue";
 import router from "../router";
 export default {
     // components: { NavBar, VueGoogleAutocomplete },
+    components: { NavBar },
     data() {
         return {
             username: "",
@@ -146,6 +163,15 @@ export default {
             postcode: "",
             contactno: "",
             type: false,
+            step: {
+                type: Object,
+                required: true,
+            },
+            active: {
+                type: Boolean,
+                required: true,
+                default: false,
+            },
         };
     },
     methods: {
@@ -183,3 +209,55 @@ export default {
     },
 };
 </script>
+<style scoped>
+.sidebar-step-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--white);
+    margin-bottom: 40px;
+}
+
+.sidebar-step-number {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--light-blue);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+}
+
+.sidebar-step-number.active {
+    background-color: var(--light-blue);
+    color: var(--purplish-blue);
+}
+
+.sidebar-step {
+    margin-left: 20px;
+}
+
+.sidebar-step span {
+    display: block;
+}
+
+.sidebar-step span:first-child {
+    font-size: 14px;
+    color: var(--light-blue);
+}
+
+.sidebar-step span:last-child {
+    font-size: 16px;
+    font-weight: 600;
+}
+.main-container {
+    padding: 20px 100px;
+    margin-left: 20px;
+    width: calc(100% - 320px);
+}
+
+.main-content {
+    height: 600px;
+    width: 100%;
+}
+</style>

@@ -336,6 +336,7 @@ export default {
             console.log(this.product.images);
             await setDoc(productRef, this.product).then(() => {
                 console.log("Document successfully written!");
+                router.push("/");
             });
         },
     },

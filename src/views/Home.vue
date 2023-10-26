@@ -63,7 +63,7 @@
                             <div
                                 class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
                                 data-mdb-ripple-color="light">
-                                <img :src="product.image" class="w-100" />
+                                <img :src="product.images[0]" class="w-100" />
                                 <a href="#!">
                                     <div class="mask">
                                         <div class="d-flex justify-content-start align-items-end h-100">
@@ -99,7 +99,7 @@ import NavBar from "../components/NavBar.vue";
 import Card from "../components/Card.vue";
 import Sidebar from "../components/Sidebar.vue";
 import { collection, query, getFirestore, getDocs } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage } from "firebase/storage";
 import router from "../router";
 const db = getFirestore();
 const q = query(collection(db, "products"));
@@ -117,15 +117,6 @@ export default {
         getDocs(q).then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 let data = doc.data();
-
-                getDownloadURL(ref(storage, doc.data().images[0]))
-                    .then((url) => {
-                        data.image = url;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-
                 this.products.push(data);
             });
         });
