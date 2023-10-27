@@ -20,16 +20,19 @@ import axios from "axios";
 
 export default {
 
+
   data() {
     return {
       map: null,
       infoWindow: null,
       placesService: null,
-      currentPos: { lat: 0, lng: 0 } //To get currentPos without calling function again
+      currentPos: { lat: 0, lng: 0, dist: 0, }, //To get currentPos without calling function again
     };
   },
 
-  // Lifecycle hook that is called when the Vue component is mounted (i.e., added to the DOM)
+  // called when the component is added to the DOM. 
+  // It triggers the function loadGoogleMapsScript() to load the Google Maps JavaScript SDK, 
+  // which is used to display maps in the component.
   mounted() {
     // Load the Google Maps JavaScript SDK when the component is mounted
     this.loadGoogleMapsScript();
@@ -46,47 +49,46 @@ export default {
         // We bind it to the current Vue component's context to make sure it has access to component's data, methods, etc.
         window.initMap = this.initMap.bind(this);
 
-        // Create a new <script> element to load the Google Maps SDK
-        const script = document.createElement('script');
-        // Set the source of the script to the Google Maps SDK, including the API key and callback function
-        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBgzMSEPxutQDRMWM5W9O83UR8cLMmocaE&libraries=geometry,places&callback=initMap";
-        script.async = true; // Load the script asynchronously
-        document.head.appendChild(script); // Append the script to the head of the document
-      }
+        // Create a script element for the Google Maps API
+        const mapsScript = document.createElement('script');
 
+        // Set the source URL for the Google Maps API
+        mapsScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBgzMSEPxutQDRMWM5W9O83UR8cLMmocaE&libraries=geometry,places&callback=initMap";
+
+        // Set the script to load asynchronously
+        mapsScript.async = true;
+
+        // Append the script element to the document head
+        document.head.appendChild(mapsScript);
+      }
       else {
         // If the Google Maps SDK is already loaded, directly initialize the map
         this.initMap();
       }
     },
 
+
     /**
-     * Calculates the distance between an origin point and multiple destination points using the Google Maps API.
+     * Calculates the Haversine distance between the current position and a given location.
      *
-     * @param {Array} arr - An array of locations representing the destination points.
-     * @return {void} This function does not return a value.
+     * @param {Object} locObj - The location object containing latitude and longitude.
+     * @return {number} The calculated distance between the two locations.
      */
-    haversine_distance(arr) {
-      //Current location
+    haversine_distance(locObj) {
+      // Create a new LatLng object for the origin coordinates
       let origin = new google.maps.LatLng({
         lat: this.currentPos.lat,
         lng: this.currentPos.lng,
       });
-      // console.log(origin);
-      let distArr = [];
 
-      //This code snippet calculates the distance between an origin point and multiple destination points using the Google Maps API.
-      //It iterates over an array of locations, calculates the distance between the origin and each destination,
-      //and stores the distances in another array. Finally, it logs the array of distances to the console.
-      for (let loc of arr) {
-        // console.log(loc);
-        let dest = new google.maps.LatLng({ lat: loc.lat, lng: loc.lng });
-        const distance =
-          google.maps.geometry.spherical.computeDistanceBetween(origin, dest);
-        // console.log(distance);
-        distArr.push(Math.floor(distance)); //In meters
-      }
-      console.log(distArr);
+      // Create a new LatLng object for the destination coordinates
+      let dest = new google.maps.LatLng({ lat: locObj.lat, lng: locObj.lng });
+
+      // Calculate the distance between the origin and destination using the spherical geometry library
+      const distance = google.maps.geometry.spherical.computeDistanceBetween(origin, dest);
+
+      // Return the distance
+      return distance;
     },
 
     initMap() {
@@ -99,24 +101,23 @@ export default {
       ];
 
       this.map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 1.304833, lng: 103.831833 },
+        //center: { lat: 1.304833, lng: 103.831833 },
         zoom: 15,
         styles: customMapStyle,
         mapTypeControl: false,
       });
+
       this.infoWindow = new google.maps.InfoWindow();
       this.placesService = new google.maps.places.PlacesService(this.map);
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            this.currentPos.lat = position.coords.latitude;
-            this.currentPos.lng = position.coords.longitude;
-            // console.log(pos);
+            const { latitude, longitude } = position.coords;
+            const pos = { lat: latitude, lng: longitude };
+            this.currentPos = pos;
+            // console.log(this.currentPos);
+
             this.infoWindow.setPosition(pos);
             this.infoWindow.setContent("Current Location");
             this.infoWindow.open(this.map);
@@ -132,54 +133,131 @@ export default {
       }
     },
 
-    findNearbyPlaces(location) {
+    /**
+     * Find nearby places based on the given location.
+     *
+     * @param {Object} location - The location object.
+     * @return {undefined} This function does not return a value.
+     */
+    async findNearbyPlaces(location) {
       const request = {
         location: location,
         radius: 1000,
         type: "clothing_store",
       };
+      let arrayOfData = [];
+      // Call function to retrieve list of locations
 
-      let data = [149306, 149729];
-      let results = [];
-
-      //Alter this part, go to firestore retrieve the list of locations and use the axios.get to get the lat and long values
-      for (let i = 0; i < data.length; i++) {
-        // console.log(data[i]);
-
-        //Firebase to retrieve the objects
-        axios
-          .get(
-            `https://maps.googleapis.com/maps/api/geocode/json?address=${data[i]}&key=AIzaSyBgzMSEPxutQDRMWM5W9O83UR8cLMmocaE`
-          )
-          .then((resp) => {
-            // console.log(resp.data.results);
-            let lat = resp.data.results[0].geometry.location.lat;
-            let loong = resp.data.results[0].geometry.location.lng;
-            let locName = {};
-            locName.lat = lat;
-            locName.lng = loong;
-            // console.log(locName);
-            results.push(locName);
-            // console.log(results);
-            this.haversine_distance(results); //Pass to this function to calculate the distance between the places in meters
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-      }
-
+      // Perform a nearby search using the placesService
       this.placesService.nearbySearch(request, (results, status) => {
+        // Check if the search was successful
         if (status === google.maps.places.PlacesServiceStatus.OK) {
+          // Limit the number of results to 5
           const limitedResults = results.slice(0, 5);
-          //   console.log(limitedResults);
+
+          // Iterate over the limited results
+
+          //Insert code to check the distance between the current location and the place
+          //If distance within X range, create a marker
           for (const place of limitedResults) {
+            // Create a marker for each place
             this.createMarker(place);
           }
         }
       });
+
+      // Pass the results array to the haversine_distance function
+
+      let data = [149306, 149729];
+
+      const apiKey = 'AIzaSyBgzMSEPxutQDRMWM5W9O83UR8cLMmocaE';
+      const apiUrls = data.map(address => {
+        const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
+        return axios.get(apiUrl);
+      });
+
+      Promise.all(apiUrls)
+        .then(responses => {
+          arrayOfData = responses.map(response => {
+            const { lat, lng } = response.data.results[0].geometry.location;
+            var locName = {
+              lat: lat,
+              lng: lng,
+              dist: null
+            };
+
+            const returnDist = this.haversine_distance(locName);
+            locName.dist = returnDist.toFixed(2);
+            console.log(locName);
+
+            return locName;
+          });
+          console.log(arrayOfData[1]);
+          for (let i = 0; i < arrayOfData.length; i++) {
+            // console.log(arrayOfData[i]);
+            if (arrayOfData[i].dist < 4800) {
+              //create marker
+              console.log(arrayOfData[i]);
+              this.makeMarker(arrayOfData[i]);
+            }
+          }
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+
+
+      //Alter this part, go to firestore retrieve the list of locations and use the axios.get to get the lat and long values
+      // Iterate through the data array
+      // for (let i = 0; i < data.length; i++) {
+      //   const address = data[i];
+      //   const apiKey = 'AIzaSyBgzMSEPxutQDRMWM5W9O83UR8cLMmocaE';
+      //   const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
+
+      //   axios.get(apiUrl)
+      //     .then((response) => {
+      //       const { lat, lng } = response.data.results[0].geometry.location;
+      //       const locName = {
+      //         lat: lat,
+      //         lng: lng,
+      //         dist: null
+      //       };
+
+      //       const returnDist = this.haversine_distance(locName);
+      //       locName.dist = returnDist.toFixed(2);
+      //       console.log(locName);
+
+      //       arrayOfData.push(locName);
+      //       console.log(arrayOfData);
+      //     })
+      //     .catch((error) => {
+      //       console.log(error.message);
+      //     });
+      // }
+      // console.log(arrayOfData.locName);
     },
 
+    makeMarker(locData) {
+      console.log(locData);
+      const latlng = {lat: locData.lat, lng: locData.lng};
+      const marker = new google.maps.Marker({
+        position: latlng,
+        map: this.map,
+      });
+      marker.addListener("click", () => {
+        const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
+        window.open(mapsLink, "_blank");
+      });
+    },
+
+    /**
+     * Creates a marker on the map for the given place.
+     *
+     * @param {Object} place - The place object containing the information of the place.
+     * @return {void} This function does not return anything.
+     */
     createMarker(place) {
+
       const marker = new google.maps.Marker({
         map: this.map,
         position: place.geometry.location,
