@@ -146,15 +146,24 @@ export default {
 
     .size-selection {
         margin-bottom: 20px;
+        display: flex;
+        align-items: center;
     }
     
     .size-btn {
         margin-right: 10px;
-        padding: 5px 15px;
+        padding: 5px 15px; /* Adjusted padding to make buttons uniform */
         border: none;
         border-radius: 5px;
         cursor: pointer;
         transition: all 0.3s ease;
+        background-color: #f5f5f5; /* Base light gray color */
+        width: 60px; /* Making every size button of the same width */
+        text-align: center;
+        
+        &:hover {
+            background-color: #b0b0b0; /* Darker shade of gray when hovered on */
+        }
     }
     
     
