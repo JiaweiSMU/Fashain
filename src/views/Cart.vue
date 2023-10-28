@@ -5,7 +5,7 @@
     <div class="col-lg-7">
       <div class="card shadow">
         <div class="card-header bg-dark text-white">
-          <h4>Shopping Cart</h4>
+          <h4>Your Cart</h4>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item" v-for="item in products" :key="item.id">
@@ -17,12 +17,18 @@
                 {{ item.name }}
               </div>
               <div class="col-3">
-                <button class="btn btn-sm btn-outline-dark" @click="decrementQuantity(item)">-</button>
-                {{ item.quantity }}
-                <button class="btn btn-sm btn-outline-dark" @click="incrementQuantity(item)">+</button>
+                <div class="quantity-control">
+                  <button class="btn btn-sm btn-outline-dark" @click="decrementQuantity(item)">-</button>
+                  <span class="quantity-number">{{ item.quantity }}</span>
+                  <button class="btn btn-sm btn-outline-dark" @click="incrementQuantity(item)">+</button>
+                </div>
               </div>
+              
               <div class="col-3 text-right quantity">
-                {{ item.price * item.quantity | currency }}
+                <div class="price-section">
+                    <span class="price-label">Price: </span>
+                    {{ item.price * item.quantity | currency }}
+                </div>
                 <div @click="removeFromCart(item)" style="cursor: pointer;">
                   <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20" height="20"
                     style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
@@ -36,13 +42,10 @@
             </div>
           </li>
         </ul>
-        <div class="card-footer text-right">
-          Total: {{ totalPrice | currency }}
-        </div>
       </div>
     </div>
 
-    <div class="col-lg-4 ml-4">
+    <div class="col-lg-4 ml-4 summary-card">
       <div class="card shadow">
         <div class="card-body">
           <h5 class="card-title">Summary</h5>
@@ -161,16 +164,22 @@ export default {
 <style>
 .card {
   border-radius: 10px;
+  overflow: hidden; /* To ensure the border-radius is applied to inner elements */
+}
+
+.card-header, .card-footer {
+  background-color: #343a40; /* Bootstrap's default dark theme color */
 }
 
 .btn-outline-dark,
 .btn-outline-danger {
   border-width: 2px;
-
+  font-size: 0.8rem; /* Reduced font size for the buttons */
 }
 
 .list-group-item {
   border-top-width: 1px !important;
+  padding: 1.5rem 1.25rem; /* Increase padding for better spacing */
 }
 
 .list-group-item:first-child {
@@ -178,19 +187,73 @@ export default {
 }
 
 .btn-sm {
-  height: 20px;
-  width: 20px;
+  height: 25px; /* Reduced height */
+  width: 25px;  /* Reduced width */
   display: inline-flex;
   justify-content: center;
   align-items: center;
   padding: 0;
+}
 
+.row.align-items-center > div {
+  display: flex;
+  align-items: center; /* Vertically align content in the row */
+}
+
+.img-fluid {
+  max-height: 80px; /* Limit image height */
+  width: auto;
 }
 
 .quantity {
-  display: flex;
-
+  justify-content: space-between; /* Space out the quantity and price */
 }
+
+.quantity .btn {
+  margin: 0 0.4rem; /* Slight reduction in spacing between the decrement and increment buttons */
+}
+
+.remove-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 1rem; /* Space out the delete icon from the price */
+  cursor: pointer;
+}
+
+.remove-icon path {
+  fill: #650000;
+}
+
+.quantity-control {
+  display: inline-flex;
+  align-items: center;
+}
+
+.quantity-number {
+  margin: 0 0.5rem;
+  min-width: 20px;
+  text-align: center;
+}
+
+.price-section {
+  display: flex;
+  justify-content: flex-end;  /* align content to the right */
+  align-items: center;  /* vertically align items */
+  margin-bottom: 0.5rem;  /* some space between price and delete icon */
+}
+
+.price-label {
+  margin-right: 0.5rem;  /* spacing between label and price */
+  font-weight: 600;  /* make label slightly bold */
+  color: #343a40;  /* a slightly darker text color for the label */
+}
+
+@media (max-width: 991.98px) {
+  .summary-card {
+      padding-top: 2rem;  /* Adjust as needed */
+  }
+}
+
 
 /* Ensure you've included Font Awesome if you're using the trash icon. */
 </style>
