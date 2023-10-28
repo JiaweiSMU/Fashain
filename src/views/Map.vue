@@ -91,7 +91,13 @@ export default {
       return distance;
     },
 
+    /**
+     * Initializes the map and sets up the custom map style, info window, places service, and current position.
+     *
+     * @return {void} This function does not return anything.
+     */
     initMap() {
+      // Define custom map style
       const customMapStyle = [
         {
           featureType: "administrative",
@@ -100,35 +106,53 @@ export default {
         },
       ];
 
+      // Create a new map instance
       this.map = new google.maps.Map(document.getElementById("map"), {
-        //center: { lat: 1.304833, lng: 103.831833 },
+        // Set the initial center of the map
+        // center: { lat: 1.304833, lng: 103.831833 },
         zoom: 15,
         styles: customMapStyle,
         mapTypeControl: false,
       });
 
+      // Create an info window
       this.infoWindow = new google.maps.InfoWindow();
+
+      // Create a places service
       this.placesService = new google.maps.places.PlacesService(this.map);
 
+      // Check if geolocation is available
       if (navigator.geolocation) {
+        // Get the current position
         navigator.geolocation.getCurrentPosition(
           (position) => {
+            // Extract latitude and longitude from the position
             const { latitude, longitude } = position.coords;
             const pos = { lat: latitude, lng: longitude };
             this.currentPos = pos;
-            // console.log(this.currentPos);
 
+            // Set the position of the info window
             this.infoWindow.setPosition(pos);
+
+            // Set the content of the info window
             this.infoWindow.setContent("Current Location");
+
+            // Open the info window on the map
             this.infoWindow.open(this.map);
+
+            // Set the center of the map to the current position
             this.map.setCenter(pos);
+
+            // Find nearby places
             this.findNearbyPlaces(pos);
           },
           () => {
+            // Handle location error
             handleLocationError(true, this.infoWindow, this.map.getCenter());
           }
         );
       } else {
+        // Handle location error
         handleLocationError(false, this.infoWindow, this.map.getCenter());
       }
     },
@@ -146,7 +170,6 @@ export default {
         type: "clothing_store",
       };
       let arrayOfData = [];
-      // Call function to retrieve list of locations
 
       // Perform a nearby search using the placesService
       this.placesService.nearbySearch(request, (results, status) => {
@@ -156,9 +179,6 @@ export default {
           const limitedResults = results.slice(0, 5);
 
           // Iterate over the limited results
-
-          //Insert code to check the distance between the current location and the place
-          //If distance within X range, create a marker
           for (const place of limitedResults) {
             // Create a marker for each place
             this.createMarker(place);
@@ -171,13 +191,17 @@ export default {
       let data = [149306, 149729];
 
       const apiKey = 'AIzaSyBgzMSEPxutQDRMWM5W9O83UR8cLMmocaE';
+
+      // Map each address to a geocoding API request URL
       const apiUrls = data.map(address => {
         const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
         return axios.get(apiUrl);
       });
 
+      // Wait for all API requests to complete
       Promise.all(apiUrls)
         .then(responses => {
+          // Extract latitude, longitude, and distance from each response
           arrayOfData = responses.map(response => {
             const { lat, lng } = response.data.results[0].geometry.location;
             var locName = {
@@ -186,6 +210,7 @@ export default {
               dist: null
             };
 
+            // Calculate distance using haversine formula
             const returnDist = this.haversine_distance(locName);
             locName.dist = returnDist.toFixed(2);
             console.log(locName);
@@ -193,10 +218,11 @@ export default {
             return locName;
           });
           console.log(arrayOfData[1]);
+
+          // Filter and process data within a certain distance
           for (let i = 0; i < arrayOfData.length; i++) {
-            // console.log(arrayOfData[i]);
             if (arrayOfData[i].dist < 4800) {
-              //create marker
+              // Create marker
               console.log(arrayOfData[i]);
               this.makeMarker(arrayOfData[i]);
             }
@@ -205,7 +231,6 @@ export default {
         .catch(error => {
           console.log(error.message);
         });
-
 
       //Alter this part, go to firestore retrieve the list of locations and use the axios.get to get the lat and long values
       // Iterate through the data array
@@ -237,9 +262,16 @@ export default {
       // console.log(arrayOfData.locName);
     },
 
+    /**
+     * Creates a marker on the map at the specified location.
+     *
+     * @param {Object} locData - The location data for the marker.
+     * @param {number} locData.lat - The latitude of the marker.
+     * @param {number} locData.lng - The longitude of the marker.
+     */
     makeMarker(locData) {
       console.log(locData);
-      const latlng = {lat: locData.lat, lng: locData.lng};
+      const latlng = { lat: locData.lat, lng: locData.lng };
       const marker = new google.maps.Marker({
         position: latlng,
         map: this.map,
