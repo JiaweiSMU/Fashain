@@ -146,7 +146,7 @@
                                     class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
                                     v-for="product in this.products"
                                     :key="product">
-                                    <div class="card h-100" v-if="product.type == 'Pre-loved'">
+                                    <div class="card h-100" v-if="product.type == 'Pre-loved'" @click="goToProductPage(product)">
                                         <div
                                             class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
                                             data-mdb-ripple-color="light">
