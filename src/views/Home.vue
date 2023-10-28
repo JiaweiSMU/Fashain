@@ -97,7 +97,7 @@
                                     class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
                                     v-for="product in this.products"
                                     :key="product">
-                                    <div class="card h-100" v-if="product.type == 'New'">
+                                    <div class="card h-100" v-if="product.type == 'New'" @click="goToProductPage(product)">
                                         <div
                                             class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
                                             data-mdb-ripple-color="light">
@@ -224,5 +224,20 @@ export default {
         });
         console.log(this.products);
     },
+
+    methods: {
+        goToProductPage(product) {
+            if (product && product.uid) {
+                this.$router.push({
+                    name: 'ProductPage',
+                    params: { uid: product.uid }
+                });
+            } else {
+                console.error("Product UID is missing or undefined");
+            }
+        }
+    }
+
+ 
 };
 </script>
