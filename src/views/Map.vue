@@ -177,12 +177,14 @@ export default {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           // Limit the number of results to 5
           const limitedResults = results.slice(0, 5);
-
+          //const bounds = new google.maps.LatLngBounds();
           // Iterate over the limited results
           for (const place of limitedResults) {
             // Create a marker for each place
+            //bounds.extend(place.geometry.location);
             this.createMarker(place);
           }
+          //this.map.fitBounds(bounds);
         }
       });
 
