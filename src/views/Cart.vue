@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <div class="row mt-5 ml-5" style="margin-left: 5%;">
+  <div class="row mt-5 mx-auto justify-content-center">
 
     <div class="col-lg-7">
       <div class="card shadow">
