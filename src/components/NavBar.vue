@@ -37,7 +37,7 @@
                         <li><a class="dropdown-item" href="#" v-on:click="logout">Log out</a></li>
                     </ul>
                 </div>
-                <button type="button" class="btn nav-link m-2">
+                <button type="button" class="btn nav-link m-2" @click="goToCartPage">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -71,6 +71,9 @@ export default {
                 router.push("/");
             });
         },
+        goToCartPage(){
+            router.push({name:'Cart'});
+        }
     },
     created() {
         onAuthStateChanged(auth, (user) => {
