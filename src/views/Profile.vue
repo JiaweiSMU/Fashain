@@ -245,7 +245,24 @@
                             </div>
                             <div class="tab-pane fade" id="pills-campaign" role="tabpanel"
                                 aria-labelledby="pills-campaign-tab">
-                                ...
+                                <div class="card mb-3" v-for="(campaign, index) in campaigns" :key="index">
+                                    <img class="card-img-top" :src="campaign.campaignImage" alt="Campaign Image" style="max-height: 200px; object-fit: fill;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ campaign.campaignName }}</h5>
+                                        <p class="card-text">{{ campaign.campaignDesc }}</p>
+                                        <p class="card-text">
+                                            <small class="text-muted">Campaign Start Date: {{ campaign.campaignStartDate
+                                            }}</small>
+                                            <br>
+                                            <small class="text-muted">Campaign End Date: {{ campaign.campaignEndDate
+                                            }}</small>
+                                        </p>
+                                        <p class="card-text">
+                                            <small class="text-muted">Campaign Address: {{ campaign.campaignAddress
+                                            }}</small>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -268,22 +285,18 @@
     <div class="tab-pane fade" id="pills-rental" role="tabpanel" aria-labelledby="pills-rental-tab">
         test</div>
     <div class="tab-pane fade" id="pills-campaign" role="tabpanel" aria-labelledby="pills-campaign-tab">...</div>
-        
+
     <div class="container">
         <br />
         <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/campaign">Create Campaign</a>
         <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add Product</a>
-        <br>
-        <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/campaign">Create
-            Campaign</a>
-        <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add
-            Product</a>
+
     </div>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { auth } from "../firebase/init.js";
 import router from "../router";
 const db = getFirestore();
@@ -317,14 +330,38 @@ export default {
                 campaignsCount: 0, // Add a property to store the campaign count
                 documentID: "",
             },
+            campaigns: [],
+
         };
     },
     // sLMohi7AUYxO8Xw45FRh
     created() {
         const q = query(collection(db, "users"), where("uid", "==", this.user.uid));
-        const userDocRef = collection(db, "users");
-        // by right suppose to be this.user.id
+        // Data collection of campaigns
+        const campaignsDocRef = doc(db, "campaigns", this.user.uid);
 
+        onSnapshot(campaignsDocRef, async (campaignsDoc) => {
+            if (campaignsDoc.exists()) {
+                const campaignData = campaignsDoc.data();
+                const camps = campaignData.listOfCampaign || [];
+                this.campaigns = [];
+                for (const campItem of camps) {
+
+
+                    this.campaigns.push({
+                        campaignAddress: campItem.campaignAddress,
+                        campaignDesc: campItem.campaignDesc,
+                        campaignEndDate: campItem.campaignEndDate,
+                        campaignImage: campItem.campaignImage,
+                        campaignName: campItem.campaignName,
+                        campaignStartDate: campItem.campaignStartDate,
+                    });
+                    this.user.campaignsCount = this.campaigns.length
+                    console.log("test");
+                    console.log(this.campaigns);
+                }
+            }
+        });
         // bok yan i modify the doc name as it clashes with the function
         getDocs(q).then((querySnapshot) => {
             querySnapshot.forEach((user_details) => {
@@ -337,28 +374,14 @@ export default {
                 this.user.postcode = user_details.data().postcode;
                 this.user.blockNumber = user_details.data().blockNumber;
                 this.user.contactno = user_details.data().contactno;
-                this.user.rating = user_details.data().rating;
-                this.user.joindate = user_details.data().joindate.toDate();
+                //this.user.rating = user_details.data().rating;
+                //this.user.joindate = user_details.data().joindate.toDate();
                 console.log(this.user.documentID);
-                // Retrieval of campaigns
-                const uidRef = doc(userDocRef, this.user.documentID, "campaigns", "campaign");
-                getDoc(uidRef)
-                    .then((docSnapshot) => {
-                        if (docSnapshot.exists()) {
-                            const campaignData = docSnapshot.data();
-                            this.user.campaignsCount = campaignData.listOfCampaign.length;
-                            console.log(campaignData.listOfCampaign.length);
-                            console.log(this.user.uid);
-                        } else {
-                            // The document with the specified reference does not exist.
-                            // Handle the case when the document doesn't exist.
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error getting document:", error);
-                    });
             });
         });
+
+
+
     },
     computed: {
         // To display stars
