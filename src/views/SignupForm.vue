@@ -1,39 +1,43 @@
 <template>
     <NavBar />
 
-    <div class="container d-flex">
-        <div v-if="currentStep === 1">
-            <StepOne :data="formData" @update-data="handleUpdateData" :nextStep="nextStep" />
-        </div>
-        <div v-if="currentStep === 2">
-            <StepTwo :data="formData" @update-data="handleUpdateData" :nextStep="nextStep" :prevStep="prevStep" />
-        </div>
-        <div v-if="currentStep === 3 && formData.type">
-            <StepThree :data="formData" @update-data="handleUpdateData" :prevStep="prevStep" :submitForm="submitForm" />
-        </div>
-    </div>
     <section class="mt-5 d-flex align-items-center justify-content-centre">
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                        class="img-fluid" alt="Sample image" />
+                    <img
+                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                        class="img-fluid"
+                        alt="Sample image" />
                 </div>
-                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form href="#" @submit.prevent="signUp">
-                        <!-- Password input -->
-
-                        <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="submit" class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem">
-                                Register
-                            </button>
-                            <p class="small fw-bold mt-2 pt-1 mb-0">
-                                Already have an account?
-                                <a href="/login" class="link-danger">Log In</a>
-                            </p>
+                <div class="col-md-8 col-lg-6 col-xl-5 offset-xl-1">
+                    <!-- Password input -->
+                    <div class="container d-flex">
+                        <div v-if="currentStep === 1">
+                            <StepOne :data="formData" @update-data="handleUpdateData" :nextStep="nextStep" />
                         </div>
-                    </form>
+                        <div v-if="currentStep === 2">
+                            <StepTwo
+                                :data="formData"
+                                @update-data="handleUpdateData"
+                                :nextStep="nextStep"
+                                :prevStep="prevStep"
+                                :submitForm="submitForm" />
+                        </div>
+                        <div v-if="currentStep === 3">
+                            <StepThree
+                                :data="formData"
+                                @update-data="handleUpdateData"
+                                :prevStep="prevStep"
+                                :submitForm="submitForm" />
+                        </div>
+                    </div>
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <p class="small fw-bold mt-2 pt-1 mb-0">
+                            Already have an account?
+                            <a href="/login" class="link-danger">Log In</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,7 +57,8 @@ export default {
         StepOne,
         StepTwo,
         StepThree,
-        NavBar, VueGoogleAutocomplete,
+        NavBar,
+        VueGoogleAutocomplete,
     },
     data() {
         return {
@@ -67,7 +72,15 @@ export default {
                 blockNumber: "",
                 postalCode: "",
                 type: "",
-                questionnaireAnswer: "",
+                recycledMaterials: "",
+                organicMaterials: "",
+                ecoFriendlyProduction: "",
+                fairLaborPractices: "",
+                ecoFriendlyPackaging: "",
+                sustainabilityPolicy: "",
+                sustainabilityCommitmentRating: "",
+                verificationImage: [],
+                sustainabilityScore: 0,
             },
         };
     },
@@ -80,9 +93,21 @@ export default {
 
         // Step Control
         nextStep() {
-            if (this.currentStep < 3) {
+            if (this.currentStep == 1 && this.formData.username && this.formData.email && this.formData.password) {
                 this.currentStep++;
+            } else if (
+                this.currentStep == 2 &&
+                this.formData.blockNumber &&
+                this.formData.postalCode &&
+                this.formData.phoneNumber
+            ) {
+                this.currentStep++;
+            } else if (this.currentStep == 3 && this.formData.questionnaireAnswer) {
+                this.currentStep++;
+            } else {
+                alert("Please fill in all fields");
             }
+            console.log(this.currentStep);
         },
         prevStep() {
             if (this.currentStep > 1) {
@@ -90,31 +115,59 @@ export default {
             }
         },
 
+        checkSustainability() {
+            var message;
+            var rating;
+            var score = 0;
+            var answers = [
+                "recycledMaterials",
+                "organicMaterials",
+                "ecoFriendlyProduction",
+                "fairLaborPractices",
+                "ecoFriendlyPackaging",
+                "sustainabilityPolicy",
+                "sustainabilityCommitmentRating",
+            ];
+
+            for (var i = 0; i < answers.length; i++) {
+                if (this.formData[answers[i]] == "yes") {
+                    score += 5;
+                } else if (i == "sustainabilityCommitmentRating") {
+                    score += Number(this.formData[answers[i]]);
+                }
+                if (score > 33) {
+                    message = "Your Sustainability Rating is 5⭐";
+                    rating = 5;
+                } else if (score > 29 && score <= 33) {
+                    message = "Your Sustainability Rating is 4⭐";
+                    rating = 4;
+                } else if (score > 24 && score <= 29) {
+                    message = "Your Sustainability Rating is 3⭐";
+                    rating = 3;
+                } else if (score > 19 && score <= 24) {
+                    message = "Your Sustainability Rating is 2⭐";
+                    rating = 2;
+                } else if (score > 17 && score <= 19) {
+                    message = "Your Sustainability Rating is 1⭐";
+                    rating = 1;
+                } else {
+                    message =
+                        "Consider reviewing your policies and exploring more eco-friendly options. Every step towards sustainability makes a difference!";
+                    rating = 0;
+                }
+                this.formData.splice(this.formData.indexOf(answers[i]), 1);
+                this.formData.sustainabilityScore = rating;
+            }
+        },
         // Submit Form
-        submitForm() {
+        async submitForm() {
             console.log(this.formData);
+            this.formData.type = this.formData.type ? "business" : "user";
+            const signUp = await this.$store.dispatch("signUp", this.formData);
+            router.push("/");
             // Submit the form data to a server or process it as needed
         },
 
-        async signUp() {
-            let business = this.type ? "business" : "user";
-            try {
-                await this.$store.dispatch("signUp", {
-                    email: this.email,
-                    password: this.password,
-                    name: this.username,
-                    type: business,
-                    address: this.address,
-                    blockNumber: this.blockNumber,
-                    postalCode: this.postcode,
-                    contactno: this.contactno,
-                });
-                router.push("/");
-                console.log("User signed up successfully!");
-            } catch (err) {
-                console.log(err);
-            }
-        },
         getAddressData: function (addressData, placeResultData, id) {
             this.address = addressData;
         },

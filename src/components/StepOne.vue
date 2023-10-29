@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="mb-3">Create an account</h2>
+        <h2 class="mb-3 text-success">Create an account</h2>
 
         <!-- Email input -->
         <div class="row">
@@ -60,7 +60,9 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-success" @click="nextStep">Next</button>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-outline-success" @click="nextStep">Next</button>
+        </div>
     </div>
 </template>
 

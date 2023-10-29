@@ -34,7 +34,6 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><a class="dropdown-item" href="#" v-on:click="logout">Log out</a></li>
                     </ul>
                 </div>
@@ -86,8 +85,7 @@ export default {
 </script>
 
 <style scoped>
-    .custom-navbar-bg {
-        background-color: #FCF7EB !important;
-    }
-    
+.custom-navbar-bg {
+    background-color: #fcf7eb !important;
+}
 </style>

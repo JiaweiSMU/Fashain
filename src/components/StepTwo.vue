@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Step 2: Address Details</h2>
+        <h2 class="text-success mb-2">Address Details</h2>
         <div class="form-floating mb-3">
             <vue-google-autocomplete
                 id="map"
@@ -51,15 +51,16 @@
             <label for="contactno">Contact No.</label>
         </div>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-success me-2" @click="prevStep">Previous</button>
-            <button class="btn btn-success" @click="nextStep">Next</button>
+            <button class="btn btn-outline-success me-2" @click="prevStep">Previous</button>
+            <button v-if="data.type" class="btn btn-outline-success" @click="nextStep">Next</button>
+            <button v-else @click="submitForm" class="btn btn-success">Submit</button>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: ["data", "nextStep", "prevStep"],
+    props: ["data", "nextStep", "prevStep", "submitForm"],
     methods: {
         updateData(key, value) {
             this.$emit("update-data", { key, value });
