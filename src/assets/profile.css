@@ -386,3 +386,7 @@ ul.summary-list > li:last-child  {
     background-color: lightgreen !important;
     border-color: lightgreen !important; /* If there's a border for active state, this will ensure it matches the background color. */
 }
+.image-container {
+    border-bottom: 1px solid #ccc; /* You can adjust the border style as needed */
+    padding-bottom: 10px; /* Adjust the padding for spacing */
+  }

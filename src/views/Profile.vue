@@ -241,14 +241,41 @@
                                 te1st
                             </div>
                             <div class="tab-pane fade" id="pills-rental" role="tabpanel" aria-labelledby="pills-rental-tab">
-                                test
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4 mb-4 mb-md-0 mt-2" v-for="(product, index) in products"
+                                        :key="index">
+                                        <div class="card text-black">
+                                            <img :src="product.image" class="card-img-top" :alt="product.name" />
+                                            <div class="card-body" >
+                                                <div class="text-center mt-1">
+                                                    <h4 class="card-title">{{ product.name }}</h4>
+                                                    <p class="card-text">{{ product.description }}</p>
+                                                    <p class="card-text"><strong>Category:</strong> {{ product.category }}
+                                                    </p>
+                                                    <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+                                                    <p class="card-text"><strong>Type:</strong> {{ product.type }}</p>
+                                                </div>
+                                                <br>
+                                                <div class="d-flex flex-row">
+                                                    <button @click="editProduct(index)" type="button"
+                                                        class="btn btn-primary flex-fill me-1">Edit</button>
+                                                    <button @click="deleteProduct(index)" type="button"
+                                                        class="btn btn-danger flex-fill ms-1">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="pills-campaign" role="tabpanel"
                                 aria-labelledby="pills-campaign-tab">
-                                <div class="card mb-3" v-for="(campaign, index) in campaigns" :key="index">
-                                    <img class="card-img-top" :src="campaign.campaignImage" alt="Campaign Image" style="max-height: 200px; object-fit: fill;">
+                                <div class="card mb-3 mx-2 mt-2" v-for="(campaign, index) in campaigns" :key="index">
+                                    <div class="image-container">
+                                        <img class="card-img-top" :src="campaign.campaignImage" alt="Campaign Image"
+                                            style="max-height: 200px; object-fit: fill;">
+                                    </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ campaign.campaignName }}</h5>
+                                        <h4 class="card-title">{{ campaign.campaignName }}</h4>
                                         <p class="card-text">{{ campaign.campaignDesc }}</p>
                                         <p class="card-text">
                                             <small class="text-muted">Campaign Start Date: {{ campaign.campaignStartDate
@@ -267,6 +294,9 @@
                         </div>
                     </div>
                     <div class="d-flex flex-row">
+                        <button type="button" class="btn btn-success flex-fill me-1">
+                            Add
+                        </button>
                         <button type="button" class="btn btn-primary flex-fill me-1">
                             Edit
                         </button>
@@ -331,6 +361,8 @@ export default {
                 documentID: "",
             },
             campaigns: [],
+            products: [],
+
 
         };
     },
@@ -379,8 +411,25 @@ export default {
                 console.log(this.user.documentID);
             });
         });
+        const pq = query(collection(db, "products"));
+        getDocs(pq).then((pqSnapshot) => {
+            this.products = [];
+            pqSnapshot.forEach((product_details) => {
+                this.products.push({
+                    name: product_details.data().name,
+                    image: product_details.data().images[0],
+                    description: product_details.data().description,
+                    category: product_details.data().category,
+                    price: product_details.data().price,
+                    type: product_details.data().type,
+
+                });
 
 
+            });
+            console.log("Products");
+            console.log(this.products);
+        });
 
     },
     computed: {
@@ -415,9 +464,18 @@ export default {
             return `Joined: ${str_y}${gotAnd}${str_m}Ago`;
         },
     },
+    methods: {
+        editProduct(index) {
+            // Implement edit functionality here
+            // You can use this.products[index] to access the product data for editing
+        },
+        deleteProduct(index) {
+            // Implement delete functionality here
+            // You can use this.products[index] to access the product data for deletion
+            this.products.splice(index, 1); // Remove the product from the products array
+        },
+    },
 };
 </script>
 <!-- Style sheet -->
-<style>
-@import "../assets/profile.css";
-</style>
+<style>@import "../assets/profile.css";</style>
