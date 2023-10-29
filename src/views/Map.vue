@@ -2,6 +2,13 @@
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+        <div>
+          <!-- To filter based on distance -->
+          <p>Current dist to filter by is {{ dist }}</p>
+          <button @click="dist += 100">Add</button>
+          <input v-model="dist">
+          <button @click="dist -= 100">Minus</button>
+        </div>
         <!-- Card component -->
         <div class="card">
           <div class="card-body">
@@ -27,6 +34,7 @@ export default {
       infoWindow: null,
       placesService: null,
       currentPos: { lat: 0, lng: 0, dist: 0, }, //To get currentPos without calling function again
+      dist: 1000,
     };
   },
 
@@ -36,6 +44,11 @@ export default {
   mounted() {
     // Load the Google Maps JavaScript SDK when the component is mounted
     this.loadGoogleMapsScript();
+  },
+  watch: {
+    dist() {
+      this.findNearbyPlaces(this.currentPos);
+    },
   },
 
   methods: {
@@ -164,6 +177,7 @@ export default {
      * @return {undefined} This function does not return a value.
      */
     async findNearbyPlaces(location) {
+      console.log('hello');
       const request = {
         location: location,
         radius: 1000,
@@ -172,22 +186,23 @@ export default {
       let arrayOfData = [];
 
       // Perform a nearby search using the placesService
-      this.placesService.nearbySearch(request, (results, status) => {
-        // Check if the search was successful
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          // Limit the number of results to 5
-          const limitedResults = results.slice(0, 5);
-          //const bounds = new google.maps.LatLngBounds();
-          // Iterate over the limited results
-          for (const place of limitedResults) {
-            // Create a marker for each place
-            //bounds.extend(place.geometry.location);
-            this.createMarker(place);
-          }
-          //this.map.fitBounds(bounds);
-        }
-      });
+      // this.placesService.nearbySearch(request, (results, status) => {
+      //   // Check if the search was successful
+      //   if (status === google.maps.places.PlacesServiceStatus.OK) {
+      //     // Limit the number of results to 5
+      //     const limitedResults = results.slice(0, 5);
+      //     //const bounds = new google.maps.LatLngBounds();
+      //     // Iterate over the limited results
+      //     for (const place of limitedResults) {
+      //       // Create a marker for each place
+      //       //bounds.extend(place.geometry.location);
+      //       this.createMarker(place);
+      //     }
+      //     //this.map.fitBounds(bounds);
+      //   }
+      // });
 
+      // https://jsfiddle.net/hufk3qtL/2/ To loop through radius and display
       // Pass the results array to the haversine_distance function
 
       let data = [149306, 149729];
@@ -223,7 +238,7 @@ export default {
 
           // Filter and process data within a certain distance
           for (let i = 0; i < arrayOfData.length; i++) {
-            if (arrayOfData[i].dist < 4800) {
+            if (arrayOfData[i].dist < this.dist) {
               // Create marker
               console.log(arrayOfData[i]);
               this.makeMarker(arrayOfData[i]);
