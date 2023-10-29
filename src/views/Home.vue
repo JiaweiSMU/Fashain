@@ -227,13 +227,13 @@ export default {
 
     methods: {
         goToProductPage(product) {
-            if (product && product.uid) {
+            if (product && product.name) {
                 this.$router.push({
                     name: 'ProductPage',
-                    params: { uid: product.uid }
+                    params: { name: product.name }
                 });
             } else {
-                console.error("Product UID is missing or undefined");
+                console.error("Product name is missing or undefined");
             }
         }
     }

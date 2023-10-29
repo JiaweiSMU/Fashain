@@ -42,7 +42,7 @@ export default {
         };
     },
     props: {
-        uid: {
+        name: {
             type: String,
             required: true
         }
@@ -50,11 +50,11 @@ export default {
     name: "ProductPage",
 
     created() {
-        if (!this.uid) {
-            console.error("Product UID is missing");
+        if (!this.name) {
+            console.error("Product name is missing");
             return;
         }
-        console.log("Product UID:", this.uid);
+        console.log("Product name:", this.name);
         this.fetchProductDetails().catch(error => {
             console.error("Failed to fetch product details:", error);
         });
@@ -62,7 +62,7 @@ export default {
 
     methods: {
         async fetchProductDetails() {
-            const q = query(collection(db, "products"), where("uid", "==", this.uid));
+            const q = query(collection(db, "products"), where("name", "==", this.name));
             const querySnapshot = await getDocs(q);
             if (!querySnapshot.empty) {
                 this.product = querySnapshot.docs[0].data();

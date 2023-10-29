@@ -59,7 +59,7 @@ const router = createRouter({
             component: Map,
         },
         {
-            path: '/product/:uid',
+            path: '/product/:name',
             name: 'ProductPage',
             component: ProductPage,
             props: true
