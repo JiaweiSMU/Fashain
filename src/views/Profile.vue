@@ -125,114 +125,32 @@
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
-                                <div class="container py-5">
-                                    <div class="row">
-                                        <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
-                                            <div class="card text-black">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img1.webp"
-                                                    class="card-img-top" alt="iPhone" />
-                                                <div class="card-body">
-                                                    <div class="text-center mt-1">
-                                                        <h4 class="card-title">iPhone X</h4>
-                                                        <h6 class="text-primary mb-1 pb-3">Starting at $399</h6>
-                                                    </div>
-
-                                                    <div class="d-flex flex-row">
-                                                        <button type="button" class="btn btn-primary flex-fill me-1">
-                                                            Edit
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger flex-fill ms-1">
-                                                            Delete
-                                                        </button>
-                                                    </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4 mb-4 mb-md-0 mt-2" v-for="(product, index) in products"
+                                        :key="index">
+                                        <div class="card text-black">
+                                            <img :src="product.image" class="card-img-top" :alt="product.name" />
+                                            <div class="card-body" >
+                                                <div class="text-center mt-1">
+                                                    <h4 class="card-title">{{ product.name }}</h4>
+                                                    <p class="card-text">{{ product.description }}</p>
+                                                    <p class="card-text"><strong>Category:</strong> {{ product.category }}
+                                                    </p>
+                                                    <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+                                                    <p class="card-text"><strong>Type:</strong> {{ product.type }}</p>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-                                            <div class="card text-black">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img2.webp"
-                                                    class="card-img-top" alt="iPhone" />
-                                                <div class="card-body">
-                                                    <div class="text-center mt-1">
-                                                        <h4 class="card-title">iPhone 11</h4>
-                                                        <h6 class="text-primary mb-1 pb-3">Starting at $499</h6>
-                                                    </div>
-                                                    <div class="d-flex flex-row">
-                                                        <button type="button" class="btn btn-primary flex-fill me-1">
-                                                            Edit
-                                                        </button>
-                                                        <button type="button"
-                                                            class="btn btn-danger flex-fill ms-1">Delete</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-                                            <div class="card text-black">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img2.webp"
-                                                    class="card-img-top" alt="iPhone" />
-                                                <div class="card-body">
-                                                    <div class="text-center mt-1">
-                                                        <h4 class="card-title">iPhone 11</h4>
-                                                        <h6 class="text-primary mb-1 pb-3">Starting at $499</h6>
-                                                    </div>
-
-
-                                                    <div class="d-flex flex-row">
-                                                        <button type="button" class="btn btn-primary flex-fill me-1">
-                                                            Edit
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger flex-fill ms-1">
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-                                            <div class="card text-black">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img3.webp"
-                                                    class="card-img-top" alt="iPhone" />
-                                                <div class="card-body">
-                                                    <div class="text-center mt-1">
-                                                        <h4 class="card-title">iPhone 11 Pro</h4>
-                                                        <h6 class="text-primary mb-1 pb-3">Starting at $599</h6>
-                                                    </div>
-                                                    <div class="d-flex flex-row">
-                                                        <button type="button" class="btn btn-primary flex-fill me-1">
-                                                            Edit
-                                                        </button>
-                                                        <button type="button"
-                                                            class="btn btn-danger flex-fill ms-1">Delete</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-                                            <div class="card text-black">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img3.webp"
-                                                    class="card-img-top" alt="iPhone" />
-                                                <div class="card-body">
-                                                    <div class="text-center mt-1">
-                                                        <h4 class="card-title">iPhone 11 Pro</h4>
-                                                        <h6 class="text-primary mb-1 pb-3">Starting at $599</h6>
-                                                    </div>
-
-
-
-                                                    <div class="d-flex flex-row">
-                                                        <button type="button" class="btn btn-primary flex-fill me-1">
-                                                            Edit
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger flex-fill ms-1">
-                                                            Delete
-                                                        </button>
-                                                    </div>
+                                                <br>
+                                                <div class="d-flex flex-row">
+                                                    <button @click="editProduct(index)" type="button"
+                                                        class="btn btn-primary flex-fill me-1">Edit</button>
+                                                    <button @click="deleteProduct(index)" type="button"
+                                                        class="btn btn-danger flex-fill ms-1">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                    
                             </div>
                             <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
                                 new
