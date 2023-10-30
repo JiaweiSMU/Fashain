@@ -58,11 +58,12 @@ export default {
         StepTwo,
         StepThree,
         NavBar,
-        VueGoogleAutocomplete,
+        //VueGoogleAutocomplete,
     },
     data() {
         return {
             currentStep: 1,
+            message: "",
             formData: {
                 username: "",
                 email: "",
@@ -135,34 +136,36 @@ export default {
                 } else if (i == "sustainabilityCommitmentRating") {
                     score += Number(this.formData[answers[i]]);
                 }
-                if (score > 33) {
-                    message = "Your Sustainability Rating is 5⭐";
-                    rating = 5;
-                } else if (score > 29 && score <= 33) {
-                    message = "Your Sustainability Rating is 4⭐";
-                    rating = 4;
-                } else if (score > 24 && score <= 29) {
-                    message = "Your Sustainability Rating is 3⭐";
-                    rating = 3;
-                } else if (score > 19 && score <= 24) {
-                    message = "Your Sustainability Rating is 2⭐";
-                    rating = 2;
-                } else if (score > 17 && score <= 19) {
-                    message = "Your Sustainability Rating is 1⭐";
-                    rating = 1;
-                } else {
-                    message =
-                        "Consider reviewing your policies and exploring more eco-friendly options. Every step towards sustainability makes a difference!";
-                    rating = 0;
-                }
                 this.formData.splice(this.formData.indexOf(answers[i]), 1);
-                this.formData.sustainabilityScore = rating;
             }
+            if (score > 33) {
+                message = "Your Sustainability Rating is 5⭐";
+                rating = 5;
+            } else if (score > 29 && score <= 33) {
+                message = "Your Sustainability Rating is 4⭐";
+                rating = 4;
+            } else if (score > 24 && score <= 29) {
+                message = "Your Sustainability Rating is 3⭐";
+                rating = 3;
+            } else if (score > 19 && score <= 24) {
+                message = "Your Sustainability Rating is 2⭐";
+                rating = 2;
+            } else if (score > 17 && score <= 19) {
+                message = "Your Sustainability Rating is 1⭐";
+                rating = 1;
+            } else {
+                message =
+                    "Consider reviewing your policies and exploring more eco-friendly options. Every step towards sustainability makes a difference!";
+                rating = 0;
+            }
+            this.formData.sustainabilityScore = rating;
+            this.message = message;
         },
         // Submit Form
         async submitForm() {
             console.log(this.formData);
             this.formData.type = this.formData.type ? "business" : "user";
+            this.checkSustainability();
             const signUp = await this.$store.dispatch("signUp", this.formData);
             router.push("/");
             // Submit the form data to a server or process it as needed

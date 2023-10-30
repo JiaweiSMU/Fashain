@@ -44,45 +44,45 @@
                 <Sidebar />
             </div>
             <div class="col-9">
-                <ul class="nav nav-pills nav-justified sticky-top mt-5 bg-success" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills nav-justified mt-5 mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link text-light"
-                            id="pills-new-tab"
+                        <a
+                            class="nav-link active"
+                            id="ex-with-icons-tab-1"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-new"
-                            type="button"
                             role="tab"
+                            href="#pills-new"
                             aria-controls="pills-new"
-                            aria-selected="true">
-                            Brand New
-                        </button>
+                            aria-selected="true"
+                            ><i class="fas fa-chart-pie fa-fw me-2"></i>Brand New</a
+                        >
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link text-light"
-                            id="pills-used-tab"
+                        <a
+                            class="nav-link"
+                            id="ex-with-icons-tab-2"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-used"
-                            type="button"
+                            href="#pills-used"
                             role="tab"
                             aria-controls="pills-used"
-                            aria-selected="false">
-                            Pre-loved
-                        </button>
+                            aria-selected="false"
+                            ><i class="fas fa-chart-line fa-fw me-2"></i>Pre-loved</a
+                        >
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link text-light"
-                            id="pills-rental-tab"
+                        <a
+                            class="nav-link"
+                            id="ex-with-icons-tab-3"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-rental"
-                            type="button"
+                            href="#pills-rental"
                             role="tab"
                             aria-controls="pills-rental"
-                            aria-selected="false">
-                            Rental
-                        </button>
+                            aria-selected="false"
+                            ><i class="fas fa-cogs fa-fw me-2"></i>Rental</a
+                        >
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
@@ -94,39 +94,16 @@
                         <div class="container py-5">
                             <div class="row" style="height: 450px">
                                 <div
-                                    class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
-                                    v-for="product in this.products"
+                                    class="mb-3 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
+                                    v-for="product in this.products_new"
                                     :key="product">
-                                    <div class="card h-100" v-if="product.type == 'New'" @click="goToProductPage(product)">
-                                        <div
-                                            class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-                                            data-mdb-ripple-color="light">
-                                            <img :src="product.images[0]" class="w-100" />
-                                            <a href="#!">
-                                                <div class="mask">
-                                                    <div class="d-flex justify-content-start align-items-end h-100">
-                                                        <h5>
-                                                            <span class="badge bg-dark ms-2">{{
-                                                                product.category
-                                                            }}</span>
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="hover-overlay">
-                                                    <div
-                                                        class="mask"
-                                                        style="background-color: rgba(251, 251, 251, 0.15)"></div>
-                                                </div>
-                                            </a>
-                                        </div>
+                                    <div class="card" @click="goToProductPage(product)">
+                                        <img :src="product.images[0]" class="card-img-top" alt="..." />
                                         <div class="card-body">
-                                            <a href="" class="text-reset">
-                                                <h5 class="card-title mb-2">{{ product.name }}</h5>
-                                            </a>
-                                            <a href="" class="text-reset">
-                                                <p>Shirt</p>
-                                            </a>
-                                            <h6 class="mb-3 price">${{ product.price }}</h6>
+                                            <h5 class="card-title">{{ product.name }}</h5>
+                                            <h6 class="card-subtitle">{{ product.category }}</h6>
+                                            <p class="card-text"></p>
+                                            <a href="#" class="btn btn-primary">${{ product.price }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -135,47 +112,20 @@
                     </div>
                 </div>
                 <div class="tab-content" id="pills-tabContent">
-                    <div
-                        class="tab-pane fade show active"
-                        id="pills-used"
-                        role="tabpanel"
-                        aria-labelledby="pills-used-tab">
+                    <div class="tab-pane fade show" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
                         <div class="container py-5">
                             <div class="row" style="height: 450px">
                                 <div
-                                    class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
-                                    v-for="product in this.products"
+                                    class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3"
+                                    v-for="product in this.products_used"
                                     :key="product">
-                                    <div class="card h-100" v-if="product.type == 'Pre-loved'" @click="goToProductPage(product)">
-                                        <div
-                                            class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-                                            data-mdb-ripple-color="light">
-                                            <img :src="product.image" class="w-100" />
-                                            <a href="#!">
-                                                <div class="mask">
-                                                    <div class="d-flex justify-content-start align-items-end h-100">
-                                                        <h5>
-                                                            <span class="badge bg-dark ms-2">{{
-                                                                product.category
-                                                            }}</span>
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="hover-overlay">
-                                                    <div
-                                                        class="mask"
-                                                        style="background-color: rgba(251, 251, 251, 0.15)"></div>
-                                                </div>
-                                            </a>
-                                        </div>
+                                    <div class="card" @click="goToProductPage(product)">
+                                        <img :src="product.images[0]" class="card-img-top" alt="..." />
                                         <div class="card-body">
-                                            <a href="" class="text-reset">
-                                                <h5 class="card-title mb-2">{{ product.name }}</h5>
-                                            </a>
-                                            <a href="" class="text-reset">
-                                                <p>Shirt</p>
-                                            </a>
-                                            <h6 class="mb-3 price">${{ product.price }}</h6>
+                                            <h5 class="card-title">{{ product.name }}</h5>
+                                            <h6 class="card-subtitle">{{ product.category }}</h6>
+                                            <p class="card-text"></p>
+                                            <a href="#" class="btn btn-primary">${{ product.price }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +139,24 @@
                         id="pills-rental"
                         role="tabpanel"
                         aria-labelledby="pills-rental-tab">
-                        <div class="container py-5"></div>
+                        <div class="container py-5">
+                            <div class="row" style="height: 450px">
+                                <div
+                                    class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3"
+                                    v-for="product in this.products_rental"
+                                    :key="product">
+                                    <div class="card" @click="goToProductPage(product)">
+                                        <img :src="product.images[0]" class="card-img-top" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ product.name }}</h5>
+                                            <h6 class="card-subtitle">{{ product.category }}</h6>
+                                            <p class="card-text"></p>
+                                            <a href="#" class="btn btn-primary">${{ product.price }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,17 +167,18 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import Sidebar from "../components/Sidebar.vue";
+import { watch } from "vue";
 import { collection, query, getFirestore, getDocs } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import router from "../router";
 const db = getFirestore();
 const q = query(collection(db, "products"));
-const storage = getStorage();
 export default {
     components: { NavBar, Sidebar },
     data() {
         return {
             products: [],
+            products_new: [],
+            products_used: [],
+            products_rental: [],
         };
     },
     name: "Home",
@@ -223,21 +191,35 @@ export default {
             });
         });
         console.log(this.products);
+        const productData = this.products;
+
+        watch(
+            () => productData.length,
+            () => {
+                productData.forEach((product) => {
+                    if (product.type == "New") {
+                        this.products_new.push(product);
+                    } else if (product.type == "Pre-loved") {
+                        this.products_used.push(product);
+                    } else if (product.type == "Rental") {
+                        this.products_rental.push(product);
+                    }
+                });
+            }
+        );
     },
 
     methods: {
         goToProductPage(product) {
             if (product && product.name) {
                 this.$router.push({
-                    name: 'ProductPage',
-                    params: { name: product.name }
+                    name: "ProductPage",
+                    params: { name: product.name },
                 });
             } else {
                 console.error("Product name is missing or undefined");
             }
-        }
-    }
-
- 
+        },
+    },
 };
 </script>
