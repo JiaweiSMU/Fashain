@@ -287,70 +287,67 @@ export default {
     },
 
     /**
-     * Creates a marker on the map at the specified location.
+     * Creates markers on a Google Map for each location in the given data.
      *
-     * @param {Object} locData - The location data for the marker.
-     * @param {number} locData.lat - The latitude of the marker.
-     * @param {number} locData.lng - The longitude of the marker.
+     * @param {Array} locData - An array of objects containing latitude and longitude for each location.
      */
     makeMarker(locData) {
-      console.log("There's num of data " + locData.length);
-
-
-      // console.log(locData);
+      console.log(`There's num of data ${locData.length}`);
       for (let i = 0; i < locData.length; i++) {
+        // Create a new latlng object for the current location
         let latlng = { lat: locData[i].lat, lng: locData[i].lng };
+        // Create a new marker for the current location
         let marker = new google.maps.Marker({
           position: latlng,
           map: this.map,
         });
+        // Add a click event listener to the marker
         marker.addListener("click", () => {
+          // Generate a Google Maps link for the marker's location
           const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
+          // Open the link in a new tab
           window.open(mapsLink, "_blank");
         });
       }
-      // console.log(locData);
-      // const latlng = { lat: locData.lat, lng: locData.lng };
-      // const marker = new google.maps.Marker({
-      //   position: latlng,
-      //   map: this.map,
-      // });
-      // marker.addListener("click", () => {
-      //   const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
-      //   window.open(mapsLink, "_blank");
-      // });
-    },
+    }
+  },
 
-    /**
-     * Creates a marker on the map for the given place.
-     *
-     * @param {Object} place - The place object containing the information of the place.
-     * @return {void} This function does not return anything.
-     */
-    createMarker(place) {
+  /** Use the above makeMarker instead to create
+   * Creates a marker on the map for the given place.
+   *
+   * @param {Object} place - The place object containing the information of the place.
+   * @return {void} This function does not return anything.
+   */
+  createMarker(place) {
+    const marker = new google.maps.Marker({
+      map: this.map,
+      position: place.geometry.location,
+      title: place.name,
+    });
 
-      const marker = new google.maps.Marker({
-        map: this.map,
-        position: place.geometry.location,
-        title: place.name,
-      });
-
-      marker.addListener("click", () => {
-        const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
-        window.open(mapsLink, "_blank");
-      });
-    },
+    marker.addListener("click", () => {
+      const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
+      window.open(mapsLink, "_blank");
+    });
+  },
 
 
-    handleLocationError(browserHasGeolocation, thisinfoWindow, pos) {
-      this.infoWindow.setPosition(pos);
-      this.infoWindow.setContent(
-        browserHasGeolocation
-          ? "Error: The Geolocation service failed."
-          : "Error: Your browser doesn't support geolocation."
-      );
-      this.infoWindow.open(this.map);
-    },
+  /**
+   * Handles the location error.
+   *
+   * @param {boolean} browserHasGeolocation - Indicates if the browser has geolocation.
+   * @param {infoWindow} thisinfoWindow - The info window object.
+   * @param {pos} pos - The position object.
+   * @return {void} This function does not return a value.
+   */
+  handleLocationError(browserHasGeolocation, thisinfoWindow, pos) {
+    this.infoWindow.setPosition(pos);
+    this.infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    this.infoWindow.open(this.map);
   },
 };
 </script>
