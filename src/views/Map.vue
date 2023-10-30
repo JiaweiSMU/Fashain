@@ -47,7 +47,7 @@ export default {
   },
   watch: {
     dist() {
-      this.findNearbyPlaces(this.currentPos);
+      this.initMap();
     },
   },
 
@@ -184,6 +184,7 @@ export default {
         type: "clothing_store",
       };
       let arrayOfData = [];
+      let markerArray = [];
 
       // Perform a nearby search using the placesService
       // this.placesService.nearbySearch(request, (results, status) => {
@@ -239,11 +240,17 @@ export default {
           // Filter and process data within a certain distance
           for (let i = 0; i < arrayOfData.length; i++) {
             if (arrayOfData[i].dist < this.dist) {
+              //Add into array
+              markerArray.push(arrayOfData[i]);
               // Create marker
-              console.log(arrayOfData[i]);
-              this.makeMarker(arrayOfData[i]);
+              // console.log(arrayOfData[i]);
+              // this.makeMarker(arrayOfData[i]);
             }
           }
+          // console.log('Am i pushing');
+          // console.log(this.markerArray);
+          //Loop through a array to add to map marker
+          this.makeMarker(markerArray);
         })
         .catch(error => {
           console.log(error.message);
@@ -287,16 +294,31 @@ export default {
      * @param {number} locData.lng - The longitude of the marker.
      */
     makeMarker(locData) {
-      console.log(locData);
-      const latlng = { lat: locData.lat, lng: locData.lng };
-      const marker = new google.maps.Marker({
-        position: latlng,
-        map: this.map,
-      });
-      marker.addListener("click", () => {
-        const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
-        window.open(mapsLink, "_blank");
-      });
+      console.log("There's num of data " + locData.length);
+
+
+      // console.log(locData);
+      for (let i = 0; i < locData.length; i++) {
+        let latlng = { lat: locData[i].lat, lng: locData[i].lng };
+        let marker = new google.maps.Marker({
+          position: latlng,
+          map: this.map,
+        });
+        marker.addListener("click", () => {
+          const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
+          window.open(mapsLink, "_blank");
+        });
+      }
+      // console.log(locData);
+      // const latlng = { lat: locData.lat, lng: locData.lng };
+      // const marker = new google.maps.Marker({
+      //   position: latlng,
+      //   map: this.map,
+      // });
+      // marker.addListener("click", () => {
+      //   const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
+      //   window.open(mapsLink, "_blank");
+      // });
     },
 
     /**
@@ -318,6 +340,7 @@ export default {
         window.open(mapsLink, "_blank");
       });
     },
+
 
     handleLocationError(browserHasGeolocation, thisinfoWindow, pos) {
       this.infoWindow.setPosition(pos);
