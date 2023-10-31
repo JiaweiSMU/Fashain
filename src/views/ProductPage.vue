@@ -99,7 +99,7 @@ export default {
     }
 
     .product-img {
-        max-width: 70%; /* Reduced image size */
+        max-width: 70%; 
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
@@ -132,14 +132,14 @@ export default {
     .buy-btn {
         padding: 12px 35px;
         font-size: 1.15em;
-        background-color: #000; /* Changed button color to black */
+        background-color: #000; 
         border: none;
         color: white;
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         transition: all 0.3s ease;
 
         &:hover {
-            background-color: #333; /* Hover effect for black button */
+            background-color: #333; 
             box-shadow: 0 6px 14px rgba(0,0,0,0.12);
         }
     }
@@ -152,17 +152,17 @@ export default {
     
     .size-btn {
         margin-right: 10px;
-        padding: 5px 15px; /* Adjusted padding to make buttons uniform */
+        padding: 5px 15px; 
         border: none;
         border-radius: 5px;
         cursor: pointer;
         transition: all 0.3s ease;
-        background-color: #f5f5f5; /* Base light gray color */
-        width: 60px; /* Making every size button of the same width */
+        background-color: #f5f5f5; 
+        width: 60px; 
         text-align: center;
         
         &:hover {
-            background-color: #b0b0b0; /* Darker shade of gray when hovered on */
+            background-color: #b0b0b0; 
         }
     }
     

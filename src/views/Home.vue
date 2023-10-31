@@ -223,3 +223,52 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.nav-pills .nav-link {
+    background-color: #000000;
+    color: #ffffff; 
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #333333; 
+    color: #ffffff; 
+    border: 1px solid #a89980;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #1a1a1a; 
+    color: #ffffff;
+    border: 1px solid #a89980;
+}
+
+
+.nav-pills .nav-link.active:hover {
+    background-color: #0d0d0d; 
+    color: #ffffff; 
+}
+
+.btn-primary {
+    background-color: #000000; 
+    border: 1px solid #000000; 
+    color: #ffffff;
+    transition: background-color 0.3s, border-color 0.3s; 
+}
+
+
+.btn-primary:hover {
+    background-color: #333333; 
+    border: 1px solid #333333;
+    color: #ffffff; 
+}
+
+
+.btn-primary:active, .btn-primary:focus {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a; 
+    color: #ffffff; 
+    box-shadow: none; 
+}
+</style>
