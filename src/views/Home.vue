@@ -226,28 +226,16 @@ export default {
 
 <style scoped>
 .nav-pills .nav-link {
-    background-color: #000000;
-    color: #ffffff; 
-    border: 1px solid transparent;
-    transition: all 0.3s ease;
-}
-
-.nav-pills .nav-link:hover {
-    background-color: #333333; 
-    color: #ffffff; 
-    border: 1px solid #a89980;
-}
-
-.nav-pills .nav-link.active {
-    background-color: #1a1a1a; 
-    color: #ffffff;
-    border: 1px solid #a89980;
+    background-color: #f5f5f5;
+    color: #000000; 
 }
 
 
-.nav-pills .nav-link.active:hover {
-    background-color: #0d0d0d; 
-    color: #ffffff; 
+.nav-pills .nav-link.active,
+.nav-pills .nav-link:focus,
+.nav-pills .nav-link:active {
+    background-color: black; 
+    color: white;
 }
 
 .btn-primary {
