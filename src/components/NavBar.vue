@@ -7,7 +7,7 @@
             <ul class="navbar-nav">
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-custom-search" type="submit">Search</button>
                 </form>
             </ul>
             <div class="d-flex">
@@ -90,5 +90,17 @@ export default {
 <style scoped>
 .custom-navbar-bg {
     background-color: #fcf7eb !important;
+}
+
+.btn-custom-search {
+    color: #333; 
+    border: 1px solid #333; 
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-search:hover {
+    background-color: #333; 
+    color: #fcf7eb;
 }
 </style>
