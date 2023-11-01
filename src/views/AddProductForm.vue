@@ -71,18 +71,14 @@
                             <option hidden selected disabled>Choose clothing type</option>
 
                             <optgroup label="Women">
-                                <option value="W Top">Top</option>
-                                <option value="W Bottom">Bottom</option>
-                                <option value="W Shoes">Shoes</option>
-                                <option value="W Accessories">Accessories</option>
-                                <option value="W Underwear">Underwear</option>
+                                <option value="W Shirt">Shirt</option>
+                                <option value="W Pants">Pants</option>
+                                <option value="W Shorts">Shorts</option>
                             </optgroup>
                             <optgroup label="Men">
-                                <option value="M Top">Top</option>
-                                <option value="M Bottom">Bottom</option>
-                                <option value="M Shoes">Shoes</option>
-                                <option value="M Accessories">Accessories</option>
-                                <option value="M Underwear">Underwear</option>
+                                <option value="M Shirt">Shirt</option>
+                                <option value="M Pants">Pants</option>
+                                <option value="M Shorts">Shorts</option>
                             </optgroup>
                         </select>
                     </div>
@@ -99,17 +95,17 @@
                                 value="New"
                                 id="new"
                                 autocomplete="off" />
-                            <label class="btn btn-outline-success me-2" for="new">New</label>
+                            <label class="btn btn-outline-success me-2" for="new">Brand New</label>
 
                             <input
                                 type="radio"
                                 class="btn-check"
                                 name="type"
-                                value="Used"
+                                value="Pre-loved"
                                 v-model="product.type"
                                 id="used"
                                 autocomplete="off" />
-                            <label class="btn btn-outline-success me-2" for="used">Used</label>
+                            <label class="btn btn-outline-success me-2" for="used">Pre-loved</label>
                             <input
                                 type="radio"
                                 class="btn-check"
@@ -194,7 +190,6 @@
     </form>
 </template>
 <script>
-import { FirebaseError } from "firebase/app";
 import NavBar from "../components/NavBar.vue";
 import { setDoc, query, getFirestore, onSnapshot, updateDoc, doc, deleteDoc, arrayUnion } from "firebase/firestore";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";

@@ -1,21 +1,6 @@
 <template>
     <NavBar />
-    <div class="container">
-        <div class="sidebar-step-container">
-            <span class="sidebar-step-number" :class="{ active: active }">{{ step.number }}</span>
-            <div class="sidebar-step">
-                <span>STEP {{ step.number }}</span>
-                <span>{{ step.label }}</span>
-            </div>
-        </div>
 
-        <div class="main-container">
-            <div class="main-content">
-                <slot />
-            </div>
-            <NavButtons v-if="stepStore.step < 5" />
-        </div>
-    </div>
     <section class="mt-5 d-flex align-items-center justify-content-centre">
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -25,121 +10,34 @@
                         class="img-fluid"
                         alt="Sample image" />
                 </div>
-                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form href="#" @submit.prevent="signUp">
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="form-check mb-3">
-                                    <input
-                                        type="checkbox"
-                                        v-model="type"
-                                        id="type"
-                                        class="form-check-input"
-                                        @click="onChange" />
-                                    <label class="form-check-label" for="type">Are you a business?</label>
-                                </div>
-                            </div>
+                <div class="col-md-8 col-lg-6 col-xl-5 offset-xl-1">
+                    <!-- Password input -->
+                    <div class="container d-flex">
+                        <div v-if="currentStep === 1">
+                            <StepOne :data="formData" @update-data="handleUpdateData" :nextStep="nextStep" />
                         </div>
-                        <!-- Email input -->
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="form-floating mb-3">
-                                    <input
-                                        type="username"
-                                        placeholder="Username"
-                                        required
-                                        v-model="username"
-                                        id="username"
-                                        class="form-control"
-                                        aria-describedby="usernameHelp" />
-                                    <label id="usernameLabel" for="username">Username</label>
-                                </div>
-                            </div>
-                            <!-- Email input -->
-                            <div class="col-md">
-                                <div class="form-floating mb-3">
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        required
-                                        v-model="email"
-                                        id="email"
-                                        class="form-control"
-                                        aria-describedby="emailHelp" />
-                                    <label for="email">Email address</label>
-                                </div>
-                            </div>
+                        <div v-if="currentStep === 2">
+                            <StepTwo
+                                :data="formData"
+                                @update-data="handleUpdateData"
+                                :nextStep="nextStep"
+                                :prevStep="prevStep"
+                                :submitForm="submitForm" />
                         </div>
-                        <!-- Password input -->
-                        <div class="form-floating mb-3">
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                required
-                                v-model="password"
-                                id="password"
-                                class="form-control" />
-                            <label for="password">Password</label>
+                        <div v-if="currentStep === 3">
+                            <StepThree
+                                :data="formData"
+                                @update-data="handleUpdateData"
+                                :prevStep="prevStep"
+                                :submitForm="submitForm" />
                         </div>
-
-                        <div class="form-floating mb-3">
-                            <vue-google-autocomplete
-                                id="map"
-                                classname="form-control"
-                                ref="address"
-                                v-on:placechanged="getAddressData"
-                                :country="['sg']"></vue-google-autocomplete>
-                            <label for="postcode">Address</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="form-floating mb-3">
-                                    <input
-                                        type="text"
-                                        placeholder="Block Number"
-                                        required
-                                        v-model="blockNumber"
-                                        id="blockNumber"
-                                        class="form-control" />
-                                    <label for="blockNumber">Block Number</label>
-                                </div>
-                            </div>
-                            <div class="col-md">
-                                <div class="form-floating mb-3">
-                                    <input
-                                        type="text"
-                                        placeholder="Postal Code"
-                                        required
-                                        v-model="postcode"
-                                        id="postcode"
-                                        class="form-control" />
-                                    <label for="postcode">Postal Code</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input
-                                type="text"
-                                placeholder="Contact No."
-                                required
-                                v-model="contactno"
-                                id="contactno"
-                                class="form-control" />
-                            <label for="contactno">Contact No.</label>
-                        </div>
-                        <div class="text-center text-lg-start mt-4 pt-2">
-                            <button
-                                type="submit"
-                                class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem">
-                                Register
-                            </button>
-                            <p class="small fw-bold mt-2 pt-1 mb-0">
-                                Already have an account?
-                                <a href="/login" class="link-danger">Log In</a>
-                            </p>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <p class="small fw-bold mt-2 pt-1 mb-0">
+                            Already have an account?
+                            <a href="/login" class="link-danger">Log In</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,117 +45,135 @@
 </template>
 
 <script>
-//import VueGoogleAutocomplete from "vue-google-autocomplete";
+import VueGoogleAutocomplete from "vue-google-autocomplete";
 import NavBar from "../components/NavBar.vue";
 import router from "../router";
+import StepOne from "../components/StepOne.vue";
+import StepTwo from "../components/StepTwo.vue";
+import StepThree from "../components/StepThree.vue";
 export default {
     // components: { NavBar, VueGoogleAutocomplete },
-    components: { NavBar },
+    components: {
+        StepOne,
+        StepTwo,
+        StepThree,
+        NavBar,
+        //VueGoogleAutocomplete,
+    },
     data() {
         return {
-            username: "",
-            email: "",
-            password: "",
-            address: "",
-            blockNumber: "",
-            postcode: "",
-            contactno: "",
-            type: false,
-            step: {
-                type: Object,
-                required: true,
-            },
-            active: {
-                type: Boolean,
-                required: true,
-                default: false,
+            currentStep: 1,
+            message: "",
+            formData: {
+                username: "",
+                email: "",
+                password: "",
+                address: "",
+                phoneNumber: "",
+                blockNumber: "",
+                postalCode: "",
+                type: "",
+                recycledMaterials: "",
+                organicMaterials: "",
+                ecoFriendlyProduction: "",
+                fairLaborPractices: "",
+                ecoFriendlyPackaging: "",
+                sustainabilityPolicy: "",
+                sustainabilityCommitmentRating: "",
+                verificationImage: [],
+                sustainabilityScore: 0,
             },
         };
     },
     methods: {
-        onChange() {
-            let e = document.getElementById("type");
-            let username = document.getElementById("usernameLabel");
-            if (e.checked) {
-                username.textContent = "Business Name";
+        // Update Form
+        handleUpdateData({ key, value }) {
+            this.formData[key] = value;
+            console.log(this.formData);
+        },
+
+        // Step Control
+        nextStep() {
+            if (this.currentStep == 1 && this.formData.username && this.formData.email && this.formData.password) {
+                this.currentStep++;
+            } else if (
+                this.currentStep == 2 &&
+                this.formData.blockNumber &&
+                this.formData.postalCode &&
+                this.formData.phoneNumber
+            ) {
+                this.currentStep++;
+            } else if (this.currentStep == 3 && this.formData.questionnaireAnswer) {
+                this.currentStep++;
             } else {
-                username.textContent = "Username";
+                alert("Please fill in all fields");
+            }
+            console.log(this.currentStep);
+        },
+        prevStep() {
+            if (this.currentStep > 1) {
+                this.currentStep--;
             }
         },
-        async signUp() {
-            let business = this.type ? "business" : "user";
-            try {
-                await this.$store.dispatch("signUp", {
-                    email: this.email,
-                    password: this.password,
-                    name: this.username,
-                    type: business,
-                    address: this.address,
-                    blockNumber: this.blockNumber,
-                    postcode: this.postcode,
-                    contactno: this.contactno,
-                });
-                router.push("/");
-                console.log("User signed up successfully!");
-            } catch (err) {
-                console.log(err);
+
+        checkSustainability() {
+            var message;
+            var rating;
+            var score = 0;
+            var answers = [
+                "recycledMaterials",
+                "organicMaterials",
+                "ecoFriendlyProduction",
+                "fairLaborPractices",
+                "ecoFriendlyPackaging",
+                "sustainabilityPolicy",
+                "sustainabilityCommitmentRating",
+            ];
+
+            for (var i = 0; i < answers.length; i++) {
+                if (this.formData[answers[i]] == "yes") {
+                    score += 5;
+                } else if (i == "sustainabilityCommitmentRating") {
+                    score += Number(this.formData[answers[i]]);
+                }
+                this.formData.splice(this.formData.indexOf(answers[i]), 1);
             }
+            if (score > 33) {
+                message = "Your Sustainability Rating is 5⭐";
+                rating = 5;
+            } else if (score > 29 && score <= 33) {
+                message = "Your Sustainability Rating is 4⭐";
+                rating = 4;
+            } else if (score > 24 && score <= 29) {
+                message = "Your Sustainability Rating is 3⭐";
+                rating = 3;
+            } else if (score > 19 && score <= 24) {
+                message = "Your Sustainability Rating is 2⭐";
+                rating = 2;
+            } else if (score > 17 && score <= 19) {
+                message = "Your Sustainability Rating is 1⭐";
+                rating = 1;
+            } else {
+                message =
+                    "Consider reviewing your policies and exploring more eco-friendly options. Every step towards sustainability makes a difference!";
+                rating = 0;
+            }
+            this.formData.sustainabilityScore = rating;
+            this.message = message;
         },
+        // Submit Form
+        async submitForm() {
+            console.log(this.formData);
+            this.formData.type = this.formData.type ? "business" : "user";
+            this.checkSustainability();
+            const signUp = await this.$store.dispatch("signUp", this.formData);
+            router.push("/");
+            // Submit the form data to a server or process it as needed
+        },
+
         getAddressData: function (addressData, placeResultData, id) {
             this.address = addressData;
         },
     },
 };
 </script>
-<style scoped>
-.sidebar-step-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    color: var(--white);
-    margin-bottom: 40px;
-}
-
-.sidebar-step-number {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--light-blue);
-    border-radius: 50%;
-    text-align: center;
-    line-height: 40px;
-    font-size: 20px;
-}
-
-.sidebar-step-number.active {
-    background-color: var(--light-blue);
-    color: var(--purplish-blue);
-}
-
-.sidebar-step {
-    margin-left: 20px;
-}
-
-.sidebar-step span {
-    display: block;
-}
-
-.sidebar-step span:first-child {
-    font-size: 14px;
-    color: var(--light-blue);
-}
-
-.sidebar-step span:last-child {
-    font-size: 16px;
-    font-weight: 600;
-}
-.main-container {
-    padding: 20px 100px;
-    margin-left: 20px;
-    width: calc(100% - 320px);
-}
-
-.main-content {
-    height: 600px;
-    width: 100%;
-}
-</style>

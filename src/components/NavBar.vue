@@ -7,7 +7,7 @@
             <ul class="navbar-nav">
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-custom-search" type="submit">Search</button>
                 </form>
             </ul>
             <div class="d-flex">
@@ -15,7 +15,7 @@
                 <div v-if="checkAuth != null" class="dropdown">
                     <a
                         class="m-2 nav-link dropdown-toggle"
-                        type="button"
+                        role="button"
                         id="dropdownMenuButton"
                         data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -34,11 +34,11 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><a class="dropdown-item" href="#" v-on:click="logout">Log out</a></li>
                     </ul>
                 </div>
-                <button type="button" class="btn nav-link m-2">
+
+                <button type="button" class="btn nav-link m-2" @click="goToCartPage">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -72,6 +72,9 @@ export default {
                 router.push("/");
             });
         },
+        goToCartPage() {
+            router.push({ name: "Cart" });
+        },
     },
     created() {
         onAuthStateChanged(auth, (user) => {
@@ -86,8 +89,19 @@ export default {
 </script>
 
 <style scoped>
-    .custom-navbar-bg {
-        background-color: #FCF7EB !important;
-    }
-    
+.custom-navbar-bg {
+    background-color: #fcf7eb !important;
+}
+
+.btn-custom-search {
+    color: #333;
+    border: 1px solid #333;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-search:hover {
+    background-color: #333;
+    color: #fcf7eb;
+}
 </style>
