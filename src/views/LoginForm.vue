@@ -9,44 +9,47 @@
                         class="img-fluid"
                         alt="Sample image" />
                 </div>
-                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form href="#" @submit.prevent="logIn">
-                        <!-- Email input -->
-                        <div class="form-floating">
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                required
-                                v-model="email"
-                                id="email"
-                                class="form-control mb-3"
-                                aria-describedby="emailHelp" />
-                            <label for="email">Email address</label>
-                        </div>
-                        <!-- Password input -->
-                        <div class="form-floating">
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                required
-                                v-model="password"
-                                id="password"
-                                class="form-control mb-3" />
-                            <label for="password">Password</label>
-                        </div>
-                        <div class="text-center text-lg-start mt-4 pt-2">
-                            <button
-                                type="submit"
-                                class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem">
-                                Login
-                            </button>
-                            <p class="small fw-bold mt-2 pt-1 mb-0">
-                                Don't have an account?
-                                <a href="/signup" class="link-danger">Register</a>
-                            </p>
-                        </div>
-                    </form>
+                <div class="col-md-8 col-lg-6 col-xl-5 offset-xl-1">
+                    <div class="container d-flex">
+                        <form href="#" @submit.prevent="logIn">
+                            <h2 class="text-success mb-2">Login to your account</h2>
+                            <!-- Email input -->
+                            <div class="form-floating">
+                                <input
+                                    type="email"
+                                    placeholder="Email"
+                                    required
+                                    v-model="email"
+                                    id="email"
+                                    class="form-control mb-3"
+                                    aria-describedby="emailHelp" />
+                                <label for="email">Email address</label>
+                            </div>
+                            <!-- Password input -->
+                            <div class="form-floating">
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    required
+                                    v-model="password"
+                                    id="password"
+                                    class="form-control mb-3" />
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="text-center text-lg-start mt-4 pt-2">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary btn-lg"
+                                    style="padding-left: 2.5rem; padding-right: 2.5rem">
+                                    Login
+                                </button>
+                                <p class="small fw-bold mt-2 pt-1 mb-0">
+                                    Don't have an account?
+                                    <a href="/signup" class="link-danger">Register</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

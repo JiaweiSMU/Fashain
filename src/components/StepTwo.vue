@@ -5,11 +5,9 @@
             <vue-google-autocomplete
                 id="map"
                 classname="form-control"
-                :value="data.address"
-                ref="address"
                 v-on:placechanged="getAddressData"
                 :country="['sg']"></vue-google-autocomplete>
-            <label for="postcode">Address</label>
+            <label for="map">Address</label>
         </div>
         <div class="row">
             <div class="col-md">
@@ -59,11 +57,18 @@
 </template>
 
 <script>
+import VueGoogleAutocomplete from "vue-google-autocomplete";
 export default {
     props: ["data", "nextStep", "prevStep", "submitForm"],
+    components: { VueGoogleAutocomplete },
     methods: {
         updateData(key, value) {
             this.$emit("update-data", { key, value });
+        },
+
+        getAddressData: function (addressData, placeResultData, id) {
+            this.updateData("address", addressData);
+            console.log(addressData);
         },
     },
 };

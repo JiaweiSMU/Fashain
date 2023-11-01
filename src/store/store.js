@@ -67,7 +67,7 @@ export const store = createStore({
                     blockNumber: formData.blockNumber,
                     postcode: formData.postalCode,
                     contactno: formData.phoneNumber,
-                    sustainabilityScore: formData.sustainabilityScore,
+                    rating: formData.rating,
                     cart: [],
                 }).then(() => {
                     console.log("User successfully created!");

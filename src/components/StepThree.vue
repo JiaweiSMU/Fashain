@@ -12,21 +12,21 @@
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
+                        name="recycledMaterials"
+                        id="recycledMaterials"
                         value="yes"
                         @change="updateData('recycledMaterials', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    <label class="form-check-label" for="recycledMaterials">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
+                        name="recycledMaterials"
+                        id="recycledMaterials2"
                         value="no"
                         @change="updateData('recycledMaterials', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio2">No</label>
+                    <label class="form-check-label" for="recycledMaterials2">No</label>
                 </div>
             </div>
             <!-- 2nd question -->
@@ -36,21 +36,21 @@
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
+                        name="organic"
+                        id="organic"
                         value="yes"
                         @change="updateData('organicMaterials', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    <label class="form-check-label" for="organic">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
+                        name="organic"
+                        id="organic2"
                         value="no"
                         @change="updateData('organicMaterials', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio2">No</label>
+                    <label class="form-check-label" for="organic2">No</label>
                 </div>
             </div>
             <!-- closing div tag for section header     -->
@@ -61,21 +61,21 @@
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
+                        name="ecoFriendlyProduction"
+                        id="ecoFriendlyProduction"
                         value="yes"
                         @change="updateData('ecoFriendlyProduction', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    <label class="form-check-label" for="ecoFriendlyProduction">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
+                        name="ecoFriendlyProduction"
+                        id="ecoFriendlyProduction2"
                         value="no"
                         @change="updateData('ecoFriendlyProduction', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio2">No</label>
+                    <label class="form-check-label" for="ecoFriendlyProduction2">No</label>
                 </div>
             </div>
             <div class="mb-4">
@@ -86,21 +86,21 @@
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
+                        name="practices"
+                        id="practices"
                         value="yes"
                         @change="updateData('fairLaborPractices', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    <label class="form-check-label" for="practices">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
+                        name="practices"
+                        id="practices2"
                         value="no"
                         @change="updateData('fairLaborPractices', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio2">No</label>
+                    <label class="form-check-label" for="practices2">No</label>
                 </div>
             </div>
             <div class="mb-4">
@@ -111,21 +111,21 @@
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
+                        name="packaging"
+                        id="packaging"
                         value="yes"
                         @change="updateData('ecoFriendlyPackaging', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    <label class="form-check-label" for="packaging">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
+                        name="packaging"
+                        id="packaging2"
                         value="no"
                         @change="updateData('ecoFriendlyPackaging', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio2">No</label>
+                    <label class="form-check-label" for="packaging2">No</label>
                 </div>
             </div>
             <div class="mb-4">
@@ -136,21 +136,21 @@
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
+                        name="policy"
+                        id="policy"
                         value="yes"
                         @change="updateData('sustainabilityPolicy', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    <label class="form-check-label" for="policy">Yes</label>
                 </div>
                 <div class="form-check form-check-inline mb-3">
                     <input
                         class="form-check-input"
                         type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
+                        name="policy"
+                        id="policy2"
                         value="no"
                         @change="updateData('sustainabilityPolicy', $event.target.value)" />
-                    <label class="form-check-label" for="inlineRadio2">No</label>
+                    <label class="form-check-label" for="policy2">No</label>
                 </div>
 
                 <div class="form-group mb-3">

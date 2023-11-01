@@ -205,14 +205,56 @@
                                 class="tab-pane fade show active"
                                 id="pills-home"
                                 role="tabpanel"
-                                aria-labelledby="pills-home-tab"></div>
+                                aria-labelledby="pills-home-tab">
+                                <div class="row me-2 ms-2 mt-2 justify-content-between">
+                                    <div
+                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-2 ms-2 flex-fill"
+                                        v-for="(product, index) in products"
+                                        :key="index"
+                                        style="width: 200px">
+                                        <div class="card text-black">
+                                            <img
+                                                :src="product.images[0]"
+                                                class="card-img-top w-100"
+                                                :alt="product.name" />
+                                            <div class="card-body">
+                                                <div class="text-center mt-1">
+                                                    <h4 class="card-title" style="font-size: large">
+                                                        {{ product.name }}
+                                                    </h4>
+                                                    <p class="card-text">
+                                                        <strong>Category:</strong> {{ product.category }}<br />
+                                                        <strong>Price:</strong> ${{ product.price }}<br />
+                                                        <strong>Type:</strong> {{ product.type }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-footer d-flex flex-row mb-0">
+                                                <button
+                                                    @click="editProduct(index)"
+                                                    type="button"
+                                                    class="btn btn-primary flex-fill me-1">
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    @click="deleteProduct(index)"
+                                                    type="button"
+                                                    class="btn btn-danger flex-fill ms-1">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
                                 <div class="row me-2 ms-2 mt-2 justify-content-between">
                                     <div
-                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-4 flex-fill"
+                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-2 ms-2 flex-fill"
                                         v-for="(product, index) in products_new"
                                         :key="index"
-                                        style="height: 475px; width: 200px">
+                                        style="width: 200px">
                                         <div class="card text-black">
                                             <img
                                                 :src="product.images[0]"
@@ -249,38 +291,42 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
-                                <div class="row">
+                                <div class="row me-2 ms-2 mt-2 justify-content-between">
                                     <div
-                                        class="col-md-6 col-lg-4 mb-4 t-2"
+                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-2 ms-2 flex-fill"
                                         v-for="(product, index) in products_used"
-                                        :key="index">
+                                        :key="index"
+                                        style="width: 200px">
                                         <div class="card text-black">
-                                            <img :src="product.images[0]" class="card-img-top" :alt="product.name" />
+                                            <img
+                                                :src="product.images[0]"
+                                                class="card-img-top w-100"
+                                                :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
-                                                    <h4 class="card-title">{{ product.name }}</h4>
+                                                    <h4 class="card-title" style="font-size: large">
+                                                        {{ product.name }}
+                                                    </h4>
                                                     <p class="card-text">
-                                                        <strong>Category:</strong> {{ product.category }}
-                                                    </p>
-                                                    <p class="card-text">
+                                                        <strong>Category:</strong> {{ product.category }}<br />
                                                         <strong>Price:</strong> ${{ product.price }}
                                                     </p>
                                                 </div>
-                                                <br />
-                                                <div class="d-flex flex-row">
-                                                    <button
-                                                        @click="editProduct(index)"
-                                                        type="button"
-                                                        class="btn btn-primary flex-fill me-1">
-                                                        Edit
-                                                    </button>
-                                                    <button
-                                                        @click="deleteProduct(index)"
-                                                        type="button"
-                                                        class="btn btn-danger flex-fill ms-1">
-                                                        Delete
-                                                    </button>
-                                                </div>
+                                            </div>
+
+                                            <div class="card-footer d-flex flex-row mb-0">
+                                                <button
+                                                    @click="editProduct(index)"
+                                                    type="button"
+                                                    class="btn btn-primary flex-fill me-1">
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    @click="deleteProduct(index)"
+                                                    type="button"
+                                                    class="btn btn-danger flex-fill ms-1">
+                                                    Delete
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -291,25 +337,29 @@
                                 id="pills-rental"
                                 role="tabpanel"
                                 aria-labelledby="pills-rental-tab">
-                                <div class="row">
+                                <div class="row me-2 ms-2 mt-2 justify-content-between">
                                     <div
-                                        class="col-md-6 col-lg-4 mb-4 mb-md-0 mt-2"
+                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-2 ms-2 flex-fill"
                                         v-for="(product, index) in products_rental"
-                                        :key="index">
+                                        :key="index"
+                                        style="width: 200px">
                                         <div class="card text-black">
-                                            <img :src="product.images[0]" class="card-img-top" :alt="product.name" />
+                                            <img
+                                                :src="product.images[0]"
+                                                class="card-img-top w-100"
+                                                :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
-                                                    <h4 class="card-title">{{ product.name }}</h4>
+                                                    <h4 class="card-title" style="font-size: large">
+                                                        {{ product.name }}
+                                                    </h4>
                                                     <p class="card-text">
-                                                        <strong>Category:</strong> {{ product.category }}
-                                                    </p>
-                                                    <p class="card-text">
+                                                        <strong>Category:</strong> {{ product.category }}<br />
                                                         <strong>Price:</strong> ${{ product.price }}
                                                     </p>
                                                 </div>
-                                                <br />
                                             </div>
+
                                             <div class="card-footer d-flex flex-row mb-0">
                                                 <button
                                                     @click="editProduct(index)"
@@ -467,7 +517,7 @@ export default {
                 this.user.postcode = user_details.data().postcode;
                 this.user.blockNumber = user_details.data().blockNumber;
                 this.user.contactno = user_details.data().contactno;
-                //this.user.rating = user_details.data().rating;
+                this.user.rating = user_details.data().rating;
                 //this.user.joindate = user_details.data().joindate.toDate();
                 console.log(this.user.documentID);
             });

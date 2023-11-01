@@ -45,20 +45,17 @@
 </template>
 
 <script>
-import VueGoogleAutocomplete from "vue-google-autocomplete";
 import NavBar from "../components/NavBar.vue";
 import router from "../router";
 import StepOne from "../components/StepOne.vue";
 import StepTwo from "../components/StepTwo.vue";
 import StepThree from "../components/StepThree.vue";
 export default {
-    // components: { NavBar, VueGoogleAutocomplete },
     components: {
         StepOne,
         StepTwo,
         StepThree,
         NavBar,
-        //VueGoogleAutocomplete,
     },
     data() {
         return {
@@ -72,7 +69,7 @@ export default {
                 phoneNumber: "",
                 blockNumber: "",
                 postalCode: "",
-                type: "",
+                type: false,
                 recycledMaterials: "",
                 organicMaterials: "",
                 ecoFriendlyProduction: "",
@@ -81,7 +78,7 @@ export default {
                 sustainabilityPolicy: "",
                 sustainabilityCommitmentRating: "",
                 verificationImage: [],
-                sustainabilityScore: 0,
+                rating: 0,
             },
         };
     },
@@ -89,19 +86,13 @@ export default {
         // Update Form
         handleUpdateData({ key, value }) {
             this.formData[key] = value;
-            console.log(this.formData);
         },
 
         // Step Control
         nextStep() {
             if (this.currentStep == 1 && this.formData.username && this.formData.email && this.formData.password) {
                 this.currentStep++;
-            } else if (
-                this.currentStep == 2 &&
-                this.formData.blockNumber &&
-                this.formData.postalCode &&
-                this.formData.phoneNumber
-            ) {
+            } else if (this.currentStep == 2 && this.formData.postalCode && this.formData.phoneNumber) {
                 this.currentStep++;
             } else if (this.currentStep == 3 && this.formData.questionnaireAnswer) {
                 this.currentStep++;
@@ -133,10 +124,10 @@ export default {
             for (var i = 0; i < answers.length; i++) {
                 if (this.formData[answers[i]] == "yes") {
                     score += 5;
-                } else if (i == "sustainabilityCommitmentRating") {
+                } else if (answers[i] == "sustainabilityCommitmentRating") {
                     score += Number(this.formData[answers[i]]);
                 }
-                this.formData.splice(this.formData.indexOf(answers[i]), 1);
+                delete this.formData[answers[i]];
             }
             if (score > 33) {
                 message = "Your Sustainability Rating is 5⭐";
@@ -158,8 +149,9 @@ export default {
                     "Consider reviewing your policies and exploring more eco-friendly options. Every step towards sustainability makes a difference!";
                 rating = 0;
             }
-            this.formData.sustainabilityScore = rating;
+            this.formData.rating = rating;
             this.message = message;
+            console.log(this.message);
         },
         // Submit Form
         async submitForm() {
@@ -168,11 +160,6 @@ export default {
             this.checkSustainability();
             const signUp = await this.$store.dispatch("signUp", this.formData);
             router.push("/");
-            // Submit the form data to a server or process it as needed
-        },
-
-        getAddressData: function (addressData, placeResultData, id) {
-            this.address = addressData;
         },
     },
 };
