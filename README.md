@@ -1,14 +1,10 @@
-# Fashain_
+# Fashain\_
 
-This template should help get you started developing with Vue 3 in Vite.
+A sustainability-based e-commerce fashion platform developed in Vue3 and Vite.
 
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
@@ -22,14 +18,14 @@ npm install
 npm run dev
 ```
 
-### Compile and Minify for Production
+### For testing purposes (Business Accounts)
 
-```sh
-npm run build
-```
+superfreak@gmail.com <br> blueginger@gmail.com <br> colony@gmail.com <br> pull&bear@gmail.com <br> thesmushop@gmail.com
 
-### Lint with [ESLint](https://eslint.org/)
+Password: 123123 (LOL)
 
-```sh
-npm run lint
-```
+### (User Accounts)
+
+asd@asd.com
+
+Same password ^
