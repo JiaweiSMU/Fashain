@@ -9,19 +9,36 @@
                     <img :src="product.images[0]" class="product-img" alt="Product Image" />
                 </div>
                 <div class="col-md-6 product-details-section">
+                     <!-- Toggle button to switch between map and product details -->
+                    <button @click="toggleView" class="btn btn-secondary mb-3">
+                        {{ showMap ? 'Show Product Details' : 'Show Store Location' }}
+                    </button>
+
                     <!-- Displaying the product details -->
-                    <h2 class="product-name">{{ product.name }}</h2>
-                    <p class="product-description">{{ product.description }}</p>
-                    <p class="product-category"><strong>Category:</strong> {{ product.category }}</p>
-                    <p class="product-price">${{ product.price }}</p>
-                    <!-- size selection -->
-                    <div class="size-selection">
-                        <button v-for="size in Object.keys(product.quantity)" :key="size" class="size-btn">
-                            {{ size }}
-                        </button>
+                    <div v-if="!showMap">
+                        <h2 class="product-name">{{ product.name }}</h2>
+                        <p class="product-description">{{ product.description }}</p>
+                        <p class="product-category"><strong>Category:</strong> {{ product.category }}</p>
+                        <p class="product-price">${{ product.price }}</p>
+                        <!-- size selection -->
+                        <div class="size-selection">
+                            <button v-for="size in Object.keys(product.quantity)" :key="size" class="size-btn">
+                                {{ size }}
+                            </button>
+                        </div>
+                        <!-- buy button -->
+                        <button class="buy-btn btn btn-primary">Buy Now</button>
                     </div>
-                    <!-- buy button -->
-                    <button class="buy-btn btn btn-primary">Buy Now</button>
+                    <!-- Displaying the map -->
+                    <div v-else>
+                        <div id="map" style="width: 100%; height: 300px;"></div>
+                        <div class="user-details-section">
+                            <h3>{{ username }}</h3>
+                            <p><strong>Email: </strong><a :href="'mailto:' + email">{{ email }}</a></p>
+                            <p><strong>Contact Number: </strong>{{ contactno }}</p>
+                            <p class="address"><strong>Address: </strong>{{ street_number }} {{ route }}, {{ postal_code }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,6 +56,15 @@ export default {
     data() {
         return {
             product: {},
+            lat: null,
+            long: null,
+            username: null,
+            email: null,
+            contactno: null,
+            street_number: null,
+            route: null,
+            postal_code: null,
+            showMap: false,
         };
     },
     props: {
@@ -60,6 +86,14 @@ export default {
         });
     },
 
+    watch: {
+        showMap(newVal) {
+            if (newVal) {
+                this.initializeMap();
+            }
+        }
+    },
+
     methods: {
         async fetchProductDetails() {
             const q = query(collection(db, "products"), where("name", "==", this.name));
@@ -67,11 +101,48 @@ export default {
             if (!querySnapshot.empty) {
                 this.product = querySnapshot.docs[0].data();
                 console.log("Fetched product details:", this.product);
+                this.fetchAddress()
             } else {
                 console.warn("No product found for the given UID");
             }
         },
 
+        async fetchAddress() {
+            const q = query(collection(db, "users"), where("uid", "==", this.product.uid));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                this.lat = querySnapshot.docs[0].data().address.latitude;
+                this.long = querySnapshot.docs[0].data().address.longitude;
+                this.username = querySnapshot.docs[0].data().name;
+                this.email = querySnapshot.docs[0].data().email;
+                this.contactno = querySnapshot.docs[0].data().contactno;
+                this.street_number = querySnapshot.docs[0].data().address.street_number;
+                this.route = querySnapshot.docs[0].data().address.route;
+                this.postal_code = querySnapshot.docs[0].data().address.postal_code;
+                console.log("Fetched user address:", this.lat, this.long, this.username, this.email, this.contactno, this.street_number, this.route, this.postal_code);
+            } else {
+                console.warn("No address found");
+            }
+        },
+
+        toggleView() {
+            this.showMap = !this.showMap;
+        },
+
+        initializeMap() {
+            if (!this.lat || !this.long) return;
+            this.$nextTick(() => {
+                const map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: this.lat, lng: this.long },
+                    zoom: 15
+                });
+
+                const marker = new google.maps.Marker({
+                    position: { lat: this.lat, lng: this.long },
+                    map: map
+                });
+            });
+        },
     }
 
 };
@@ -96,6 +167,14 @@ export default {
         background-color: #ffffff;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
         border-radius: 10px;
+    }
+
+    #map {
+        width: 100%;
+        height: 400px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        margin: 20px 0; 
     }
 
     .product-img {
@@ -166,5 +245,40 @@ export default {
         }
     }
     
+    .user-details-section {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;  
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .user-details-section h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    .user-details-section p {
+        margin-bottom: 8px;
+        font-size: 1.1em;
+        color: #555;
+    }
+    
+    .user-details-section a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    
+    .user-details-section a:hover {
+        text-decoration: underline;
+    }
+
+    .user-details-section p.address {
+        margin-top: 10px;
+        font-size: 1.1em;
+        color: #4a4a4a;
+    }
+
     
 </style>
