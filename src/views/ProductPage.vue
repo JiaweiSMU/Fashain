@@ -26,8 +26,9 @@
                                 {{ size }}
                             </button>
                         </div>
-                        <!-- buy button -->
-                        <button class="buy-btn btn btn-primary">Buy Now</button>
+                        <!-- Add to cart button -->
+                        <button @click="addToCart" class="cart-btn btn btn-secondary">Add to Cart</button>
+                        <div v-if="showAddedMessage" class="added-to-cart-message">Added to Cart</div>
                     </div>
                     <!-- Displaying the map -->
                     <div v-else>
@@ -46,7 +47,7 @@
 </template>
 
 <script>
-import { collection, query, where, getFirestore, getDocs } from "firebase/firestore";
+import { collection, query, where, getFirestore, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 import NavBar from "../components/NavBar.vue";
 
 const db = getFirestore();
@@ -64,7 +65,9 @@ export default {
             street_number: null,
             route: null,
             postal_code: null,
+            buyerid: localStorage.getItem("user_uid"),
             showMap: false,
+            showAddedMessage: false,
         };
     },
     props: {
@@ -84,6 +87,7 @@ export default {
         this.fetchProductDetails().catch(error => {
             console.error("Failed to fetch product details:", error);
         });
+
     },
 
     watch: {
@@ -143,6 +147,48 @@ export default {
                 });
             });
         },
+
+        async addToCart() {
+            const userRef = doc(db, "users", this.buyerid);
+            const userDoc = await getDoc(userRef);
+
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                const cartItems = userData.cart || [];
+                
+                // Check if the product is already in the cart
+                const existingCartItemIndex = cartItems.findIndex(item => item.name === this.product.name);
+
+                if (existingCartItemIndex !== -1) {
+                    // Increment the quantity of the product in the cart
+                    cartItems[existingCartItemIndex].quantity += 1;
+                } else {
+                    // Add the product to the cart array
+                    cartItems.push({
+                        image: this.product.images[0],
+                        price: this.product.price,
+                        name: this.product.name,
+                        quantity: 1
+                    });
+                }
+
+                // Update the cart in the Firestore database
+                await updateDoc(userRef, { cart: cartItems });
+                this.isInCart = true;
+                this.showAddedMessage = true;
+
+                // Hide the message after 3 seconds (3000 milliseconds)
+                setTimeout(() => {
+                    this.showAddedMessage = false;
+                }, 2000);
+
+            } else {
+                console.error('User not found!');
+            }
+        },
+
+
+
     }
 
 };
@@ -167,6 +213,7 @@ export default {
         background-color: #ffffff;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
         border-radius: 10px;
+        position: relative;
     }
 
     #map {
@@ -280,5 +327,13 @@ export default {
         color: #4a4a4a;
     }
 
-    
+    .added-to-cart-message {
+        color: goldenrod;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: opacity 0.5s;
+        display: inline-block;
+        padding-left: 1%;
+        position: absolute;
+    }
 </style>
