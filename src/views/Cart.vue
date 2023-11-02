@@ -48,15 +48,12 @@
     <div class="col-lg-4 ml-4 summary-card">
       <div class="card shadow">
         <div class="card-body">
-          <h5 class="card-title">Summary</h5>
-          <p class="card-text">Subtotal: {{ subtotal }}</p>
-          <p class="card-text">Estimated Delivery & Handling: {{ delivery }}</p>
+          <h5 class="card-title">Order Summary</h5>
           <hr>
           <p class="card-text">Total: {{ totalPrice | currency }}</p>
           <hr>
-          <button class="btn btn-dark btn-block">Guest Checkout</button>
-          <p></p>
-          <button class="btn btn-dark btn-block">Member Checkout</button>
+      
+          <button class="btn btn-dark btn-block" @click="checkout" >Checkout</button>
         </div>
       </div>
     </div>
@@ -164,6 +161,22 @@ export default {
         cart: updatedCart,
       });
     },
+    async checkout() {
+
+      // Show a checkout success message using a browser alert
+      window.alert("Checkout Successful!");
+
+      // After showing the alert, you can perform additional actions like clearing the cart
+      // or updating the order history in your Firestore database.
+      // For example, to clear the cart, you can do something like this:
+      const userDocRef = doc(db, "users", this.user_id);
+      await updateDoc(userDocRef, {
+        cart: [],
+      });
+      this.products = []; // Clear the cart in your Vue component
+
+    },
+  
   },
   filters: {
     currency(value) {
