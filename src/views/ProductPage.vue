@@ -265,21 +265,6 @@ export default {
         margin-bottom: 40px;
     }
 
-    .buy-btn {
-        padding: 12px 35px;
-        font-size: 1.15em;
-        background-color: #000; 
-        border: none;
-        color: white;
-        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-
-        &:hover {
-            background-color: #333; 
-            box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-        }
-    }
-
     .size-selection {
         margin-bottom: 20px;
         display: flex;
