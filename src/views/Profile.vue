@@ -14,21 +14,13 @@
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <h5 class="my-3">{{ user.name }}</h5>
-                        <img
-                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                            alt="avatar"
-                            class="rounded-circle img-fluid"
-                            style="width: 150px" />
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                            class="rounded-circle img-fluid" style="width: 150px" />
                         <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
                         <p class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
-                        <a class="btn btn-primary btn-sm" href="/edit_profile"
-                            >Edit Profile
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
+                        <a class="btn btn-primary btn-sm" href="/edit_profile">Edit Profile
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 viewBox="0 2 24 24">
                                 <path
                                     d="M20.548 3.452a1.542 1.542 0 0 1 0 2.182l-7.636 7.636-3.273 1.091 1.091-3.273 7.636-7.636a1.542 1.542 0 0 1 2.182 0zM4 21h15a1 1 0 0 0 1-1v-8a1 1 0 0 0-2 0v7H5V6h7a1 1 0 0 0 0-2H4a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1z" />
@@ -37,13 +29,8 @@
 
                         <ul class="list-group list-group-flush rounded-3">
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    class="bi bi-geo-alt"
-                                    viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-geo-alt" viewBox="0 0 16 16">
                                     <path
                                         d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
                                     <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0 -6 3 3 0 0 0 0 6z" />
@@ -56,27 +43,16 @@
                                 </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    class="bi bi-telephone"
-                                    viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-telephone" viewBox="0 0 16 16">
                                     <path
                                         d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                                 </svg>
                                 <p class="mb-0">{{ user.contactno }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="23"
-                                    height="23"
-                                    fill="currentColor"
-                                    viewBox="6 0 64 64"
-                                    xml:space="preserve"
-                                    style="
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
+                                    viewBox="6 0 64 64" xml:space="preserve" style="
                                         fill-rule: evenodd;
                                         clip-rule: evenodd;
                                         stroke-linecap: round;
@@ -92,24 +68,6 @@
                                 </svg>
                                 <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    viewBox="0 0 32 32"
-                                    style="enable-background: new 0 0 32 32"
-                                    xml:space="preserve">
-                                    <path
-                                        d="M12 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zM1 32a1 1 0 0 1-1-1v-6.115c0-4.93 4.012-8.943 8.942-8.943h6.116c1.229 0 2.42.246 3.54.729a1 1 0 1 1-.792 1.836 6.91 6.91 0 0 0-2.748-.565H8.942A6.95 6.95 0 0 0 2 24.885V31a1 1 0 0 1-1 1zM25 19a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm3.052 5.332-2.75 2.75a1 1 0 0 1-1.413 0l-1.251-1.25a1 1 0 1 1 1.414-1.415l.544.544 2.042-2.043a1 1 0 1 1 1.414 1.414z" />
-                                    <g>
-                                        <path
-                                            d="M25 32c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
-                                    </g>
-                                </svg>
-                                <p class="mb-0">{{ joinDate }}</p>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -124,99 +82,53 @@
                      -->
                     <div>
                         <!-- <div v-if="user.userType == 'business'"> -->
-                        <ul
-                            class="nav nav-pills nav-justified navbar-dark bg-success"
-                            id="pills-tab"
-                            role="tablist"
+                        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist"
                             style="border-radius: 5px">
                             <li class="nav-item" role="presentation">
-                                <button
-                                    class="nav-link active"
-                                    id="pills-home-tab"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-home"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="pills-home"
-                                    aria-selected="true"
-                                    style="color: white">
+                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                    aria-selected="true" style="color: white">
                                     All Products
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button
-                                    class="nav-link"
-                                    id="pills-new-tab"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-new"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="pills-new"
-                                    aria-selected="false"
-                                    style="color: white">
+                                <button class="nav-link" id="pills-new-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
+                                    aria-selected="false" style="color: white">
                                     New
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button
-                                    class="nav-link"
-                                    id="pills-used-tab"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-used"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="pills-used"
-                                    aria-selected="false"
-                                    style="color: white">
+                                <button class="nav-link" id="pills-used-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-used" type="button" role="tab" aria-controls="pills-used"
+                                    aria-selected="false" style="color: white">
                                     Used
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button
-                                    class="nav-link"
-                                    id="pills-rental-tab"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-rental"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="pills-rental"
-                                    aria-selected="false"
-                                    style="color: white">
+                                <button class="nav-link" id="pills-rental-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-rental" type="button" role="tab" aria-controls="pills-rental"
+                                    aria-selected="false" style="color: white">
                                     Rental
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button
-                                    class="nav-link"
-                                    id="pills-campaign-tab"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-campaign"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="pills-campaign"
-                                    aria-selected="false"
-                                    style="color: white">
+                                <button class="nav-link" id="pills-campaign-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-campaign" type="button" role="tab" aria-controls="pills-campaign"
+                                    aria-selected="false" style="color: white">
                                     Campaign
                                 </button>
                             </li>
                         </ul>
+                        <!-- All products -->
                         <div class="tab-content" id="pills-tabContent">
-                            <div
-                                class="tab-pane fade show active"
-                                id="pills-home"
-                                role="tabpanel"
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
-                                <div class="row me-2 ms-2 mt-2 justify-content-between">
-                                    <div
-                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-2 ms-2 flex-fill"
-                                        v-for="(product, index) in products"
-                                        :key="index"
-                                        style="width: 200px">
-                                        <div class="card text-black">
-                                            <img
-                                                :src="product.images[0]"
-                                                class="card-img-top w-100"
-                                                :alt="product.name" />
+                                <div class="row me-2 ms-2 mt-2 justify-content-start">
+                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
+                                        v-for="(product, index) in products" :key="index">
+                                        <div class="card text-black flex-fill">
+                                            <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
                                                     <h4 class="card-title" style="font-size: large">
@@ -224,22 +136,14 @@
                                                     </h4>
                                                     <p class="card-text">
                                                         <strong>Category:</strong> {{ product.category }}<br />
-                                                        <strong>Price:</strong> ${{ product.price }}<br />
-                                                        <strong>Type:</strong> {{ product.type }}
+                                                        <strong>Price:</strong> ${{ product.price }}
                                                     </p>
                                                 </div>
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-                                                <button
-                                                    @click="editProduct(index)"
-                                                    type="button"
-                                                    class="btn btn-primary flex-fill me-1">
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    @click="deleteProduct(index)"
-                                                    type="button"
+                                               
+                                                <button @click="deleteProduct(index,products)" type="button"
                                                     class="btn btn-danger flex-fill ms-1">
                                                     Delete
                                                 </button>
@@ -248,18 +152,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- New products -->
                             <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
-                                <div class="row me-2 ms-2 mt-2 justify-content-between">
-                                    <div
-                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-2 ms-2 flex-fill"
-                                        v-for="(product, index) in products_new"
-                                        :key="index"
-                                        style="width: 200px">
-                                        <div class="card text-black">
-                                            <img
-                                                :src="product.images[0]"
-                                                class="card-img-top w-100"
-                                                :alt="product.name" />
+                                <div class="row me-2 ms-2 mt-2 justify-content-start">
+                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
+                                        v-for="(product, index) in products_new" :key="index">
+                                        <div class="card text-black flex-fill">
+                                            <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
                                                     <h4 class="card-title" style="font-size: large">
@@ -273,35 +172,24 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-                                                <button
-                                                    @click="editProduct(index)"
-                                                    type="button"
-                                                    class="btn btn-primary flex-fill me-1">
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    @click="deleteProduct(index)"
-                                                    type="button"
+                                              
+                                                <button @click="deleteProduct(index,products_new)" type="button"
                                                     class="btn btn-danger flex-fill ms-1">
                                                     Delete
                                                 </button>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- used -->
                             <div class="tab-pane fade" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
-                                <div class="row me-2 ms-2 mt-2 justify-content-between">
-                                    <div
-                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-2 ms-2 flex-fill"
-                                        v-for="(product, index) in products_used"
-                                        :key="index"
-                                        style="width: 200px">
-                                        <div class="card text-black">
-                                            <img
-                                                :src="product.images[0]"
-                                                class="card-img-top w-100"
-                                                :alt="product.name" />
+                                <div class="row me-2 ms-2 mt-2 justify-content-start">
+                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
+                                        v-for="(product, index) in products_used" :key="index">
+                                        <div class="card text-black flex-fill">
+                                            <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
                                                     <h4 class="card-title" style="font-size: large">
@@ -315,15 +203,8 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-                                                <button
-                                                    @click="editProduct(index)"
-                                                    type="button"
-                                                    class="btn btn-primary flex-fill me-1">
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    @click="deleteProduct(index)"
-                                                    type="button"
+                                         
+                                                <button @click="deleteProduct(index,products_used)" type="button"
                                                     class="btn btn-danger flex-fill ms-1">
                                                     Delete
                                                 </button>
@@ -332,22 +213,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="tab-pane fade"
-                                id="pills-rental"
-                                role="tabpanel"
-                                aria-labelledby="pills-rental-tab">
-                                <div class="row me-2 ms-2 mt-2 justify-content-between">
-                                    <div
-                                        class="col-md-6 col-lg-4 col-xl-4 mb-3 p-0 me-2 ms-2 flex-fill"
-                                        v-for="(product, index) in products_rental"
-                                        :key="index"
-                                        style="width: 200px">
-                                        <div class="card text-black">
-                                            <img
-                                                :src="product.images[0]"
-                                                class="card-img-top w-100"
-                                                :alt="product.name" />
+                            <!-- Rental -->
+                            <div class="tab-pane fade" id="pills-rental" role="tabpanel" aria-labelledby="pills-rental-tab">
+                                <div class="row me-2 ms-2 mt-2 justify-content-start">
+                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
+                                        v-for="(product, index) in products_rental" :key="index">
+                                        <div class="card text-black flex-fill">
+                                            <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
                                                     <h4 class="card-title" style="font-size: large">
@@ -361,52 +233,44 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-                                                <button
-                                                    @click="editProduct(index)"
-                                                    type="button"
-                                                    class="btn btn-primary flex-fill me-1">
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    @click="deleteProduct(index)"
-                                                    type="button"
+                                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20" height="20"
+                    style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
+                    <!-- Your SVG content here -->
+                    <path
+                      d="M5.755 20.283 4 8h16l-1.755 12.283A2 2 0 0 1 16.265 22h-8.53a2 2 0 0 1-1.98-1.717zM21 4h-5V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v1H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2z"
+                      style="fill: #650000;" />
+                  </svg>
+                                                <button @click="deleteProduct(index,products_rental)" type="button"
                                                     class="btn btn-danger flex-fill ms-1">
                                                     Delete
                                                 </button>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="tab-pane fade"
-                                id="pills-campaign"
-                                role="tabpanel"
+                            <!-- Campagins -->
+                            <div class="tab-pane fade" id="pills-campaign" role="tabpanel"
                                 aria-labelledby="pills-campaign-tab">
                                 <div class="card mb-3 mx-2 mt-2" v-for="(campaign, index) in campaigns" :key="index">
                                     <div class="image-container">
-                                        <img
-                                            class="card-img-top"
-                                            :src="campaign.campaignImage"
-                                            alt="Campaign Image"
+                                        <img class="card-img-top" :src="campaign.campaignImage" alt="Campaign Image"
                                             style="max-height: 200px; object-fit: fill" />
                                     </div>
                                     <div class="card-body">
                                         <h4 class="card-title">{{ campaign.campaignName }}</h4>
                                         <p class="card-text">{{ campaign.campaignDesc }}</p>
                                         <p class="card-text">
-                                            <small class="text-muted"
-                                                >Campaign Start Date: {{ campaign.campaignStartDate }}</small
-                                            >
+                                            <small class="text-muted">Campaign Start Date: {{ campaign.campaignStartDate
+                                            }}</small>
                                             <br />
-                                            <small class="text-muted"
-                                                >Campaign End Date: {{ campaign.campaignEndDate }}</small
-                                            >
+                                            <small class="text-muted">Campaign End Date: {{ campaign.campaignEndDate
+                                            }}</small>
                                         </p>
                                         <p class="card-text">
-                                            <small class="text-muted"
-                                                >Campaign Address: {{ campaign.campaignAddress }}</small
-                                            >
+                                            <small class="text-muted">Campaign Address: {{ campaign.campaignAddress
+                                            }}</small>
                                         </p>
                                     </div>
                                 </div>
@@ -468,7 +332,7 @@ export default {
                 blockNumber: "",
                 contactno: "",
                 rating: "",
-                joindate: null, // Initialize joindate as null
+                // joindate: null, // Initialize joindate as null
                 campaignsCount: 0, // Add a property to store the campaign count
                 documentID: "",
             },
@@ -554,40 +418,37 @@ export default {
             return x.repeat(Number(this.user.rating));
         },
         // Calculate join date
-        joinDate() {
-            const currentDate = new Date();
-            const timestamp = new Date(this.user.joindate);
-            const timeDifference = currentDate - timestamp;
+        // joinDate() {
+        //     const currentDate = new Date();
+        //     const timestamp = new Date(this.user.joindate);
+        //     const timeDifference = currentDate - timestamp;
 
-            const secondsDifference = timeDifference / 1000;
-            const monthsDifference = secondsDifference / (60 * 60 * 24 * 30.44);
+        //     const secondsDifference = timeDifference / 1000;
+        //     const monthsDifference = secondsDifference / (60 * 60 * 24 * 30.44);
 
-            const years = Math.floor(monthsDifference / 12);
-            const months = Math.floor(monthsDifference % 12);
-            let str_m = "";
-            let str_y = "";
-            if (years > 0) {
-                str_y = `${years} Years `;
-            }
-            if (months > 0) {
-                str_m = `${months} Month `;
-            }
-            let gotAnd = "";
-            if (months > 0 && years > 0) {
-                gotAnd = "& ";
-            }
-            return `Joined: ${str_y}${gotAnd}${str_m}Ago`;
-        },
+        //     const years = Math.floor(monthsDifference / 12);
+        //     const months = Math.floor(monthsDifference % 12);
+        //     let str_m = "";
+        //     let str_y = "";
+        //     if (years > 0) {
+        //         str_y = `${years} Years `;
+        //     }
+        //     if (months > 0) {
+        //         str_m = `${months} Month `;
+        //     }
+        //     let gotAnd = "";
+        //     if (months > 0 && years > 0) {
+        //         gotAnd = "& ";
+        //     }
+        //     return `Joined: ${str_y}${gotAnd}${str_m}Ago`;
+        // },
     },
     methods: {
-        editProduct(index) {
-            // Implement edit functionality here
-            // You can use this.products[index] to access the product data for editing
-        },
-        deleteProduct(index) {
+
+        deleteProduct(index,array) {
             // Implement delete functionality here
             // You can use this.products[index] to access the product data for deletion
-            this.products.splice(index, 1); // Remove the product from the products array
+            array.splice(index, 1); // Remove the product from the products array
         },
     },
 };
