@@ -22,12 +22,21 @@
                         <p class="product-price">${{ product.price }}</p>
                         <!-- size selection -->
                         <div class="size-selection">
-                            <button v-for="size in Object.keys(product.quantity)" :key="size" class="size-btn">
+                            <button 
+                                v-for="size in Object.keys(product.quantity)" 
+                                :key="size" 
+                                class="size-btn"
+                                :class="{ 'active': size === selectedSize }" 
+                                @click="selectedSize = size">
                                 {{ size }}
                             </button>
+                            <!-- Add the following line for the prompt -->
+                            <p v-if="!selectedSize" class="select-size-prompt" :style="{ visibility: !selectedSize ? 'visible' : 'hidden' }">
+                                Please select a size before adding to cart.
+                            </p>
                         </div>
                         <!-- Add to cart button -->
-                        <button @click="addToCart" class="cart-btn btn btn-secondary">Add to Cart</button>
+                        <button @click="addToCart" :disabled="!canAddToCart()" class="cart-btn btn btn-secondary">Add to Cart</button>
                         <div v-if="showAddedMessage" class="added-to-cart-message">Added to Cart</div>
                     </div>
                     <!-- Displaying the map -->
@@ -68,6 +77,7 @@ export default {
             buyerid: localStorage.getItem("user_uid"),
             showMap: false,
             showAddedMessage: false,
+            selectedSize: null,
         };
     },
     props: {
@@ -157,7 +167,8 @@ export default {
                 const cartItems = userData.cart || [];
                 
                 // Check if the product is already in the cart
-                const existingCartItemIndex = cartItems.findIndex(item => item.name === this.product.name);
+                const existingCartItemIndex = cartItems.findIndex(item => item.name === this.product.name && item.item_size === this.selectedSize);
+
 
                 if (existingCartItemIndex !== -1) {
                     // Increment the quantity of the product in the cart
@@ -168,7 +179,9 @@ export default {
                         image: this.product.images[0],
                         price: this.product.price,
                         name: this.product.name,
+                        item_size: this.selectedSize,
                         quantity: 1
+
                     });
                 }
 
@@ -185,6 +198,10 @@ export default {
             } else {
                 console.error('User not found!');
             }
+        },
+
+        canAddToCart() {
+            return this.selectedSize !== null;
         },
 
 
@@ -335,5 +352,22 @@ export default {
         display: inline-block;
         padding-left: 1%;
         position: absolute;
+    }
+
+    .size-btn.active {
+        background-color: #b0b0b0; 
+    }
+
+    .select-size-prompt {
+        color: black;
+        font-weight: bold;
+        margin-top: 10px;
+        height: 20px; /* or whatever height suits the layout */
+        visibility: hidden;
+    }
+    
+    .cart-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 </style>
