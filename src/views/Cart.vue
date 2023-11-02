@@ -29,7 +29,7 @@
                     <span class="price-label">Price: </span>
                     {{ item.price * item.quantity | currency }}
                 </div>
-                <div @click="removeFromCart(item)" style="cursor: pointer;">
+                <div @click="removeItemFromCart(item)" style="cursor: pointer;">
                   <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20" height="20"
                     style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
                     <!-- Your SVG content here -->
@@ -66,7 +66,7 @@
 <script>
 
 import NavBar from "../components/NavBar.vue";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot,updateDoc } from "firebase/firestore";
 import db, { auth } from "../firebase/init.js";
 import { onAuthStateChanged } from "firebase/auth";
 export default {
@@ -74,16 +74,7 @@ export default {
   /* For validation of user type??  */
   data() {
     return {
-      cartItems: [
-        { id: 1, name: 'Item 1', price: 10, quantity: 1, image: '../assets/fashainIcon.png' },
-        { id: 2, name: 'Item 1', price: 10, quantity: 1, image: 'path_to_image1.jpg' },
-        { id: 3, name: 'Item 1', price: 10, quantity: 1, image: 'path_to_image1.jpg' },
-        { id: 4, name: 'Item 1', price: 10, quantity: 1, image: 'path_to_image1.jpg' },
-        { id: 5, name: 'Item 1', price: 10, quantity: 1, image: 'path_to_image1.jpg' },
-        // ... more items
-
-
-      ],
+      user_id: localStorage.getItem("user_uid"),
       products: [],
 
     }
@@ -115,12 +106,10 @@ export default {
               // Assuming the cart items contain product information
 
               this.products.push({
-                id: cartItem.id, // You may need to adjust this based on your data structure
                 name: cartItem.name,
                 price: cartItem.price,
                 quantity: cartItem.quantity,
                 image: cartItem.image,
-
               });
               console.log(this.products)
             }
@@ -140,17 +129,41 @@ export default {
     }
   },
   methods: {
-    incrementQuantity(item) {
+    async incrementQuantity(item) {
       item.quantity++;
+      await this.updateQuantity(item);
     },
-    decrementQuantity(item) {
+    async decrementQuantity(item) {
       if (item.quantity > 1) {
         item.quantity--;
+        await this.updateQuantity(item);
       }
     },
-    removeFromCart(item) {
-      this.products = this.products.filter(products => products.id !== item.id);
-    }
+    async updateQuantity(item) {
+      const userDocRef = doc(db, "users", this.user_id);
+      const updatedCart = this.products.map((product) => {
+        if (product.name === item.name) {
+          return {
+            ...product,
+            quantity: item.quantity,
+          };
+        }
+        return product;
+      });
+
+      await updateDoc(userDocRef, {
+        cart: updatedCart,
+      });
+    },
+    async removeItemFromCart(item) {
+      const userDocRef = doc(db, "users", this.user_id);
+      console.log("test")
+      const updatedCart = this.products.filter((product) => product.name !== item.name);
+
+      await updateDoc(userDocRef, {
+        cart: updatedCart,
+      });
+    },
   },
   filters: {
     currency(value) {
