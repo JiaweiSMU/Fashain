@@ -15,6 +15,9 @@
               </div>
               <div class="col-3">
                 {{ item.name }}
+                <br>
+                Size: {{ item.item_size }}
+
               </div>
               <div class="col-3">
                 <div class="quantity-control">
@@ -23,11 +26,11 @@
                   <button class="btn btn-sm btn-outline-dark" @click="incrementQuantity(item)">+</button>
                 </div>
               </div>
-              
+
               <div class="col-3 text-right quantity">
                 <div class="price-section">
-                    <span class="price-label">Price: </span>
-                    {{ item.price * item.quantity | currency }}
+
+                  ${{ item.price * item.quantity | currency }}
                 </div>
                 <div @click="removeItemFromCart(item)" style="cursor: pointer;">
                   <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20" height="20"
@@ -50,10 +53,10 @@
         <div class="card-body">
           <h5 class="card-title">Order Summary</h5>
           <hr>
-          <p class="card-text">Total: {{ totalPrice | currency }}</p>
+          <p class="card-text">Total: ${{ totalPrice | currency }}</p>
           <hr>
-      
-          <button class="btn btn-dark btn-block" @click="checkout" >Checkout</button>
+
+          <button class="btn btn-dark btn-block" @click="checkout">Checkout</button>
         </div>
       </div>
     </div>
@@ -63,7 +66,7 @@
 <script>
 
 import NavBar from "../components/NavBar.vue";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot,updateDoc } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import db, { auth } from "../firebase/init.js";
 import { onAuthStateChanged } from "firebase/auth";
 export default {
@@ -79,7 +82,7 @@ export default {
 
   created() {
 
-    onAuthStateChanged(auth, (user) =>{
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         // User logged in already or has just logged in.
         const userID = user.uid;
@@ -107,14 +110,15 @@ export default {
                 price: cartItem.price,
                 quantity: cartItem.quantity,
                 image: cartItem.image,
+                item_size: cartItem.item_size,
               });
               console.log(this.products)
             }
           }
         });
       } else {
-          // No user is signed in
-          console.log("No user is signed in.");
+        // No user is signed in
+        console.log("No user is signed in.");
       }
     });
 
@@ -138,29 +142,51 @@ export default {
     },
     async updateQuantity(item) {
       const userDocRef = doc(db, "users", this.user_id);
-      const updatedCart = this.products.map((product) => {
-        if (product.name === item.name) {
-          return {
-            ...product,
-            quantity: item.quantity,
-          };
-        }
-        return product;
-      });
+
+      // Filter out items with invalid quantity
+      const updatedCart = this.products
+        .map((product) => {
+          if (product.name === item.name && product.item_size === item.item_size) {
+            return {
+              ...product,
+              quantity: item.quantity,
+            };
+          }
+          return product;
+        })
+        .filter((product) => product.quantity > 0); // Remove items with quantity less than or equal to 0
 
       await updateDoc(userDocRef, {
-        cart: updatedCart,
+        cart: updatedCart.map((item) => ({
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+          item_size: item.item_size,
+        })),
       });
     },
+
     async removeItemFromCart(item) {
       const userDocRef = doc(db, "users", this.user_id);
-      console.log("test")
-      const updatedCart = this.products.filter((product) => product.name !== item.name);
+
+      // Filter out items based on name and item_size
+      const updatedCart = this.products.filter(
+        (product) =>
+          product.name !== item.name || product.item_size !== item.item_size
+      );
 
       await updateDoc(userDocRef, {
-        cart: updatedCart,
+        cart: updatedCart.map((item) => ({
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+          item_size: item.item_size,
+        })),
       });
     },
+
     async checkout() {
 
       // Show a checkout success message using a browser alert
@@ -176,7 +202,7 @@ export default {
       this.products = []; // Clear the cart in your Vue component
 
     },
-  
+
   },
   filters: {
     currency(value) {
@@ -190,22 +216,27 @@ export default {
 <style>
 .card {
   border-radius: 10px;
-  overflow: hidden; /* To ensure the border-radius is applied to inner elements */
+  overflow: hidden;
+  /* To ensure the border-radius is applied to inner elements */
 }
 
-.card-header, .card-footer {
-  background-color: #343a40; /* Bootstrap's default dark theme color */
+.card-header,
+.card-footer {
+  background-color: #343a40;
+  /* Bootstrap's default dark theme color */
 }
 
 .btn-outline-dark,
 .btn-outline-danger {
   border-width: 2px;
-  font-size: 0.8rem; /* Reduced font size for the buttons */
+  font-size: 0.8rem;
+  /* Reduced font size for the buttons */
 }
 
 .list-group-item {
   border-top-width: 1px !important;
-  padding: 1.5rem 1.25rem; /* Increase padding for better spacing */
+  padding: 1.5rem 1.25rem;
+  /* Increase padding for better spacing */
 }
 
 .list-group-item:first-child {
@@ -213,36 +244,43 @@ export default {
 }
 
 .btn-sm {
-  height: 25px; /* Reduced height */
-  width: 25px;  /* Reduced width */
+  height: 25px;
+  /* Reduced height */
+  width: 25px;
+  /* Reduced width */
   display: inline-flex;
   justify-content: center;
   align-items: center;
   padding: 0;
 }
 
-.row.align-items-center > div {
+.row.align-items-center>div {
   display: flex;
-  align-items: center; /* Vertically align content in the row */
+  align-items: center;
+  /* Vertically align content in the row */
 }
 
 .img-fluid {
-  max-height: 80px; /* Limit image height */
+  max-height: 80px;
+  /* Limit image height */
   width: auto;
 }
 
 .quantity {
-  justify-content: space-between; /* Space out the quantity and price */
+  justify-content: space-between;
+  /* Space out the quantity and price */
 }
 
 .quantity .btn {
-  margin: 0 0.4rem; /* Slight reduction in spacing between the decrement and increment buttons */
+  margin: 0 0.4rem;
+  /* Slight reduction in spacing between the decrement and increment buttons */
 }
 
 .remove-icon {
   width: 20px;
   height: 20px;
-  margin-left: 1rem; /* Space out the delete icon from the price */
+  margin-left: 1rem;
+  /* Space out the delete icon from the price */
   cursor: pointer;
 }
 
@@ -263,23 +301,29 @@ export default {
 
 .price-section {
   display: flex;
-  justify-content: flex-end;  /* align content to the right */
-  align-items: center;  /* vertically align items */
-  margin-bottom: 0.5rem;  /* some space between price and delete icon */
+  justify-content: flex-end;
+  /* align content to the right */
+  align-items: center;
+  /* vertically align items */
+  margin-bottom: 0.5rem;
+  /* some space between price and delete icon */
 }
 
 .price-label {
-  margin-right: 0.5rem;  /* spacing between label and price */
-  font-weight: 600;  /* make label slightly bold */
-  color: #343a40;  /* a slightly darker text color for the label */
+  margin-right: 0.5rem;
+  /* spacing between label and price */
+  font-weight: 600;
+  /* make label slightly bold */
+  color: #343a40;
+  /* a slightly darker text color for the label */
 }
 
 @media (max-width: 991.98px) {
   .summary-card {
-      padding-top: 2rem;  /* Adjust as needed */
+    padding-top: 2rem;
+    /* Adjust as needed */
   }
 }
 
 
-/* Ensure you've included Font Awesome if you're using the trash icon. */
-</style>
+/* Ensure you've included Font Awesome if you're using the trash icon. */</style>
