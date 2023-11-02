@@ -31,9 +31,9 @@
                                 {{ size }}
                             </button>
                             <!-- Add the following line for the prompt -->
-                            <p v-if="!selectedSize" class="select-size-prompt" :style="{ visibility: !selectedSize ? 'visible' : 'hidden' }">
+                            <div v-if="!selectedSize" class="select-size-prompt" :style="{ visibility: !selectedSize ? 'visible' : 'hidden' }">
                                 Please select a size before adding to cart.
-                            </p>
+                            </div>
                         </div>
                         <!-- Add to cart button -->
                         <button @click="addToCart" :disabled="!canAddToCart()" class="cart-btn btn btn-secondary">Add to Cart</button>
@@ -133,7 +133,7 @@ export default {
                 this.street_number = querySnapshot.docs[0].data().address.street_number;
                 this.route = querySnapshot.docs[0].data().address.route;
                 this.postal_code = querySnapshot.docs[0].data().address.postal_code;
-                console.log("Fetched user address:", this.lat, this.long, this.username, this.email, this.contactno, this.street_number, this.route, this.postal_code);
+                // console.log("Fetched user address:", this.lat, this.long, this.username, this.email, this.contactno, this.street_number, this.route, this.postal_code);
             } else {
                 console.warn("No address found");
             }
@@ -165,16 +165,12 @@ export default {
             if (userDoc.exists()) {
                 const userData = userDoc.data();
                 const cartItems = userData.cart || [];
-                
-                // Check if the product is already in the cart
                 const existingCartItemIndex = cartItems.findIndex(item => item.name === this.product.name && item.item_size === this.selectedSize);
 
 
                 if (existingCartItemIndex !== -1) {
-                    // Increment the quantity of the product in the cart
                     cartItems[existingCartItemIndex].quantity += 1;
                 } else {
-                    // Add the product to the cart array
                     cartItems.push({
                         image: this.product.images[0],
                         price: this.product.price,
@@ -184,13 +180,10 @@ export default {
 
                     });
                 }
-
-                // Update the cart in the Firestore database
+                
                 await updateDoc(userRef, { cart: cartItems });
                 this.isInCart = true;
                 this.showAddedMessage = true;
-
-                // Hide the message after 3 seconds (3000 milliseconds)
                 setTimeout(() => {
                     this.showAddedMessage = false;
                 }, 2000);
@@ -361,8 +354,6 @@ export default {
     .select-size-prompt {
         color: black;
         font-weight: bold;
-        margin-top: 10px;
-        height: 20px; /* or whatever height suits the layout */
         visibility: hidden;
     }
     
