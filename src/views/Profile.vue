@@ -14,8 +14,8 @@
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <h5 class="my-3">{{ user.name }}</h5>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                            class="rounded-circle img-fluid" style="width: 150px" />
+                        <img :src="user.image"
+                            class="rounded-circle img-fluid" style="width: 150px;height:150px"  />
                         <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
                         <p class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
@@ -348,6 +348,7 @@ export default {
                 blockNumber: "",
                 contactno: "",
                 rating: "",
+                image: "",
                 // joindate: null, // Initialize joindate as null
                 campaignsCount: 0, // Add a property to store the campaign count
                 documentID: "",
@@ -398,6 +399,7 @@ export default {
                 this.user.blockNumber = user_details.data().blockNumber;
                 this.user.contactno = user_details.data().contactno;
                 this.user.rating = user_details.data().rating;
+                this.user.image = user_details.data().image;
                 //this.user.joindate = user_details.data().joindate.toDate();
                 console.log(this.user.documentID);
             });
