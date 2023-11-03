@@ -167,59 +167,60 @@ export default {
     //     });
     //     console.log(this.products);
     //     const productData = this.products;
-        
+
     async created() {
-            await this.fetchProducts();
-            for (const product of this.products) {
-                this.categorizeProduct(product);
+        await this.fetchProducts();
+        for (const product of this.products) {
+            this.categorizeProduct(product);
+        }
+    },
+
+
+    methods: {
+        async fetchProducts() {
+            try {
+                console.log("Executing fetchProducts...");
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        this.products.push(doc.data());
+                        //Commented out for testing
+                        //console.log("Product fetched:", doc.data());
+                    });
+                } else {
+                    console.log("No products found for the given query.");
+                }
+            } catch (error) {
+                console.error("Error fetching products:", error);
             }
         },
 
-
-        methods: {
-        async fetchProducts() {
-                try {
-                    console.log("Executing fetchProducts...");
-                    const querySnapshot = await getDocs(q);
-                    if (!querySnapshot.empty) {
-                        querySnapshot.forEach((doc) => {
-                            this.products.push(doc.data());
-                            console.log("Product fetched:", doc.data());
-                        });
-                    } else {
-                        console.log("No products found for the given query.");
-                    }
-                } catch (error) {
-                    console.error("Error fetching products:", error);
-                }
-            },
-
-            categorizeProduct(product) {
-                if (product.type == "New") {
-                    this.products_new.push(product);
-                } else if (product.type == "Pre-loved") {
-                    this.products_used.push(product);
-                } else if (product.type == "Rental") {
-                    this.products_rental.push(product);
-                }
-            },
-            goToProductPage(product) {
-                if (product && product.name) {
-                    this.$router.push({
-                        name: "ProductPage",
-                        params: { name: product.name },
-                    });
-                } else {
-                    console.error("Product name is missing or undefined");
-                }
-            },
+        categorizeProduct(product) {
+            if (product.type == "New") {
+                this.products_new.push(product);
+            } else if (product.type == "Pre-loved") {
+                this.products_used.push(product);
+            } else if (product.type == "Rental") {
+                this.products_rental.push(product);
+            }
         },
-        filters: {
-            highestRating: function (products) {
-                return products.sort((a, b) => b.rating - a.rating);
-            },
+        goToProductPage(product) {
+            if (product && product.name) {
+                this.$router.push({
+                    name: "ProductPage",
+                    params: { name: product.name },
+                });
+            } else {
+                console.error("Product name is missing or undefined");
+            }
         },
-    };
+    },
+    filters: {
+        highestRating: function (products) {
+            return products.sort((a, b) => b.rating - a.rating);
+        },
+    },
+};
 </script>
 
 <style scoped>
