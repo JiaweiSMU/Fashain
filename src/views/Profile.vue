@@ -14,12 +14,12 @@
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <h5 class="my-3">{{ user.name }}</h5>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                            class="rounded-circle img-fluid" style="width: 150px" />
+                        <img :src="user.image"
+                            class="rounded-circle img-fluid" style="width: 150px;height:150px"  />
                         <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
                         <p class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
-                        <a class="btn btn-primary btn-sm" href="/edit_profile">Edit Profile
+                        <a class="btn btn-custom-outline btn-sm" href="/edit_profile">Edit Profile
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 viewBox="0 2 24 24">
                                 <path
@@ -82,8 +82,7 @@
                      -->
                     <div>
                         <!-- <div v-if="user.userType == 'business'"> -->
-                        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist"
-                            style="border-radius: 5px">
+                        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist" style="border-radius: 5px">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
@@ -125,8 +124,8 @@
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
                                 <div class="row me-2 ms-2 mt-2 justify-content-start">
-                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
-                                        v-for="(product, index) in products" :key="index">
+                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex" v-for="(product, index) in products"
+                                        :key="index">
                                         <div class="card text-black flex-fill">
                                             <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
                                             <div class="card-body">
@@ -142,14 +141,20 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-                                               
-                                                <button @click="deleteProduct(index,products)" type="button"
+
+                                                <button @click="deleteProduct(index, products)" type="button"
                                                     class="btn btn-danger flex-fill ms-1">
                                                     Delete
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="d-flex flex-row">
+
+                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
+                                        href="/add_product">Add Product</a>
+                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
                                 </div>
                             </div>
                             <!-- New products -->
@@ -172,15 +177,21 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-                                              
-                                                <button @click="deleteProduct(index,products_new)" type="button"
+
+                                                <button @click="deleteProduct(index, products_new)" type="button"
                                                     class="btn btn-danger flex-fill ms-1">
                                                     Delete
                                                 </button>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="d-flex flex-row">
+
+                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
+                                        href="/add_product">Add Product</a>
+                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
                                 </div>
                             </div>
                             <!-- used -->
@@ -203,14 +214,20 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-                                         
-                                                <button @click="deleteProduct(index,products_used)" type="button"
+
+                                                <button @click="deleteProduct(index, products_used)" type="button"
                                                     class="btn btn-danger flex-fill ms-1">
                                                     Delete
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="d-flex flex-row">
+
+                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
+                                        href="/add_product">Add Product</a>
+                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
                                 </div>
                             </div>
                             <!-- Rental -->
@@ -233,16 +250,23 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-                                               
-                                                <button @click="deleteProduct(index,products_rental)" type="button"
+
+                                                <button @click="deleteProduct(index, products_rental)" type="button"
                                                     class="btn btn-danger flex-fill ms-1">
                                                     Delete
                                                 </button>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="d-flex flex-row">
+
+                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
+                                        href="/add_product">Add Product</a>
+                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
+                                </div>
+
                             </div>
                             <!-- Campagins -->
                             <div class="tab-pane fade" id="pills-campaign" role="tabpanel"
@@ -268,14 +292,18 @@
                                         </p>
                                     </div>
                                 </div>
+                                <br>
+                                <div class="d-flex flex-row">
+
+                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1" 
+                    
+                                        href="/campaign">Create Campaign</a>
+                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-row">
-                        <button type="button" class="btn btn-success flex-fill me-1">Add</button>
-                        <button type="button" class="btn btn-primary flex-fill me-1">Edit</button>
-                        <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -285,12 +313,6 @@
     <div class="tab-pane fade" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">te1st</div>
     <div class="tab-pane fade" id="pills-rental" role="tabpanel" aria-labelledby="pills-rental-tab">test</div>
     <div class="tab-pane fade" id="pills-campaign" role="tabpanel" aria-labelledby="pills-campaign-tab">...</div>
-
-    <div class="container">
-        <br />
-        <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/campaign">Create Campaign</a>
-        <a v-if="user.userType == 'business'" class="btn btn-outline-success me-2" href="/add_product">Add Product</a>
-    </div>
 </template>
 
 <script>
@@ -326,6 +348,7 @@ export default {
                 blockNumber: "",
                 contactno: "",
                 rating: "",
+                image: "",
                 // joindate: null, // Initialize joindate as null
                 campaignsCount: 0, // Add a property to store the campaign count
                 documentID: "",
@@ -376,6 +399,7 @@ export default {
                 this.user.blockNumber = user_details.data().blockNumber;
                 this.user.contactno = user_details.data().contactno;
                 this.user.rating = user_details.data().rating;
+                this.user.image = user_details.data().image;
                 //this.user.joindate = user_details.data().joindate.toDate();
                 console.log(this.user.documentID);
             });
@@ -439,7 +463,7 @@ export default {
     },
     methods: {
 
-        deleteProduct(index,array) {
+        deleteProduct(index, array) {
             // Implement delete functionality here
             // You can use this.products[index] to access the product data for deletion
             array.splice(index, 1); // Remove the product from the products array
@@ -448,6 +472,4 @@ export default {
 };
 </script>
 <!-- Style sheet -->
-<style>
-@import "../assets/profile.css";
-</style>
+<style>@import "../assets/profile.css";</style>

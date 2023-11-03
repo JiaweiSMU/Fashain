@@ -94,14 +94,15 @@ export default {
 }
 
 .btn-custom-search {
-    color: #333;
-    border: 1px solid #333;
     background-color: transparent;
+    border: 1px solid #665c37;
+    color: #665c37;
     transition: all 0.3s ease;
 }
 
 .btn-custom-search:hover {
-    background-color: #333;
-    color: #fcf7eb;
+    background-color: #665c37;
+    color: white;
+    border: 2px solid #665c37;
 }
 </style>

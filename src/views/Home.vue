@@ -49,6 +49,7 @@
                                 class="fas fa-cogs fa-fw me-2"></i>Rental</a>
                     </li>
                 </ul>
+
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
                         <div class="container py-5">
@@ -60,7 +61,10 @@
                                         <div class="card-body">
                                             <h5 class="card-title">{{ product.name }}</h5>
                                             <h6 class="card-subtitle">{{ product.category }}</h6>
-                                            <p class="card-text">{{ product.type }}</p>
+                                            <p class="card-text">
+                                                {{ "⭐".repeat(Number(product.rating))
+                                                }}{{ "☆".repeat(5 - Number(product.rating)) }}
+                                            </p>
                                             <a href="#" class="btn btn-primary">${{ product.price }}</a>
                                         </div>
                                     </div>
@@ -80,7 +84,10 @@
                                         <div class="card-body">
                                             <h5 class="card-title">{{ product.name }}</h5>
                                             <h6 class="card-subtitle">{{ product.category }}</h6>
-                                            <p class="card-text"></p>
+                                            <p class="card-text">
+                                                {{ "⭐".repeat(Number(product.rating))
+                                                }}{{ "☆".repeat(5 - Number(product.rating)) }}
+                                            </p>
                                             <a href="#" class="btn btn-primary">${{ product.price }}</a>
                                         </div>
                                     </div>
@@ -103,7 +110,10 @@
                                         <div class="card-body">
                                             <h5 class="card-title">{{ product.name }}</h5>
                                             <h6 class="card-subtitle">{{ product.category }}</h6>
-                                            <p class="card-text"></p>
+                                            <p class="card-text">
+                                                {{ "⭐".repeat(Number(product.rating))
+                                                }}{{ "☆".repeat(5 - Number(product.rating)) }}
+                                            </p>
                                             <a href="#" class="btn btn-primary">${{ product.price }}</a>
                                         </div>
                                     </div>
@@ -122,7 +132,7 @@ import NavBar from "../components/NavBar.vue";
 import Sidebar from "../components/Sidebar.vue";
 import GoogleMap from "../components/GoogleMap.vue";
 import { watch } from "vue";
-import { collection, query, getFirestore, getDocs } from "firebase/firestore";
+import { collection, where, query, doc, getFirestore, getDocs, setDoc } from "firebase/firestore";
 import { ref } from "vue";
 
 
@@ -137,6 +147,7 @@ export default {
             products_new: [],
             products_used: [],
             products_rental: [],
+            product: "",
             //Map stuff
             map: null,
             infoWindow: null,
@@ -147,46 +158,68 @@ export default {
     },
 
     name: "Home",
-    created() {
-        getDocs(q).then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                let data = doc.data();
-                this.products.push(data);
-            });
-        });
-        console.log(this.products);
-        const productData = this.products;
-
-        watch(
-            () => productData.length,
-            () => {
-                productData.forEach((product) => {
-                    if (product.type == "New") {
-                        this.products_new.push(product);
-                    } else if (product.type == "Pre-loved") {
-                        this.products_used.push(product);
-                    } else if (product.type == "Rental") {
-                        this.products_rental.push(product);
-                    }
-                });
-            }
-        );
-    },
-
-
-    methods: {
-        goToProductPage(product) {
-            if (product && product.name) {
-                this.$router.push({
-                    name: "ProductPage",
-                    params: { name: product.name },
-                });
-            } else {
-                console.error("Product name is missing or undefined");
+    // async created() {
+    //     getDocs(q).then((querySnapshot) => {
+    //         querySnapshot.forEach((doc) => {
+    //             let data = doc.data();
+    //             this.products.push(data);
+    //         });
+    //     });
+    //     console.log(this.products);
+    //     const productData = this.products;
+        
+    async created() {
+            await this.fetchProducts();
+            for (const product of this.products) {
+                this.categorizeProduct(product);
             }
         },
-    },
-};
+
+
+        methods: {
+        async fetchProducts() {
+                try {
+                    console.log("Executing fetchProducts...");
+                    const querySnapshot = await getDocs(q);
+                    if (!querySnapshot.empty) {
+                        querySnapshot.forEach((doc) => {
+                            this.products.push(doc.data());
+                            console.log("Product fetched:", doc.data());
+                        });
+                    } else {
+                        console.log("No products found for the given query.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching products:", error);
+                }
+            },
+
+            categorizeProduct(product) {
+                if (product.type == "New") {
+                    this.products_new.push(product);
+                } else if (product.type == "Pre-loved") {
+                    this.products_used.push(product);
+                } else if (product.type == "Rental") {
+                    this.products_rental.push(product);
+                }
+            },
+            goToProductPage(product) {
+                if (product && product.name) {
+                    this.$router.push({
+                        name: "ProductPage",
+                        params: { name: product.name },
+                    });
+                } else {
+                    console.error("Product name is missing or undefined");
+                }
+            },
+        },
+        filters: {
+            highestRating: function (products) {
+                return products.sort((a, b) => b.rating - a.rating);
+            },
+        },
+    };
 </script>
 
 <style scoped>
