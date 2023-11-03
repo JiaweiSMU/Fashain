@@ -5,7 +5,7 @@
         <div>
           <!-- To filter based on distance -->
           <p>Current dist to filter by is {{ dist }}</p>
-          <button @click="dist += 100">Add</button>
+          <button @click="dist +=100">Add</button>
           <input v-model="dist">
           <button @click="dist -= 100">Minus</button>
         </div>
