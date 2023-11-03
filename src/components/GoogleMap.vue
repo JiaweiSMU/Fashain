@@ -5,9 +5,9 @@
                 <div>
                     <!-- To filter based on distance -->
                     <p>Current dist to filter by is {{ dist }}</p>
-                    <button class="btn btn-outline-success" @click="dist += 100">Add</button>
-                    <input class="form-control" v-model="dist" />
-                    <button class="btn btn-outline-success" @click="dist -= 100">Minus</button>
+                    <button @click="dist += 100">Add</button>
+                    <input v-model="dist" />
+                    <button @click="dist -= 100">Minus</button>
                 </div>
                 <!-- Card component -->
                 <div class="card">
@@ -324,6 +324,10 @@ export default {
      *
      * @param {Object} place - The place object containing the information of the place.
      * @return {void} This function does not return anything.
+     */
+    /**
+     * Creates a marker on the map at the given place.
+     * @param {Object} place - The place object containing the location and name of the marker.
      */
     createMarker(place) {
         const marker = new google.maps.Marker({
