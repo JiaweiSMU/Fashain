@@ -54,16 +54,16 @@ const router = createRouter({
             component: Questionaire,
         },
         {
-            path: "/Map",
+            path: "/map",
             name: "Map",
             component: Map,
         },
         {
-            path: '/product/:name',
-            name: 'ProductPage',
+            path: "/product/:name",
+            name: "ProductPage",
             component: ProductPage,
-            props: true
-        }
+            props: true,
+        },
     ],
 });
 
