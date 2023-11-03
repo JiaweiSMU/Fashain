@@ -24,6 +24,8 @@
   
 <script>
 import axios from "axios";
+const { encoding } = await google.maps.importLibrary("geometry")
+const { spherical } = await google.maps.importLibrary("geometry")
 
 export default {
 
@@ -66,7 +68,7 @@ export default {
         const mapsScript = document.createElement('script');
 
         // Set the source URL for the Google Maps API
-        mapsScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBgzMSEPxutQDRMWM5W9O83UR8cLMmocaE&libraries=geometry,places&callback=initMap";
+        mapsScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDA9Lr5Q_orxHic9yRrScWEU6P6OQM_mjI&libraries=geometry&callback=initMap";
 
         // Set the script to load asynchronously
         mapsScript.async = true;
@@ -80,36 +82,14 @@ export default {
       }
     },
 
-
-    /**
-     * Calculates the Haversine distance between the current position and a given location.
-     *
-     * @param {Object} locObj - The location object containing latitude and longitude.
-     * @return {number} The calculated distance between the two locations.
-     */
-    haversine_distance(locObj) {
-      // Create a new LatLng object for the origin coordinates
-      let origin = new google.maps.LatLng({
-        lat: this.currentPos.lat,
-        lng: this.currentPos.lng,
-      });
-
-      // Create a new LatLng object for the destination coordinates
-      let dest = new google.maps.LatLng({ lat: locObj.lat, lng: locObj.lng });
-
-      // Calculate the distance between the origin and destination using the spherical geometry library
-      const distance = google.maps.geometry.spherical.computeDistanceBetween(origin, dest);
-
-      // Return the distance
-      return distance;
-    },
-
     /**
      * Initializes the map and sets up the custom map style, info window, places service, and current position.
      *
      * @return {void} This function does not return anything.
      */
-    initMap() {
+    async initMap() {
+      const { encoding } = await google.maps.importLibrary("geometry")
+      const { spherical } = await google.maps.importLibrary("geometry")
       // Define custom map style
       const customMapStyle = [
         {
@@ -117,6 +97,7 @@ export default {
           elementType: "labels.text.fill",
           stylers: [{ color: "#444444" }],
         },
+
       ];
 
       // Create a new map instance
@@ -171,6 +152,34 @@ export default {
     },
 
     /**
+* Calculates the Haversine distance between the current position and a given location.
+*
+* @param {Object} locObj - The location object containing latitude and longitude.
+* @return {number} The calculated distance between the two locations.
+*/
+    haversine_distance(locObj) {
+      setTimeout(250);
+      console.log(locObj);
+      // Create a new LatLng object for the origin coordinates
+      console.log('In calculate distance');
+      let origin = new google.maps.LatLng({
+        lat: this.currentPos.lat,
+        lng: this.currentPos.lng,
+      });
+
+      // Create a new LatLng object for the destination coordinates
+      let destination = new google.maps.LatLng({ lat: locObj.lat, lng: locObj.lng });
+
+      // Calculate the distance between the origin and destination using the spherical geometry library
+      const distance = google.maps.geometry.spherical.computeDistanceBetween(origin, destination)
+      console.log(distance);
+
+      // Return the distance
+      return distance;
+    },
+
+
+    /**
      * Find nearby places based on the given location.
      *
      * @param {Object} location - The location object.
@@ -208,11 +217,12 @@ export default {
 
       let data = [149306, 149729];
 
-      const apiKey = 'AIzaSyBgzMSEPxutQDRMWM5W9O83UR8cLMmocaE';
+      const apiKey = 'AIzaSyDA9Lr5Q_orxHic9yRrScWEU6P6OQM_mjI';
 
       // Map each address to a geocoding API request URL
       const apiUrls = data.map(address => {
-        const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
+
+        const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBAXj3w94Ny-9Kylm1nrFCJtPki8B1dMfk`;
         return axios.get(apiUrl);
       });
 
@@ -225,8 +235,10 @@ export default {
             var locName = {
               lat: lat,
               lng: lng,
-              dist: null
+              dist: 0
             };
+            console.log('getting array of data');
+            console.log(locName);
 
             // Calculate distance using haversine formula
             const returnDist = this.haversine_distance(locName);
@@ -235,6 +247,7 @@ export default {
 
             return locName;
           });
+          console.log('getting array of data');
           console.log(arrayOfData[1]);
 
           // Filter and process data within a certain distance
@@ -248,7 +261,7 @@ export default {
             }
           }
           // console.log('Am i pushing');
-          // console.log(this.markerArray);
+          console.log(this.markerArray);
           //Loop through a array to add to map marker
           this.makeMarker(markerArray);
         })
