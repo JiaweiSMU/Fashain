@@ -380,7 +380,7 @@ export default {
     .product-image-section {
         display: flex;
         align-items: center;
-        justify-content: flex-start; /* Change from center to flex-start */
+        justify-content: flex-start;
         padding: 20px;
     }
     
@@ -388,20 +388,20 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-right: 20px; /* Spacing between thumbnails and main image */
+        margin-right: 20px;
     }
     
     .thumbnail-img {
-        margin-bottom: 10px; /* Spacing between each thumbnail */
+        margin-bottom: 10px; 
         cursor: pointer;
-        width: 60px; /* Adjust width as desired */
-        height: 60px; /* Adjust height as desired */
+        width: 60px; 
+        height: 60px; 
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
         transition: border 0.3s ease;
     }
     
     .thumbnail-img.active-thumbnail {
-        border: 2px solid grey; /* Highlight active thumbnail */
+        border: 2px solid grey; 
     }
 </style>
