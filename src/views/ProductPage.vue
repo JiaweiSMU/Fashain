@@ -4,9 +4,22 @@
 
         <div class="container mt-5">
             <div class="row">
-                <div class="col-md-6 product-image-section">
-                    <!-- Displaying the product image -->
-                    <img :src="product.images[0]" class="product-img" alt="Product Image" />
+                <div class="col-md-6 product-image-section" >
+                    <!-- Thumbnails -->
+                    <div class="thumbnails">
+                        <img 
+                            v-for="(image, index) in product.images" 
+                            :key="index" 
+                            :src="image" 
+                            @click="setCurrentImage(image)"
+                            class="thumbnail-img"
+                            :class="{ 'active-thumbnail': image === currentImage }"
+                            alt="Thumbnail Image"
+                        />
+                    </div>
+                
+                    <!-- Main Product Image -->
+                    <img :src="currentImage" class="product-img" alt="Product Image" />
                 </div>
                 <div class="col-md-6 product-details-section">
                      <!-- Toggle button to switch between map and product details -->
@@ -78,6 +91,8 @@ export default {
             showMap: false,
             showAddedMessage: false,
             selectedSize: null,
+            currentImage: null,
+            
         };
     },
     props: {
@@ -105,7 +120,18 @@ export default {
             if (newVal) {
                 this.initializeMap();
             }
+        },
+
+        product: {
+            deep: true,
+            handler(newValue) {
+                // Set the currentImage to the first image in the array when the product data changes.
+                if (newValue.images && newValue.images.length > 0) {
+                    this.currentImage = newValue.images[0];
+                }
+            }
         }
+
     },
 
     methods: {
@@ -195,6 +221,10 @@ export default {
 
         canAddToCart() {
             return this.selectedSize !== null;
+        },
+
+        setCurrentImage(image) {
+            this.currentImage = image;
         },
 
 
@@ -345,5 +375,33 @@ export default {
     .cart-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+    }
+
+    .product-image-section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Change from center to flex-start */
+        padding: 20px;
+    }
+    
+    .thumbnails {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 20px; /* Spacing between thumbnails and main image */
+    }
+    
+    .thumbnail-img {
+        margin-bottom: 10px; /* Spacing between each thumbnail */
+        cursor: pointer;
+        width: 60px; /* Adjust width as desired */
+        height: 60px; /* Adjust height as desired */
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        transition: border 0.3s ease;
+    }
+    
+    .thumbnail-img.active-thumbnail {
+        border: 2px solid grey; /* Highlight active thumbnail */
     }
 </style>
