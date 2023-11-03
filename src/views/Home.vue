@@ -147,7 +147,9 @@
                         role="tabpanel"
                         aria-labelledby="pills-rental-tab">
                         <!-- For Map -->
-                        <GoogleMap :data="storeLocations">Hi</GoogleMap>
+                        <GoogleMap :data="storeLocations" @update-data="handleUpdateData" @onChange="nearbyStores"
+                            >Hi</GoogleMap
+                        >
                         <!-- Map End -->
                         <div class="container py-5">
                             <div class="row">
@@ -204,6 +206,7 @@ export default {
             currentPos: { lat: 0, lng: 0, dist: 0 }, //To get currentPos without calling function again
             dist: 1000,
             storeLocations: [],
+            storesNearby: [],
         };
     },
 
@@ -222,9 +225,13 @@ export default {
     },
 
     methods: {
+        handleUpdateData({ key, value }) {
+            if (!this.storesNearby.includes(value)) {
+                this.storesNearby.push(value);
+            }
+        },
         async fetchProducts() {
             try {
-                console.log("Executing fetchProducts...");
                 const querySnapshot = await getDocs(q);
                 if (!querySnapshot.empty) {
                     querySnapshot.forEach((doc) => {
@@ -241,12 +248,13 @@ export default {
         async fetchLocations(products) {
             try {
                 const locationPromises = products.map((product) => {
-                    console.log(product.uid);
                     const q = query(collection(db, "users"), where("uid", "==", product.uid));
                     return getDocs(q).then((querySnapshot) => {
                         querySnapshot.forEach((doc) => {
-                            this.storeLocations.push(doc.data().address);
-                            console.log("Location fetched:", doc.data().address);
+                            const locationData = doc.data();
+                            if (!this.storeLocations.some((location) => location.uid === locationData.uid)) {
+                                this.storeLocations.push(locationData);
+                            }
                         });
                     });
                 });
@@ -280,6 +288,15 @@ export default {
     filters: {
         highestRating: function (products) {
             return products.sort((a, b) => b.rating - a.rating);
+        },
+    },
+
+    computed: {
+        nearbyStores() {
+            console.log(this.storesNearby);
+            return this.products_rental.filter((product) => {
+                this.storesNearby.includes(product.uid);
+            });
         },
     },
 };

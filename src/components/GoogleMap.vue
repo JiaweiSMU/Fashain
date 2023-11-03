@@ -24,10 +24,15 @@
 
 <script>
 import axios from "axios";
+import { collection, where, query, doc, getFirestore, getDocs, setDoc } from "firebase/firestore";
+import { toRaw } from "vue";
 const { encoding } = await google.maps.importLibrary("geometry");
 const { spherical } = await google.maps.importLibrary("geometry");
+const db = getFirestore();
+const q = query(collection(db, "users"));
 
 export default {
+    props: ["data"],
     data() {
         return {
             map: null,
@@ -35,23 +40,37 @@ export default {
             placesService: null,
             currentPos: { lat: 0, lng: 0, dist: 0 }, //To get currentPos without calling function again
             dist: 1000,
+            users: [],
+            markers: [],
         };
     },
 
-    // called when the component is added to the DOM.
-    // It triggers the function loadGoogleMapsScript() to load the Google Maps JavaScript SDK,
-    // which is used to display maps in the component.
+    /**
+     * Load the Google Maps JavaScript SDK when the component is mounted.
+     *
+     * @param {}
+     * @return {}
+     */
     mounted() {
         // Load the Google Maps JavaScript SDK when the component is mounted
         this.loadGoogleMapsScript();
     },
     watch: {
+        /**
+         * This function is used to calculate the distance.
+         *
+         * @param {type} paramName - description of parameter
+         * @return {type} description of return value
+         */
         dist() {
-            this.initMap();
+            this.findNearbyPlaces(this.currentPos);
         },
     },
 
     methods: {
+        updateData(key, value) {
+            this.$emit("update-data", { key, value });
+        },
         // Method to load the Google Maps JavaScript SDK dynamically
         loadGoogleMapsScript() {
             console.log("loading");
@@ -80,9 +99,43 @@ export default {
         },
 
         /**
-         * Initializes the map and sets up the custom map style, info window, places service, and current position.
+         * Retrieves the users subcollection from the database and performs some operations on it.
          *
-         * @return {void} This function does not return anything.
+         * @return {void} This function does not return any value.
+         */
+        /**
+         * Retrieves the users subcollection and performs some operations on the data.
+         */
+        getUsersSubcollection() {
+            // Retrieve the documents from the subcollection
+            getDocs(q).then((querySnapshot) => {
+                // Iterate over each document in the query snapshot
+                querySnapshot.forEach((doc) => {
+                    let data = doc.data();
+                    this.users.push(data);
+                });
+
+                // Log a message indicating that the list of users is being retrieved
+                console.log("Hi getting list of users");
+
+                // Log the list of users
+                console.log(this.users);
+
+                // Iterate over each user in the list
+                for (const user of this.users) {
+                    // Check if the user type is "business"
+                    if (user.userType == "business") {
+                        // Log the name of the user
+                        console.log(user.name);
+                    }
+                }
+            });
+        },
+
+        /**
+         * Initializes the map and sets up the necessary components and configurations.
+         *
+         * @return {Promise<void>} A promise that resolves when the map is successfully initialized.
          */
         async initMap() {
             const { encoding } = await google.maps.importLibrary("geometry");
@@ -155,9 +208,9 @@ export default {
          */
         haversine_distance(locObj) {
             setTimeout(250);
-            console.log(locObj);
+            //console.log(locObj);
             // Create a new LatLng object for the origin coordinates
-            console.log("In calculate distance");
+            //console.log("In calculate distance");
             let origin = new google.maps.LatLng({
                 lat: this.currentPos.lat,
                 lng: this.currentPos.lng,
@@ -168,7 +221,7 @@ export default {
 
             // Calculate the distance between the origin and destination using the spherical geometry library
             const distance = google.maps.geometry.spherical.computeDistanceBetween(origin, destination);
-            console.log(distance);
+            // console.log(distance);
 
             // Return the distance
             return distance;
@@ -181,7 +234,7 @@ export default {
          * @return {undefined} This function does not return a value.
          */
         async findNearbyPlaces(location) {
-            console.log("hello");
+            console.log("Inside FindNearbyPlaces");
             const request = {
                 location: location,
                 radius: 1000,
@@ -189,6 +242,16 @@ export default {
             };
             let arrayOfData = [];
             let markerArray = [];
+
+            //Empty out array
+            arrayOfData.splice(0);
+            markerArray.splice(0);
+            this.users.splice(0);
+            if (this.markers.length > 0) {
+                this.markers.splice(0);
+            }
+
+            //Old Code
 
             // Perform a nearby search using the placesService
             // this.placesService.nearbySearch(request, (results, status) => {
@@ -210,58 +273,118 @@ export default {
             // https://jsfiddle.net/hufk3qtL/2/ To loop through radius and display
             // Pass the results array to the haversine_distance function
 
-            let data = [149306, 149729];
+            // let data = [149306, 149729];
 
-            const apiKey = "AIzaSyDA9Lr5Q_orxHic9yRrScWEU6P6OQM_mjI";
+            /*getDocs(q).then((querySnapshot) => {
+                // Iterate over each document in the query snapshot
+                querySnapshot.forEach((doc) => {
+                    let data = doc.data();
+                    this.users.push(data);
+                });
 
-            // Map each address to a geocoding API request URL
-            const apiUrls = data.map((address) => {
-                const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBAXj3w94Ny-9Kylm1nrFCJtPki8B1dMfk`;
-                return axios.get(apiUrl);
-            });
+                console.log("Hi getting list of users");
+                console.log(this.users);
 
-            // Wait for all API requests to complete
-            Promise.all(apiUrls)
-                .then((responses) => {
-                    // Extract latitude, longitude, and distance from each response
-                    arrayOfData = responses.map((response) => {
-                        const { lat, lng } = response.data.results[0].geometry.location;
+                // Iterate over each user in the users array
+                for (const user of this.users) {
+                    if (user.userType == "business") {
+                        // Create a location object with latitude and longitude
                         var locName = {
-                            lat: lat,
-                            lng: lng,
+                            lat: user.address.latitude,
+                            lng: user.address.longitude,
                             dist: 0,
                         };
-                        console.log("getting array of data");
-                        console.log(locName);
 
                         // Calculate distance using haversine formula
                         const returnDist = this.haversine_distance(locName);
                         locName.dist = returnDist.toFixed(2);
-                        console.log(locName);
 
-                        return locName;
-                    });
-                    console.log("getting array of data");
-                    console.log(arrayOfData[1]);
-
-                    // Filter and process data within a certain distance
-                    for (let i = 0; i < arrayOfData.length; i++) {
-                        if (arrayOfData[i].dist < this.dist) {
-                            //Add into array
-                            markerArray.push(arrayOfData[i]);
-                            // Create marker
-                            // console.log(arrayOfData[i]);
-                            // this.makeMarker(arrayOfData[i]);
-                        }
+                        // Add the location to the arrayOfData array
+                        arrayOfData.push(locName);
                     }
-                    // console.log('Am i pushing');
-                    console.log(this.markerArray);
-                    //Loop through a array to add to map marker
-                    this.makeMarker(markerArray);
-                })
-                .catch((error) => {
-                    console.log(error.message);
-                });
+                }
+            });*/
+
+            for (const user of this.data) {
+                var locName = {
+                    lat: user.address.latitude,
+                    lng: user.address.longitude,
+                    dist: 0,
+                    uid: user.uid,
+                };
+
+                // Calculate distance using haversine formula
+                const returnDist = this.haversine_distance(locName);
+                locName.dist = returnDist.toFixed(2);
+
+                // Add the location to the arrayOfData array
+                arrayOfData.push(locName);
+            }
+            console.log(arrayOfData);
+            // Iterate over each location in the arrayOfData array
+            for (const loc of arrayOfData) {
+                console.log(loc.dist, this.dist);
+                if (loc.dist <= Number(this.dist)) {
+                    // Add the location to the markerArray array
+                    this.updateData("uid", loc.uid);
+                    console.log("added");
+                    markerArray.push(loc);
+                }
+            }
+
+            //console.log(markerArray);
+
+            // Call the makeMarker function with the markerArray
+            this.makeMarker(markerArray);
+
+            //Idk wtf is this dont touch
+
+            // const apiKey = 'AIzaSyDA9Lr5Q_orxHic9yRrScWEU6P6OQM_mjI';
+
+            // // Map each address to a geocoding API request URL
+            // const apiUrls = data.map(address => {
+
+            //   const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBAXj3w94Ny-9Kylm1nrFCJtPki8B1dMfk`;
+            //   return axios.get(apiUrl);
+            // });
+
+            // // Wait for all API requests to complete
+            // Promise.all(apiUrls)
+            //   .then(responses => {
+            //     // Extract latitude, longitude, and distance from each response
+            //     arrayOfData = responses.map(response => {
+            //       const { lat, lng } = response.data.results[0].geometry.location;
+            //       var locName = {
+            //         lat: lat,
+            //         lng: lng,
+            //         dist: 0
+            //       };
+
+            //       // Calculate distance using haversine formula
+            //       const returnDist = this.haversine_distance(locName);
+            //       locName.dist = returnDist.toFixed(2);
+
+            //       return locName;
+            //     });
+
+            //     // Filter and process data within a certain distance
+            //     for (let i = 0; i < arrayOfData.length; i++) {
+            //       if (arrayOfData[i].dist < this.dist) {
+            //         //Add into array
+            //         markerArray.push(arrayOfData[i]);
+            //         // Create marker
+            //         // console.log(arrayOfData[i]);
+            //         // this.makeMarker(arrayOfData[i]);
+            //       }
+            //     }
+            //     // console.log('Am i pushing');
+            //     console.log(this.markerArray);
+            //     //Loop through a array to add to map marker
+            //     this.makeMarker(markerArray);
+            //   })
+            //   .catch(error => {
+            //     console.log(error.message);
+            //   });
 
             //Alter this part, go to firestore retrieve the list of locations and use the axios.get to get the lat and long values
             // Iterate through the data array
@@ -299,65 +422,84 @@ export default {
          * @param {Array} locData - An array of objects containing latitude and longitude for each location.
          */
         makeMarker(locData) {
-            console.log(`There's num of data ${locData.length}`);
+            // Log a message indicating that the marker is being made
+            console.log("Hi making marker");
+
+            // Log the location data
+            console.log(locData);
+
+            // Iterate over the location data
             for (let i = 0; i < locData.length; i++) {
+                // Log the current index
+                console.log(i);
+
                 // Create a new latlng object for the current location
                 let latlng = { lat: locData[i].lat, lng: locData[i].lng };
+
                 // Create a new marker for the current location
                 let marker = new google.maps.Marker({
                     position: latlng,
                     map: this.map,
                 });
+
                 // Add a click event listener to the marker
                 marker.addListener("click", () => {
                     // Generate a Google Maps link for the marker's location
                     const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
+
                     // Open the link in a new tab
                     window.open(mapsLink, "_blank");
                 });
+
+                // Add the marker to the markers array
+                this.markers.push(marker);
             }
         },
-    },
 
-    /** Use the above makeMarker instead to create
-     * Creates a marker on the map for the given place.
-     *
-     * @param {Object} place - The place object containing the information of the place.
-     * @return {void} This function does not return anything.
-     */
-    /**
-     * Creates a marker on the map at the given place.
-     * @param {Object} place - The place object containing the location and name of the marker.
-     */
-    createMarker(place) {
-        const marker = new google.maps.Marker({
-            map: this.map,
-            position: place.geometry.location,
-            title: place.name,
-        });
+        /** Use the above makeMarker instead to create
+         * Creates a marker on the map for the given place.
+         *
+         * @param {Object} place - The place object containing the information of the place.
+         * @return {void} This function does not return anything.
+         */
+        /**
+         * Creates a marker on the map at the given place.
+         * @param {Object} place - The place object containing the location and name of the marker.
+         */
+        createMarker(place) {
+            // Create a new marker on the map
+            const marker = new google.maps.Marker({
+                map: this.map,
+                position: place.geometry.location,
+                title: place.name,
+            });
 
-        marker.addListener("click", () => {
-            const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
-            window.open(mapsLink, "_blank");
-        });
-    },
+            // Add a click event listener to the marker
+            marker.addListener("click", () => {
+                // Generate a Google Maps link with the location of the marker
+                const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
+                // Open the link in a new tab
+                window.open(mapsLink, "_blank");
+            });
+        },
 
-    /**
-     * Handles the location error.
-     *
-     * @param {boolean} browserHasGeolocation - Indicates if the browser has geolocation.
-     * @param {infoWindow} thisinfoWindow - The info window object.
-     * @param {pos} pos - The position object.
-     * @return {void} This function does not return a value.
-     */
-    handleLocationError(browserHasGeolocation, thisinfoWindow, pos) {
-        this.infoWindow.setPosition(pos);
-        this.infoWindow.setContent(
-            browserHasGeolocation
-                ? "Error: The Geolocation service failed."
-                : "Error: Your browser doesn't support geolocation."
-        );
-        this.infoWindow.open(this.map);
+        /**
+         * Handles the location error.
+         *
+         * @param {boolean} browserHasGeolocation - Indicates if the browser has geolocation.
+         * @param {infoWindow} thisinfoWindow - The info window object.
+         * @param {pos} pos - The position object.
+         * @return {void} This function does not return a value.
+         */
+        handleLocationError(browserHasGeolocation, thisinfoWindow, pos) {
+            this.infoWindow.setPosition(pos);
+            this.infoWindow.setContent(
+                browserHasGeolocation
+                    ? "Error: The Geolocation service failed."
+                    : "Error: Your browser doesn't support geolocation."
+            );
+            this.infoWindow.open(this.map);
+        },
     },
 };
 </script>
