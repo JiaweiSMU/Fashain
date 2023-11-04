@@ -155,7 +155,7 @@
                             <div class="row">
                                 <div
                                     class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3"
-                                    v-for="product in this.products_rental"
+                                    v-for="product in this.nearbyStores"
                                     :key="product">
                                     <div
                                         class="card"
@@ -226,6 +226,10 @@ export default {
 
     methods: {
         handleUpdateData({ key, value }) {
+            if (value == "No users found") {
+                this.storesNearby = [];
+                return;
+            }
             if (!this.storesNearby.includes(value)) {
                 this.storesNearby.push(value);
             }
@@ -295,7 +299,7 @@ export default {
         nearbyStores() {
             console.log(this.storesNearby);
             return this.products_rental.filter((product) => {
-                this.storesNearby.includes(product.uid);
+                return this.storesNearby.includes(product.uid);
             });
         },
     },

@@ -4,11 +4,15 @@
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div>
                     <!-- To filter based on distance -->
-                    <p class="row justify-content-center">Current dist to filter by is {{ dist }}</p>
-                    <div class="row justify-content-center">
-                        <button class="col-2" @click="dist += 100">Add</button>
-                        <input class="col-2 align-content-center" v-model="dist" />
-                        <button class="col-2" @click="dist -= 100">Minus</button>
+                    <p class="row justify-content-center">Showing stores within {{ dist }}km</p>
+                    <div class="row d-flex justify-content-center">
+                        <div class="input-group mb-3">
+                            <button class="btn btn-outline-success col-2" @click="dist = Number(dist) + 1">Add</button>
+                            <input class="form-control col-2 align-content-center" v-model="dist" />
+                            <button class="btn btn-outline-success col-2" @click="dist = Number(dist) - 1">
+                                Minus
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <!-- Card component -->
@@ -41,7 +45,7 @@ export default {
             infoWindow: null,
             placesService: null,
             currentPos: { lat: 0, lng: 0, dist: 0 }, //To get currentPos without calling function again
-            dist: 1000,
+            dist: 1,
             markers: [],
         };
     },
@@ -286,12 +290,15 @@ export default {
             // Iterate over each location in the arrayOfData array
             for (const loc of arrayOfData) {
                 // console.log(loc.dist, this.dist);
-                if (loc.dist <= Number(this.dist)) {
+                if (loc.dist <= Number(this.dist * 1000)) {
                     // Add the location to the markerArray array
                     this.updateData("uid", loc.uid);
                     // console.log("added");
                     markerArray.push(loc);
                 }
+            }
+            if (markerArray.length == 0) {
+                this.updateData("uid", "No users found");
             }
             // Call the makeMarker function with the markerArray
             this.makeMarker(markerArray);
