@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div
                                     class="mb-3 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
-                                    v-for="product in this.products_new"
+                                    v-for="product in this.sortedProducts_new"
                                     :key="product">
                                     <div
                                         class="card"
@@ -114,11 +114,18 @@
                 </div>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
-                        <div class="container py-5">
+                        <div class="container">
+                            <div class="row d-flex mb-3">
+                                <div class="col-3">
+                                    <a class="btn" @click="isSortedByRating = !isSortedByRating">
+                                        {{ isSortedByRating ? "Unsort" : "Sort by rating (High - low)" }}
+                                    </a>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div
                                     class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3"
-                                    v-for="product in this.products_used"
+                                    v-for="product in this.sortedProducts_used"
                                     :key="product">
                                     <div
                                         style="height: auto; width: 250px"
@@ -207,6 +214,7 @@ export default {
             dist: 1000,
             storeLocations: [],
             storesNearby: [],
+            isSortedByRating: false,
         };
     },
 
@@ -289,11 +297,7 @@ export default {
             }
         },
     },
-    filters: {
-        highestRating: function (products) {
-            return products.sort((a, b) => b.rating - a.rating);
-        },
-    },
+    filters: {},
 
     computed: {
         nearbyStores() {
@@ -301,6 +305,24 @@ export default {
             return this.products_rental.filter((product) => {
                 return this.storesNearby.includes(product.uid);
             });
+        },
+        sortedProducts_new() {
+            if (this.isSortedByRating) {
+                // If isSortedByRating is true, return the products sorted by rating
+                return [...this.products_new].sort((a, b) => b.rating - a.rating);
+            } else {
+                // If isSortedByRating is false, return the products in their original order
+                return this.products_new;
+            }
+        },
+        sortedProducts_used() {
+            if (this.isSortedByRating) {
+                // If isSortedByRating is true, return the products sorted by rating
+                return [...this.products_used].sort((a, b) => b.rating - a.rating);
+            } else {
+                // If isSortedByRating is false, return the products in their original order
+                return this.products_used;
+            }
         },
     },
 };
