@@ -64,6 +64,7 @@ export const store = createStore({
                     uid: respUid,
                     userType: formData.type,
                     address: formData.address,
+                    image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp",
                     blockNumber: formData.blockNumber,
                     postcode: formData.postalCode,
                     contactno: formData.phoneNumber,
