@@ -62,7 +62,9 @@
 														</defs>
 													</svg>
 													Attach files
-													<input type="file" ref="fileInput" accept="image/*" name="upload"
+													<input 
+													
+													type="file" ref="fileInput" accept="image/*" name="upload"
 														id="upload" @change="handleImageUpload($event)">
 												</label>
 												<div v-if="imageError.length > 0">
@@ -71,7 +73,7 @@
 													</div>
 												</div>
 												<!-- Display Image once Image uploaded -->
-												<div class="container-fluid">
+												<div class="container-fluid mt-2">
 													<div class="row">
 														<img class="rounded" v-if="image.url" :src="image.url" />
 													</div>
@@ -86,7 +88,7 @@
 					</div> <!-- Row END -->
 					<!-- button -->
 					<div class="gap-3 d-md-flex justify-content-md-end text-center">
-						<button type="button" class="btn btn-primary btn-lg" @click="updateUserProfile" >Update profile</button>
+						<button type="button" class="btn btn-custom-outline btn-lg" @click="updateUserProfile" >Update profile</button>
 					</div>
 				</form> <!-- Form END -->
 			</div>
@@ -152,6 +154,37 @@ body {
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
 }
+
+input[type="file"] {
+  
+}
+
+input[type="file"]::file-selector-button {
+    background-color: transparent;
+    border: 2px solid #665c37;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: #665c37;
+    cursor: pointer;
+}
+
+input[type="file"]:hover::file-selector-button {
+    background-color: #665c37;
+    color: white;
+}
+.btn-custom-outline {
+    background-color: transparent;
+    border: 2px solid #665c37;
+    color: #665c37;
+}
+
+.btn-custom-outline:hover,
+.btn-custom-outline:focus {
+    background-color: #665c37;
+    color: white;
+    border: 2px solid #665c37;
+}
+
 </style>
 <script>
 import NavBar from "../components/NavBar.vue";
@@ -292,6 +325,7 @@ export default {
 				window.alert("Profile updated successfully");
                 console.log("Profile updated successfully");
                 // You can also show a success message to the user
+				window.location.href = '/profile';
             })
             .catch((error) => {
                 // Handle errors

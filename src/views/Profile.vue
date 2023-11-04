@@ -80,7 +80,7 @@
                     <!-- 
                         Tabs for businesses products, campaigns
                      -->
-                    <div>
+                    <div v-if="user.userType == 'business'">
                         <!-- <div v-if="user.userType == 'business'"> -->
                         <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist" style="border-radius: 5px">
                             <li class="nav-item" role="presentation">
