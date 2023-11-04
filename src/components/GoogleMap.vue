@@ -405,12 +405,9 @@ export default {
                 });
 
                 // Add a click event listener to the marker
-                marker.addListener("click", () => {
-                    // Generate a Google Maps link for the marker's location
-                    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
-
-                    // Open the link in a new tab
-                    window.open(mapsLink, "_blank");
+                marker.addListener('click', () => {
+                    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latlng.lat},${latlng.lng}`;
+                    window.open(directionsUrl, '_blank');
                 });
 
                 // Add the marker to the markers array
