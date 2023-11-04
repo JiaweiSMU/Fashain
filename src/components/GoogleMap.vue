@@ -1,19 +1,21 @@
 <template>
-    <div class="container py-5">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                 <div>
                     <!-- To filter based on distance -->
-                    <p>Current dist to filter by is {{ dist }}</p>
-                    <button @click="dist += 100">Add</button>
-                    <input v-model="dist" />
-                    <button @click="dist -= 100">Minus</button>
+                    <p class="row justify-content-center">Current dist to filter by is {{ dist }}</p>
+                    <div class="row justify-content-center">
+                        <button class="col-2" @click="dist += 100">Add</button>
+                        <input class="col-2 align-content-center" v-model="dist" />
+                        <button class="col-2" @click="dist -= 100">Minus</button>
+                    </div>
                 </div>
                 <!-- Card component -->
                 <div class="card">
                     <div class="card-body">
                         <!-- Card body with padding -->
-                        <div id="map" class="w-100"></div>
+                        <div id="map" class="w-500"></div>
                         <!-- Map container -->
                     </div>
                 </div>
@@ -29,7 +31,7 @@ import { toRaw } from "vue";
 const { encoding } = await google.maps.importLibrary("geometry");
 const { spherical } = await google.maps.importLibrary("geometry");
 const db = getFirestore();
-const q = query(collection(db, "users"));
+const q = query(collection(db, "users")); //Subcollection of users object
 
 export default {
     props: ["data"],
@@ -40,7 +42,6 @@ export default {
             placesService: null,
             currentPos: { lat: 0, lng: 0, dist: 0 }, //To get currentPos without calling function again
             dist: 1000,
-            users: [],
             markers: [],
         };
     },
@@ -56,21 +57,66 @@ export default {
         this.loadGoogleMapsScript();
     },
     watch: {
-        /**
-         * This function is used to calculate the distance.
-         *
-         * @param {type} paramName - description of parameter
-         * @return {type} description of return value
-         */
         dist() {
-            this.findNearbyPlaces(this.currentPos);
+            this.refreshMap();
         },
     },
 
     methods: {
+        /**
+         * Refreshes the map by creating a new map instance with custom styling,
+         * setting the initial center of the map, adding an info window to the
+         * current position, and finding nearby places.
+         *
+         * @return {void} This function does not return anything.
+         */
+        refreshMap() {
+            const customMapStyle = [
+                {
+                    featureType: "administrative",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#444444" }],
+                },
+            ];
+            this.map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                styles: customMapStyle,
+                mapTypeControl: false,
+            });
+            // Create a new InfoWindow object
+            this.infoWindow = new google.maps.InfoWindow();
+
+            // Create a new PlacesService object
+            this.placesService = new google.maps.places.PlacesService(this.map);
+
+            // Set the position of the InfoWindow to the current position
+            let pos = { lat: this.currentPos.lat, lng: this.currentPos.lng };
+            this.infoWindow.setPosition(pos);
+
+            // Set the content of the InfoWindow to "Current Location"
+            this.infoWindow.setContent("Current Location");
+
+            // Open the InfoWindow on the map
+            this.infoWindow.open(this.map);
+
+            // Set the center of the map to the current position
+            this.map.setCenter(pos);
+
+            // Find nearby places using the current position
+            this.findNearbyPlaces(this.currentPos);
+        },
+
+        /**
+         * Updates the data with the specified key-value pair.
+         *
+         * @param {string} key - The key to update.
+         * @param {any} value - The value to update.
+         * @return {void} This function does not return anything.
+         */
         updateData(key, value) {
             this.$emit("update-data", { key, value });
         },
+
         // Method to load the Google Maps JavaScript SDK dynamically
         loadGoogleMapsScript() {
             console.log("loading");
@@ -96,40 +142,6 @@ export default {
                 // If the Google Maps SDK is already loaded, directly initialize the map
                 this.initMap();
             }
-        },
-
-        /**
-         * Retrieves the users subcollection from the database and performs some operations on it.
-         *
-         * @return {void} This function does not return any value.
-         */
-        /**
-         * Retrieves the users subcollection and performs some operations on the data.
-         */
-        getUsersSubcollection() {
-            // Retrieve the documents from the subcollection
-            getDocs(q).then((querySnapshot) => {
-                // Iterate over each document in the query snapshot
-                querySnapshot.forEach((doc) => {
-                    let data = doc.data();
-                    this.users.push(data);
-                });
-
-                // Log a message indicating that the list of users is being retrieved
-                console.log("Hi getting list of users");
-
-                // Log the list of users
-                console.log(this.users);
-
-                // Iterate over each user in the list
-                for (const user of this.users) {
-                    // Check if the user type is "business"
-                    if (user.userType == "business") {
-                        // Log the name of the user
-                        console.log(user.name);
-                    }
-                }
-            });
         },
 
         /**
@@ -208,21 +220,14 @@ export default {
          */
         haversine_distance(locObj) {
             setTimeout(250);
-            //console.log(locObj);
-            // Create a new LatLng object for the origin coordinates
-            //console.log("In calculate distance");
             let origin = new google.maps.LatLng({
                 lat: this.currentPos.lat,
                 lng: this.currentPos.lng,
             });
-
             // Create a new LatLng object for the destination coordinates
             let destination = new google.maps.LatLng({ lat: locObj.lat, lng: locObj.lng });
-
             // Calculate the distance between the origin and destination using the spherical geometry library
             const distance = google.maps.geometry.spherical.computeDistanceBetween(origin, destination);
-            // console.log(distance);
-
             // Return the distance
             return distance;
         },
@@ -240,70 +245,29 @@ export default {
                 radius: 1000,
                 type: "clothing_store",
             };
-            let arrayOfData = [];
+            let arrayOfData = []; //Store array of Loc Object
             let markerArray = [];
+            let users = [];
 
             //Empty out array
             arrayOfData.splice(0);
             markerArray.splice(0);
-            this.users.splice(0);
+            users.splice(0);
             if (this.markers.length > 0) {
                 this.markers.splice(0);
             }
 
-            //Old Code
-
-            // Perform a nearby search using the placesService
-            // this.placesService.nearbySearch(request, (results, status) => {
-            //   // Check if the search was successful
-            //   if (status === google.maps.places.PlacesServiceStatus.OK) {
-            //     // Limit the number of results to 5
-            //     const limitedResults = results.slice(0, 5);
-            //     //const bounds = new google.maps.LatLngBounds();
-            //     // Iterate over the limited results
-            //     for (const place of limitedResults) {
-            //       // Create a marker for each place
-            //       //bounds.extend(place.geometry.location);
-            //       this.createMarker(place);
-            //     }
-            //     //this.map.fitBounds(bounds);
-            //   }
-            // });
-
-            // https://jsfiddle.net/hufk3qtL/2/ To loop through radius and display
-            // Pass the results array to the haversine_distance function
-
-            // let data = [149306, 149729];
-
-            /*getDocs(q).then((querySnapshot) => {
+            // Retrieve documents from users subcollection
+            getDocs(q).then((querySnapshot) => {
                 // Iterate over each document in the query snapshot
                 querySnapshot.forEach((doc) => {
                     let data = doc.data();
-                    this.users.push(data);
+                    // Add the retrieved data to the users array
+                    users.push(data);
                 });
-
-                console.log("Hi getting list of users");
-                console.log(this.users);
-
-                // Iterate over each user in the users array
-                for (const user of this.users) {
-                    if (user.userType == "business") {
-                        // Create a location object with latitude and longitude
-                        var locName = {
-                            lat: user.address.latitude,
-                            lng: user.address.longitude,
-                            dist: 0,
-                        };
-
-                        // Calculate distance using haversine formula
-                        const returnDist = this.haversine_distance(locName);
-                        locName.dist = returnDist.toFixed(2);
-
-                        // Add the location to the arrayOfData array
-                        arrayOfData.push(locName);
-                    }
-                }
-            });*/
+            });
+            console.log("Hi getting list of users");
+            console.log(users);
 
             for (const user of this.data) {
                 var locName = {
@@ -312,35 +276,29 @@ export default {
                     dist: 0,
                     uid: user.uid,
                 };
-
                 // Calculate distance using haversine formula
                 const returnDist = this.haversine_distance(locName);
                 locName.dist = returnDist.toFixed(2);
-
                 // Add the location to the arrayOfData array
                 arrayOfData.push(locName);
             }
-            console.log(arrayOfData);
+            //console.log(arrayOfData);
             // Iterate over each location in the arrayOfData array
             for (const loc of arrayOfData) {
-                console.log(loc.dist, this.dist);
+                // console.log(loc.dist, this.dist);
                 if (loc.dist <= Number(this.dist)) {
                     // Add the location to the markerArray array
                     this.updateData("uid", loc.uid);
-                    console.log("added");
+                    // console.log("added");
                     markerArray.push(loc);
                 }
             }
-
-            //console.log(markerArray);
-
             // Call the makeMarker function with the markerArray
             this.makeMarker(markerArray);
 
             //Idk wtf is this dont touch
 
             // const apiKey = 'AIzaSyDA9Lr5Q_orxHic9yRrScWEU6P6OQM_mjI';
-
             // // Map each address to a geocoding API request URL
             // const apiUrls = data.map(address => {
 
@@ -430,9 +388,6 @@ export default {
 
             // Iterate over the location data
             for (let i = 0; i < locData.length; i++) {
-                // Log the current index
-                console.log(i);
-
                 // Create a new latlng object for the current location
                 let latlng = { lat: locData[i].lat, lng: locData[i].lng };
 
@@ -454,33 +409,6 @@ export default {
                 // Add the marker to the markers array
                 this.markers.push(marker);
             }
-        },
-
-        /** Use the above makeMarker instead to create
-         * Creates a marker on the map for the given place.
-         *
-         * @param {Object} place - The place object containing the information of the place.
-         * @return {void} This function does not return anything.
-         */
-        /**
-         * Creates a marker on the map at the given place.
-         * @param {Object} place - The place object containing the location and name of the marker.
-         */
-        createMarker(place) {
-            // Create a new marker on the map
-            const marker = new google.maps.Marker({
-                map: this.map,
-                position: place.geometry.location,
-                title: place.name,
-            });
-
-            // Add a click event listener to the marker
-            marker.addListener("click", () => {
-                // Generate a Google Maps link with the location of the marker
-                const mapsLink = `https://www.google.com/maps/search/?api=1&query=${place.geometry.location.lat()},${place.geometry.location.lng()}`;
-                // Open the link in a new tab
-                window.open(mapsLink, "_blank");
-            });
         },
 
         /**
