@@ -86,11 +86,16 @@
                         id="pills-new"
                         role="tabpanel"
                         aria-labelledby="pills-new-tab">
-                        <div class="container py-5">
+                        <div class="container">
+                            <div class="row d-flex mb-3 justify-content-center">
+                                <a class="btn btn-success" @click="isSortedByRating = !isSortedByRating">
+                                    {{ isSortedByRating ? "Unsort" : "Sort by rating (High - low)" }}
+                                </a>
+                            </div>
                             <div class="row">
                                 <div
-                                    class="mb-3 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
-                                    v-for="product in this.products_new"
+                                    class="col mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3"
+                                    v-for="product in this.sortedProducts_new"
                                     :key="product">
                                     <div
                                         class="card"
@@ -114,17 +119,22 @@
                 </div>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
-                        <div class="container py-5">
+                        <div class="container">
+                            <div class="row d-flex mb-3 justify-content-center">
+                                <a class="btn btn-success" @click="isSortedByRating = !isSortedByRating">
+                                    {{ isSortedByRating ? "Unsort" : "Sort by rating (High - low)" }}
+                                </a>
+                            </div>
                             <div class="row">
                                 <div
-                                    class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3"
-                                    v-for="product in this.products_used"
+                                    class="col col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
+                                    v-for="product in this.sortedProducts_used"
                                     :key="product">
                                     <div
                                         style="height: auto; width: 250px"
                                         class="card"
                                         @click="goToProductPage(product)">
-                                        <img :src="product.images[0]" class="card-img-top w-100 h-100" alt="..." />
+                                        <img :src="product.images[0]" class="card-img-top img-fluid" alt="..." />
                                         <div class="card-body">
                                             <h5 class="card-title">{{ product.name }}</h5>
                                             <h6 class="card-subtitle">{{ product.category }}</h6>
@@ -154,7 +164,7 @@
                         <div class="container py-5">
                             <div class="row">
                                 <div
-                                    class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3"
+                                    class="col col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                                     v-for="product in this.nearbyStores"
                                     :key="product">
                                     <div
@@ -207,6 +217,7 @@ export default {
             dist: 1000,
             storeLocations: [],
             storesNearby: [],
+            isSortedByRating: false,
         };
     },
 
@@ -289,11 +300,7 @@ export default {
             }
         },
     },
-    filters: {
-        highestRating: function (products) {
-            return products.sort((a, b) => b.rating - a.rating);
-        },
-    },
+    filters: {},
 
     computed: {
         nearbyStores() {
@@ -301,6 +308,25 @@ export default {
             return this.products_rental.filter((product) => {
                 return this.storesNearby.includes(product.uid);
             });
+        },
+        sortedProducts_new() {
+            let sortedProducts = this.products_new;
+
+            if (this.isSortedByRating) {
+                // If isSortedByRating is true, return the products sorted by rating
+                sortedProducts = sortedProducts.sort((a, b) => b.rating - a.rating);
+            }
+
+            return sortedProducts;
+        },
+        sortedProducts_used() {
+            if (this.isSortedByRating) {
+                // If isSortedByRating is true, return the products sorted by rating
+                return [...this.products_used].sort((a, b) => b.rating - a.rating);
+            } else {
+                // If isSortedByRating is false, return the products in their original order
+                return this.products_used;
+            }
         },
     },
 };
