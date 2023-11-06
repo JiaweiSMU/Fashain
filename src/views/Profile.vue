@@ -80,13 +80,13 @@
                     <!-- 
                         Tabs for businesses products, campaigns
                      -->
-                    <div>
+                    <div v-if="user.userType == 'business'">
                         <!-- <div v-if="user.userType == 'business'"> -->
                         <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist" style="border-radius: 5px">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true" style="color: white">
+                                    aria-selected="true" style="min-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:white" >
                                     All Products
                                 </button>
                             </li>
@@ -274,7 +274,7 @@
                                 <div class="card mb-3 mx-2 mt-2" v-for="(campaign, index) in campaigns" :key="index">
                                     <div class="image-container">
                                         <img class="card-img-top" :src="campaign.campaignImage" alt="Campaign Image"
-                                            style="max-height: 200px; object-fit: fill" />
+                                            style="max-height: 200px; object-fit: contain" />
                                     </div>
                                     <div class="card-body">
                                         <h4 class="card-title">{{ campaign.campaignName }}</h4>

@@ -181,6 +181,17 @@ export default {
                     position: { lat: this.lat, lng: this.long },
                     map: map
                 });
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: "Click for directions"
+                });
+
+                infoWindow.open(map, marker);
+
+                marker.addListener('click', () => {
+                    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${this.lat},${this.long}`;
+                    window.open(directionsUrl, '_blank');
+                });
             });
         },
 
