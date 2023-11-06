@@ -49,7 +49,7 @@
                             href="#pills-new"
                             aria-controls="pills-new"
                             aria-selected="true"
-                            ><i class="fas fa-chart-pie fa-fw me-2"></i>Brand New</a
+                            ><i class="fas fa-fire fa-fw me-2"></i>Brand New</a
                         >
                     </li>
                     <li class="nav-item" role="presentation">
@@ -62,7 +62,7 @@
                             role="tab"
                             aria-controls="pills-used"
                             aria-selected="false"
-                            ><i class="fas fa-chart-line fa-fw me-2"></i>Pre-loved</a
+                            ><i class="fas fa-heart fa-fw me-2"></i>Pre-loved</a
                         >
                     </li>
                     <li class="nav-item" role="presentation">
@@ -75,7 +75,7 @@
                             role="tab"
                             aria-controls="pills-rental"
                             aria-selected="false"
-                            ><i class="fas fa-cogs fa-fw me-2"></i>Rental</a
+                            ><i class="fas fa-truck-moving fa-fw me-2"></i>Rental</a
                         >
                     </li>
                 </ul>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="row">
                                 <div
-                                    class="col mb-3 col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3"
+                                    class="col mb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 text-center"
                                     v-for="product in this.sortedProducts_new"
                                     :key="product">
                                     <div
@@ -127,7 +127,7 @@
                             </div>
                             <div class="row">
                                 <div
-                                    class="col col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
+                                    class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                                     v-for="product in this.sortedProducts_used"
                                     :key="product">
                                     <div
@@ -164,7 +164,7 @@
                         <div class="container py-5">
                             <div class="row">
                                 <div
-                                    class="col col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
+                                    class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                                     v-for="product in this.nearbyStores"
                                     :key="product">
                                     <div
