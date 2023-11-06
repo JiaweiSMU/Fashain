@@ -310,14 +310,13 @@ export default {
             });
         },
         sortedProducts_new() {
-            let sortedProducts = this.products_new;
-
             if (this.isSortedByRating) {
                 // If isSortedByRating is true, return the products sorted by rating
-                sortedProducts = sortedProducts.sort((a, b) => b.rating - a.rating);
+                return [...this.products_new].sort((a, b) => b.rating - a.rating);
+            } else {
+                // If isSortedByRating is false, return the products in their original order
+                return this.products_new;
             }
-
-            return sortedProducts;
         },
         sortedProducts_used() {
             if (this.isSortedByRating) {
