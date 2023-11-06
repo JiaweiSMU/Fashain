@@ -400,16 +400,18 @@ export default {
         flex-direction: column;
         align-items: center;
         margin-right: 20px;
+        
     }
     
     .thumbnail-img {
         margin-bottom: 10px; 
         cursor: pointer;
         width: 60px; 
-        height: 60px; 
+        height: 80px; 
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
         transition: border 0.3s ease;
+
     }
     
     .thumbnail-img.active-thumbnail {
