@@ -14,8 +14,7 @@
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <h5 class="my-3">{{ user.name }}</h5>
-                        <img :src="user.image"
-                            class="rounded-circle img-fluid" style="width: 150px;height:150px"  />
+                        <img :src="user.image" class="rounded-circle img-fluid" style="width: 150px;height:150px" />
                         <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
                         <p class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
@@ -68,6 +67,46 @@
                                 </svg>
                                 <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
                             </li>
+                            <li class="list-group-item d-flex justify-content-center">
+                                <a @click="toggleModal" class="btn btn-custom-outline btn-sm">Organise Upcycling
+                                    Campaign</a>
+
+                                <!-- Modal -->
+                                <div v-if="showModal" class="modal" tabindex="-1" role="dialog" style="display: block;">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Upcycling Campaign Form</h5>
+                                                <button type="button" class="close" @click="toggleModal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form @submit.prevent="submitForm">
+                                                    <div class="form-group">
+                                                        <label for="startDate">Start Date:</label>
+                                                        <input type="date" id="startDate" class="form-control"
+                                                            v-model="form.startDate" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="endDate">End Date:</label>
+                                                        <input type="date" id="endDate" class="form-control"
+                                                            v-model="form.endDate" required>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            @click="toggleModal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Launch Campaign</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </li>
+
+
                         </ul>
                     </div>
                 </div>
@@ -86,7 +125,8 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true" style="min-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:white" >
+                                    aria-selected="true"
+                                    style="min-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:white">
                                     All Products
                                 </button>
                             </li>
@@ -295,8 +335,7 @@
                                 <br>
                                 <div class="d-flex flex-row">
 
-                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1" 
-                    
+                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/campaign">Create Campaign</a>
                                     <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
                                 </div>
@@ -317,7 +356,7 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot, setDoc, Timestamp } from "firebase/firestore";
 import { auth } from "../firebase/init.js";
 import { watch } from "vue";
 import router from "../router";
@@ -358,6 +397,13 @@ export default {
             products_new: [],
             products_used: [],
             products_rental: [],
+
+            // upcycling
+            showModal: false,
+            form: {
+                startDate: '',
+                endDate: ''
+            }
         };
     },
     // sLMohi7AUYxO8Xw45FRh
@@ -468,8 +514,37 @@ export default {
             // You can use this.products[index] to access the product data for deletion
             array.splice(index, 1); // Remove the product from the products array
         },
+        toggleModal() {
+            this.showModal = !this.showModal;
+        },
+        async submitForm() {
+            try {
+                const docRef = collection(db, 'upcycling');
+
+
+                // Create a new document with a unique ID based on the user's UID
+                const docData = {
+                    startdate: this.form.startDate ? Timestamp.fromDate(new Date(this.form.startDate)) : null,
+                    enddate: this.form.endDate ? Timestamp.fromDate(new Date(this.form.endDate)) : null
+                };
+
+                const docId = this.user.uid; // Document ID is based on the user's UID
+
+                // Set the document data using doc() and set() functions
+                await setDoc(doc(docRef, docId), docData);
+
+                console.log('Document written with ID: ', docId);
+                this.toggleModal(); // close the modal on submit
+            } catch (error) {
+                console.error('Error adding document: ', error);
+            }
+        }
+
+
     },
 };
 </script>
 <!-- Style sheet -->
-<style>@import "../assets/profile.css";</style>
+<style>
+@import "../assets/profile.css";
+</style>
