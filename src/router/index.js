@@ -5,6 +5,7 @@ import Home from "../views/Home.vue";
 import Questionaire from "../views/Questionaire.vue";
 import Map from "../views/Map.vue";
 import ProductPage from "../views/ProductPage.vue";
+import Upcycling from "../views/Upcycling.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -63,6 +64,11 @@ const router = createRouter({
             name: "ProductPage",
             component: ProductPage,
             props: true,
+        },
+        {
+            path: "/Upcycling",
+            name: "Upcycling",
+            component: Upcycling,
         },
     ],
 });

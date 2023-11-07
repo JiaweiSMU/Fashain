@@ -23,6 +23,10 @@
                     <a v-if="checkAuth == null" type="button" class="btn btn-outline-success me-2" href="/login"
                         >Log In</a
                     >
+
+                      
+                    <button type="button" class="btn btn-outline-success me-2" @click="goToUpcyclingHubs()">Upcycling Hub</button>
+
                     <div v-if="checkAuth != null" class="dropdown">
                         <a
                             class="m-2 nav-link dropdown-toggle"
@@ -87,6 +91,9 @@ export default {
         goToCartPage() {
             router.push({ name: "Cart" });
         },
+        goToUpcyclingHubs() {
+            router.push({ name: 'Upcycling'});
+        }
     },
     created() {
         onAuthStateChanged(auth, (user) => {
