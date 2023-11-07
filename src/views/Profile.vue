@@ -68,7 +68,7 @@
                                 <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-center">
-                                <a @click="toggleModal" class="btn btn-custom-outline btn-sm">Organise Upcycling
+                                <a v-if="user.userType == 'business'" @click="toggleModal" class="btn btn-custom-outline btn-sm">Organise Upcycling
                                     Campaign</a>
 
                                 <!-- Modal -->

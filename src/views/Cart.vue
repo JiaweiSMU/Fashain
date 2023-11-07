@@ -69,6 +69,7 @@ import NavBar from "../components/NavBar.vue";
 import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import db, { auth } from "../firebase/init.js";
 import { onAuthStateChanged } from "firebase/auth";
+import router from "../router";
 export default {
   components: { NavBar },
   /* For validation of user type??  */
@@ -118,6 +119,7 @@ export default {
         });
       } else {
         // No user is signed in
+        router.push('/login')
         console.log("No user is signed in.");
       }
     });
