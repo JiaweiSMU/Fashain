@@ -217,7 +217,7 @@ export default {
             dist: 1000,
             storeLocations: [],
             storesNearby: [],
-            isSortedByRating: false,
+            isSortedByRating: true,
         };
     },
 
