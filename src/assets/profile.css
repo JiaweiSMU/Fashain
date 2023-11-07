@@ -410,3 +410,47 @@ ul.summary-list > li:last-child  {
     color: white;
     border: 2px solid #665c37;
 }
+
+.btn-custom-outline-danger {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 1px solid #dc3545; /* Use the same color as btn-outline-danger */
+    color: #dc3545; /* Use the same color as btn-outline-danger */
+    padding: 8px 16px; /* Adjust padding as needed */
+    background-color: transparent; /* Ensure the background is transparent initially */
+  }
+  
+  /* This is for the initial label which will be hidden on hover */
+  .btn-custom-outline-danger .button-label {
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  
+  /* This styles the X symbol, starting off transformed and invisible */
+  .btn-custom-outline-danger .button-x {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.2s;
+    font-size: 1.5em; /* Adjust size as needed */
+    color: white; /* The X symbol is white */
+  }
+  
+  /* Hover effects */
+  .btn-custom-outline-danger:hover {
+    background-color: #dc3545; /* Highlight the button in red on hover */
+    color: white; /* Change the text color to white on hover */
+  }
+  
+  .btn-custom-outline-danger:hover .button-label {
+    transform: scale(0); /* Hide the label text */
+  }
+  
+  .btn-custom-outline-danger:hover .button-x {
+    transform: translate(-50%, -50%) scale(1); /* Show the X symbol */
+    opacity: 1;
+  }
+  

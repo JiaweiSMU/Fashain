@@ -68,7 +68,8 @@
                                 <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-center">
-                                <a v-if="user.userType == 'business'" @click="toggleModal" class="btn btn-custom-outline btn-sm">Organise Upcycling
+                                <a v-if="user.userType == 'business'" @click="toggleModal"
+                                    class="btn btn-custom-outline btn-sm">Organise Upcycling
                                     Campaign</a>
 
                                 <!-- Modal -->
@@ -94,9 +95,10 @@
                                                             v-model="form.endDate" required>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
+                                                        <button type="button" class="btn btn-outline-danger"
                                                             @click="toggleModal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Launch Campaign</button>
+                                                        <button type="submit" class="btn btn-custom-outline">Launch
+                                                            Campaign</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -183,8 +185,9 @@
                                             <div class="card-footer d-flex flex-row mb-0">
 
                                                 <button @click="deleteProduct(index, products)" type="button"
-                                                    class="btn btn-danger flex-fill ms-1">
-                                                    Delete
+                                                    class="btn btn-custom-outline-danger flex-fill ms-1">
+                                                    <span class="button-label">Delete</span>
+                                                    <span class="button-x">x</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -194,7 +197,9 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
+                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
+                                            class="button-label">Delete</span>
+                                        <span class="button-x">x</span></button>
                                 </div>
                             </div>
                             <!-- New products -->
@@ -219,8 +224,9 @@
                                             <div class="card-footer d-flex flex-row mb-0">
 
                                                 <button @click="deleteProduct(index, products_new)" type="button"
-                                                    class="btn btn-danger flex-fill ms-1">
-                                                    Delete
+                                                    class="btn btn-custom-outline-danger flex-fill ms-1">
+                                                    <span class="button-label">Delete</span>
+                                                    <span class="button-x">x</span>
                                                 </button>
 
                                             </div>
@@ -231,7 +237,9 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
+                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
+                                            class="button-label">Delete</span>
+                                        <span class="button-x">x</span></button>
                                 </div>
                             </div>
                             <!-- used -->
@@ -256,8 +264,9 @@
                                             <div class="card-footer d-flex flex-row mb-0">
 
                                                 <button @click="deleteProduct(index, products_used)" type="button"
-                                                    class="btn btn-danger flex-fill ms-1">
-                                                    Delete
+                                                    class="btn btn-custom-outline-danger flex-fill ms-1">
+                                                    <span class="button-label">Delete</span>
+                                                    <span class="button-x">x</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -267,7 +276,9 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
+                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
+                                            class="button-label">Delete</span>
+                                        <span class="button-x">x</span></button>
                                 </div>
                             </div>
                             <!-- Rental -->
@@ -292,8 +303,9 @@
                                             <div class="card-footer d-flex flex-row mb-0">
 
                                                 <button @click="deleteProduct(index, products_rental)" type="button"
-                                                    class="btn btn-danger flex-fill ms-1">
-                                                    Delete
+                                                    class="btn btn-custom-outline-danger flex-fill ms-1">
+                                                    <span class="button-label">Delete</span>
+                                                    <span class="button-x">x</span>
                                                 </button>
 
                                             </div>
@@ -304,7 +316,9 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
+                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
+                                            class="button-label">Delete</span>
+                                        <span class="button-x">x</span></button>
                                 </div>
 
                             </div>
@@ -337,7 +351,9 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/campaign">Create Campaign</a>
-                                    <button type="button" class="btn btn-danger flex-fill ms-1">Delete</button>
+                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
+                                            class="button-label">Delete</span>
+                                        <span class="button-x">x</span></button>
                                 </div>
                             </div>
                         </div>
@@ -545,6 +561,4 @@ export default {
 };
 </script>
 <!-- Style sheet -->
-<style>
-@import "../assets/profile.css";
-</style>
+<style>@import "../assets/profile.css";</style>
