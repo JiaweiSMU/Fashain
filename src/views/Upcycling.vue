@@ -16,7 +16,7 @@
             <div class="ongoing-campaigns">
               <h3 class="campaigns-title">Ongoing Upcycling Campaigns</h3>
               <div class="campaign-list">
-                <div class="campaign-card mb-3" v-for="campaign in campaigns" :key="campaign.id">
+                <div class="campaign-card mb-3" v-for="campaign in campaigns" :key="campaign.id" @click="centerMapOnBusiness(campaign.uid)">
                   <div class="campaign-header">
                     <h4 class="campaign-business-name">{{ campaign.businessName }}</h4>
                     <div class="campaign-dates">
@@ -47,6 +47,8 @@
             businesses: [],
             campaigns: [],
             showMap: false,
+            map: null, 
+            markers: {},
         };
     },
 
@@ -66,6 +68,7 @@
                     if (businessSnap.exists()) {
                         return {
                             id: campaignDoc.id,
+                            uid: businessSnap.id,
                             businessName: businessSnap.data().name,
                             startdate: campaignData.startdate,
                             enddate: campaignData.enddate,
@@ -97,28 +100,37 @@
         },
 
         initializeMap() {
-            if (!this.businesses.length) return;
-            this.$nextTick(() => {
-                const map = new google.maps.Map(document.getElementById("map-container"), {
-                    center: { lat: this.businesses[0].address.latitude, lng: this.businesses[0].address.longitude },
-                    zoom: 15 
-                });
+        if (!this.businesses.length) return;
 
+        this.map = new google.maps.Map(document.getElementById("map-container"), {
+            center: { lat: this.businesses[0].address.latitude, lng: this.businesses[0].address.longitude },
+            zoom: 15,
+        });
 
-                this.businesses.forEach(business => {
-                    const marker = new google.maps.Marker({
-                        position: { lat: business.address.latitude, lng: business.address.longitude },
-                        map: map,
-                        title: business.name,
-                    });
-
-                    const infoWindow = new google.maps.InfoWindow({
-                        content: `<div><strong>${business.name}</strong></div>`
-                    });
-
-                    infoWindow.open(map, marker);
-                });
+        this.businesses.forEach(business => {
+            const position = new google.maps.LatLng(business.address.latitude, business.address.longitude);
+            const marker = new google.maps.Marker({
+                position,
+                map: this.map,
+                title: business.name,
             });
+
+            this.markers[business.uid] = marker;
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<div><strong>${business.name}</strong></div>`,
+            });
+
+            infoWindow.open(this.map, marker);
+        });
+    },
+
+        centerMapOnBusiness(businessId) {
+            const marker = this.markers[businessId];
+            if (marker) {
+                this.map.panTo(marker.getPosition());
+                this.map.setZoom(15);
+            }
         },
 
 
