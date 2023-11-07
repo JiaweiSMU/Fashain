@@ -217,7 +217,7 @@ export default {
             dist: 1000,
             storeLocations: [],
             storesNearby: [],
-            isSortedByRating: false,
+            isSortedByRating: true,
         };
     },
 
@@ -229,6 +229,8 @@ export default {
                 for (const product of this.products) {
                     this.categorizeProduct(product);
                 }
+
+                return this.fetchRating(this.products);
             })
             .then(() => {
                 return this.fetchLocations(this.products);
@@ -259,7 +261,27 @@ export default {
                 console.error("Error fetching products:", error);
             }
         },
-
+        async fetchRating(products) {
+            try {
+                const locationPromises = products.map((product) => {
+                    const q = query(collection(db, "users"), where("uid", "==", product.uid));
+                    return getDocs(q).then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            this.products.forEach((product) => {
+                                if (product.uid == doc.data().uid) {
+                                    product.rating = doc.data().rating;
+                                }
+                            });
+                        });
+                        console.log(this.products);
+                    });
+                });
+                // Wait for all the location fetches to complete
+                await Promise.all(locationPromises);
+            } catch (error) {
+                console.error("Error fetching locations:", error);
+            }
+        },
         async fetchLocations(products) {
             try {
                 const locationPromises = products.map((product) => {
