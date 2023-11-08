@@ -49,7 +49,7 @@
                                 </svg>
                                 <p class="mb-0">{{ user.contactno }}</p>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <li v-if="user.userType == 'business'" class="list-group-item d-flex justify-content-between align-items-center p-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                                     viewBox="6 0 64 64" xml:space="preserve" style="
                                         fill-rule: evenodd;
