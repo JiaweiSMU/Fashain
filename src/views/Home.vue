@@ -235,6 +235,7 @@ export default {
             .then(() => {
                 return this.fetchLocations(this.products);
             });
+        
     },
 
     methods: {
@@ -281,7 +282,7 @@ export default {
                                 }
                             });
                         });
-                        console.log(this.products);
+                        // console.log(this.products);
                     });
                 });
                 // Wait for all the location fetches to complete
@@ -334,7 +335,7 @@ export default {
 
     computed: {
         nearbyStores() {
-            console.log(this.storesNearby);
+            //console.log(this.storesNearby);
             return this.products_rental.filter((product) => {
                 return this.storesNearby.includes(product.uid);
             });
