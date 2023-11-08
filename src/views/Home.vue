@@ -4,19 +4,23 @@
         <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../assets/carousel/2.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/2.png" class="d-block w-100" alt="..." @click="scrollToSection()" />
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/carousel/3.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/3.png" class="d-block w-100" alt="..." @click="scrollToSection()" />
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/carousel/5.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/5.png" class="d-block w-100" alt="..." @click="scrollToSection()" />
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/carousel/6.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/6.png" class="d-block w-100" alt="..." @click="scrollToSection()" />
                 </div>
                 <div class="carousel-item" v-for="campaign in this.campaigns" :key="campaign">
-                    <img :src="campaign.listOfCampaign[0].campaignImage" class="d-block w-100" alt="..." />
+                    <img
+                        :src="campaign.listOfCampaign[0].campaignImage"
+                        class="d-block w-100"
+                        alt="..."
+                        @click="scrollToSection()" />
                 </div>
             </div>
             <button
@@ -88,7 +92,7 @@
                         aria-labelledby="pills-new-tab">
                         <div class="container">
                             <div class="row d-flex mb-3 justify-content-center">
-                                <a class="btn btn-success" @click="isSortedByRating = !isSortedByRating">
+                                <a class="btn btn-custom-outline" @click="isSortedByRating = !isSortedByRating">
                                     {{ isSortedByRating ? "Unsort" : "Sort by rating (High - low)" }}
                                 </a>
                             </div>
@@ -121,7 +125,7 @@
                     <div class="tab-pane fade show" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
                         <div class="container">
                             <div class="row d-flex mb-3 justify-content-center">
-                                <a class="btn btn-success" @click="isSortedByRating = !isSortedByRating">
+                                <a class="btn btn-custom-outline" @click="isSortedByRating = !isSortedByRating">
                                     {{ isSortedByRating ? "Unsort" : "Sort by rating (High - low)" }}
                                 </a>
                             </div>
@@ -236,10 +240,22 @@ export default {
             .then(() => {
                 return this.fetchLocations(this.products);
             });
+<<<<<<< HEAD
         this.fetchCampaigns();
+=======
+
+>>>>>>> 7cbe2e4a8f990519d0514a42c8d4e6f1814945c7
     },
 
     methods: {
+
+        scrollToSection() {
+            this.$nextTick(() => {
+                const element = document.getElementById('pills-tab');
+                element.scrollIntoView({ behavior: 'smooth' });
+            });
+        },
+
         handleUpdateData({ key, value }) {
             if (value == "No users found") {
                 this.storesNearby = [];
@@ -290,7 +306,7 @@ export default {
                                 }
                             });
                         });
-                        console.log(this.products);
+                        // console.log(this.products);
                     });
                 });
                 // Wait for all the location fetches to complete
@@ -343,7 +359,7 @@ export default {
 
     computed: {
         nearbyStores() {
-            console.log(this.storesNearby);
+            //console.log(this.storesNearby);
             return this.products_rental.filter((product) => {
                 return this.storesNearby.includes(product.uid);
             });
@@ -407,5 +423,10 @@ export default {
     border-color: #1a1a1a;
     color: #ffffff;
     box-shadow: none;
+}
+.btn-custom-outline {
+    background-color: #665c37;
+    color: white;
+    border: 1px solid #665c37;
 }
 </style>

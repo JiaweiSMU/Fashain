@@ -17,7 +17,7 @@
                         <img :src="user.image" class="rounded-circle img-fluid" style="width: 150px;height:150px" />
                         <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
-                        <p class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
+                        <p v-if="user.userType == 'business'" class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
                         <a class="btn btn-custom-outline btn-sm" href="/edit_profile">Edit Profile
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 viewBox="0 2 24 24">
@@ -49,7 +49,7 @@
                                 </svg>
                                 <p class="mb-0">{{ user.contactno }}</p>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <li v-if="user.userType == 'business'" class="list-group-item d-flex justify-content-between align-items-center p-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                                     viewBox="6 0 64 64" xml:space="preserve" style="
                                         fill-rule: evenodd;
@@ -70,14 +70,14 @@
                             <li class="list-group-item d-flex justify-content-center">
                                 <a v-if="user.userType == 'business'" @click="toggleModal"
                                     class="btn btn-custom-outline btn-sm">Organise Upcycling
-                                    Campaign</a>
+                                    Drive</a>
 
                                 <!-- Modal -->
                                 <div v-if="showModal" class="modal" tabindex="-1" role="dialog" style="display: block;">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Upcycling Campaign Form</h5>
+                                                <h5 class="modal-title">Upcycling Drive Form</h5>
                                                 <button type="button" class="close" @click="toggleModal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -98,7 +98,7 @@
                                                         <button type="button" class="btn btn-outline-danger"
                                                             @click="toggleModal">Close</button>
                                                         <button type="submit" class="btn btn-custom-outline">Launch
-                                                            Campaign</button>
+                                                            Drive</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -197,9 +197,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                                    
                                 </div>
                             </div>
                             <!-- New products -->
@@ -237,9 +235,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                              
                                 </div>
                             </div>
                             <!-- used -->
@@ -276,9 +272,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                                
                                 </div>
                             </div>
                             <!-- Rental -->
@@ -316,9 +310,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                               
                                 </div>
 
                             </div>
@@ -351,9 +343,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/campaign">Create Campaign</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                               
                                 </div>
                             </div>
                         </div>

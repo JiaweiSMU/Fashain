@@ -14,7 +14,7 @@
           <!-- display ongoing campaigns -->
           <div class="col-md-4 col-12">
             <div class="ongoing-campaigns">
-              <h3 class="campaigns-title">Ongoing Upcycling Campaigns</h3>
+              <h3 class="campaigns-title">Ongoing Upcycling Drives</h3>
               <div class="campaign-list">
                 <div class="campaign-card mb-3" v-for="campaign in campaigns" :key="campaign.id" @click="centerMapOnBusiness(campaign.uid)">
                   <div class="campaign-header">
@@ -122,6 +122,11 @@
             });
 
             infoWindow.open(this.map, marker);
+
+            marker.addListener('click', () => {
+                    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${business.address.latitude},${business.address.longitude}`;
+                    window.open(directionsUrl, '_blank');
+                });
         });
     },
 

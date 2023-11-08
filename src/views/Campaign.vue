@@ -154,7 +154,7 @@ export default {
             image: {
                 imageName: "",
                 imageExt: "",
-                url: "https://placehold.co/400",
+                url: "",
                 isImage: false,
                 //isUploaded: false,
             },
