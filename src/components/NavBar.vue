@@ -24,6 +24,10 @@
                         >Log In</a
                     >
 
+                    <button type="button" class="btn btn-custom-outline me-2" @click="goToUpcyclingHubs()">
+                        Upcycling Hub
+                    </button>
+
                     <div v-if="checkAuth != null" class="dropdown">
                         <a
                             class="m-2 nav-link dropdown-toggle"
