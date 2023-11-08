@@ -202,7 +202,7 @@ export default {
                     const uidRef = doc(userDbRef, auth.currentUser.uid);
                     await setDoc(uidRef, { listOfCampaign: arrayUnion(data) }, { merge: true });
                     alert("Campaign created successfully");
-                    router.push("/profile");
+                    router.push("/");
                 } catch (e) {
                     console.error("Error adding document: ", e);
                 }
