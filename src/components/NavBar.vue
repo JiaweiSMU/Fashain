@@ -25,7 +25,7 @@
                     >
 
                       
-                    <button type="button" class="btn btn-custom-outline me-2" @click="goToUpcyclingHubs()">Upcycling Hub</button>
+                    <button type="button" class="btn btn-outline-success me-2" @click="goToUpcyclingHubs()">Upcycling Hub</button>
 
                     <div v-if="checkAuth != null" class="dropdown">
                         <a
@@ -124,18 +124,4 @@ export default {
     color: white;
     border: 2px solid #665c37;
 }
-.btn-custom-outline {
-    background-color: transparent;
-    border: 1px solid #665c37;
-    color: #665c37;
-}
-
-.btn-custom-outline:hover,
-.btn-custom-outline:focus {
-    background-color: #665c37;
-    color: white;
-    border: 1px solid #665c37;
-}
 </style>
-
-

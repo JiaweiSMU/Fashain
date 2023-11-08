@@ -69,10 +69,8 @@
 </template>
 
 <script>
-import { collection, query, where, getFirestore, getDocs, doc, getDoc, updateDoc} from "firebase/firestore";
+import { collection, query, where, getFirestore, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 import NavBar from "../components/NavBar.vue";
-import { auth } from '../firebase/init.js';
-import router from "../router";
 
 const db = getFirestore();
 
@@ -198,12 +196,6 @@ export default {
         },
 
         async addToCart() {
-            
-            if (!auth.currentUser) {
-        // Redirect to the login page
-        router.push('/login');
-        return; // Stop execution of this function
-      }
             const userRef = doc(db, "users", this.buyerid);
             const userDoc = await getDoc(userRef);
 
