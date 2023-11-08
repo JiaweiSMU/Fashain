@@ -4,19 +4,19 @@
         <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../assets/carousel/2.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/2.png" class="d-block w-100" alt="..." @click="scrollToSection()" />
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/carousel/3.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/3.png" class="d-block w-100" alt="..." @click="scrollToSection()"/>
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/carousel/4.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/4.png" class="d-block w-100" alt="..." @click="scrollToSection()"/>
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/carousel/5.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/5.png" class="d-block w-100" alt="..." @click="scrollToSection()"/>
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/carousel/6.png" class="d-block w-100" alt="..." />
+                    <img src="../assets/carousel/6.png" class="d-block w-100" alt="..." @click="scrollToSection()"/>
                 </div>
             </div>
             <button
@@ -238,6 +238,14 @@ export default {
     },
 
     methods: {
+
+        scrollToSection() {
+            this.$nextTick(() => {
+                const element = document.getElementById('pills-tab');
+                element.scrollIntoView({ behavior: 'smooth' });
+            });
+        },
+
         handleUpdateData({ key, value }) {
             if (value == "No users found") {
                 this.storesNearby = [];
