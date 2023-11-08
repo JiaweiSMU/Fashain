@@ -122,6 +122,11 @@
             });
 
             infoWindow.open(this.map, marker);
+
+            marker.addListener('click', () => {
+                    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${business.address.latitude},${business.address.longitude}`;
+                    window.open(directionsUrl, '_blank');
+                });
         });
     },
 
