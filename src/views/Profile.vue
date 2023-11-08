@@ -69,14 +69,14 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-center">
                                 <a @click="toggleModal" class="btn btn-custom-outline btn-sm">Organise Upcycling
-                                    Campaign</a>
+                                    Drive</a>
 
                                 <!-- Modal -->
                                 <div v-if="showModal" class="modal" tabindex="-1" role="dialog" style="display: block;">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Upcycling Campaign Form</h5>
+                                                <h5 class="modal-title">Upcycling Drive Form</h5>
                                                 <button type="button" class="close" @click="toggleModal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -96,7 +96,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             @click="toggleModal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Launch Campaign</button>
+                                                        <button type="submit" class="btn btn-primary">Launch Drive</button>
                                                     </div>
                                                 </form>
                                             </div>
