@@ -82,7 +82,11 @@ export default {
   },
 
   created() {
-
+    if (!auth.currentUser) {
+        // Redirect to the login page
+        router.push('/login');
+        return;
+    }
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User logged in already or has just logged in.
@@ -119,7 +123,6 @@ export default {
         });
       } else {
         // No user is signed in
-        router.push('/login')
         console.log("No user is signed in.");
       }
     });
@@ -215,7 +218,7 @@ export default {
 
 </script>
 <!-- Style sheet -->
-<style>
+<style scoped>
 .card {
   border-radius: 10px;
   overflow: hidden;
