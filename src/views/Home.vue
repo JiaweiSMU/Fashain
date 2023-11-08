@@ -121,7 +121,7 @@
                     <div class="tab-pane fade show" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
                         <div class="container">
                             <div class="row d-flex mb-3 justify-content-center">
-                                <a class="btn btn-success" @click="isSortedByRating = !isSortedByRating">
+                                <a class="btn btn-custom-outline" @click="isSortedByRating = !isSortedByRating">
                                     {{ isSortedByRating ? "Unsort" : "Sort by rating (High - low)" }}
                                 </a>
                             </div>
