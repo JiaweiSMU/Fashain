@@ -20,12 +20,12 @@
                     <li class="nav-item"></li>
                 </ul>
                 <div class="d-flex">
+                    <button type="button" class="btn btn-custom-outline me-2" @click="goToUpcyclingHubs()">
+                        Upcycling Hub
+                    </button>
                     <a v-if="checkAuth == null" type="button" class="btn btn-outline-success me-2" href="/login"
                         >Log In</a
                     >
-
-                      
-                    <button type="button" class="btn btn-custom-outline me-2" @click="goToUpcyclingHubs()">Upcycling Hub</button>
 
                     <div v-if="checkAuth != null" class="dropdown">
                         <a
@@ -92,8 +92,8 @@ export default {
             router.push({ name: "Cart" });
         },
         goToUpcyclingHubs() {
-            router.push({ name: 'Upcycling'});
-        }
+            router.push({ name: "Upcycling" });
+        },
     },
     created() {
         onAuthStateChanged(auth, (user) => {
@@ -137,5 +137,3 @@ export default {
     border: 1px solid #665c37;
 }
 </style>
-
-
