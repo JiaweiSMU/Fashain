@@ -20,14 +20,7 @@
                     <li class="nav-item"></li>
                 </ul>
                 <div class="d-flex">
-<<<<<<< HEAD
-                    <button type="button" class="btn btn-custom-outline me-2" @click="goToUpcyclingHubs()">
-                        Upcycling Hub
-                    </button>
-                    <a v-if="checkAuth == null" type="button" class="btn btn-outline-success me-2" href="/login"
-=======
                     <a v-if="checkAuth == null" type="button" class="btn btn-custom-outline me-2" href="/login"
->>>>>>> 7cbe2e4a8f990519d0514a42c8d4e6f1814945c7
                         >Log In</a
                     >
 

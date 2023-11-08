@@ -128,35 +128,35 @@
                                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                                     aria-selected="true"
-                                    style="min-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:white">
+                                    style="min-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:white" @click="fetchData">
                                     All Products
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-new-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
-                                    aria-selected="false" style="color: white">
+                                    aria-selected="false" style="color: white" @click="fetchData" >
                                     New
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-used-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-used" type="button" role="tab" aria-controls="pills-used"
-                                    aria-selected="false" style="color: white">
+                                    aria-selected="false" style="color: white" @click="fetchData">
                                     Used
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-rental-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-rental" type="button" role="tab" aria-controls="pills-rental"
-                                    aria-selected="false" style="color: white">
+                                    aria-selected="false" style="color: white" @click="fetchData">
                                     Rental
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-campaign-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-campaign" type="button" role="tab" aria-controls="pills-campaign"
-                                    aria-selected="false" style="color: white">
+                                    aria-selected="false" style="color: white" @click="fetchData">
                                     Campaign
                                 </button>
                             </li>
@@ -362,7 +362,7 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot, setDoc, Timestamp } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot, setDoc, Timestamp, deleteDoc} from "firebase/firestore";
 import { auth } from "../firebase/init.js";
 import { watch } from "vue";
 import router from "../router";
@@ -487,39 +487,51 @@ export default {
             let x = "⭐";
             return x.repeat(Number(this.user.rating));
         },
-        // Calculate join date
-        // joinDate() {
-        //     const currentDate = new Date();
-        //     const timestamp = new Date(this.user.joindate);
-        //     const timeDifference = currentDate - timestamp;
-
-        //     const secondsDifference = timeDifference / 1000;
-        //     const monthsDifference = secondsDifference / (60 * 60 * 24 * 30.44);
-
-        //     const years = Math.floor(monthsDifference / 12);
-        //     const months = Math.floor(monthsDifference % 12);
-        //     let str_m = "";
-        //     let str_y = "";
-        //     if (years > 0) {
-        //         str_y = `${years} Years `;
-        //     }
-        //     if (months > 0) {
-        //         str_m = `${months} Month `;
-        //     }
-        //     let gotAnd = "";
-        //     if (months > 0 && years > 0) {
-        //         gotAnd = "& ";
-        //     }
-        //     return `Joined: ${str_y}${gotAnd}${str_m}Ago`;
-        // },
     },
     methods: {
+        async fetchData() {
+        // Clear previous data before fetching new data
+        this.products = [];
+        this.products_new = [];
+        this.products_used = [];
+        this.products_rental = [];
 
-        deleteProduct(index, array) {
-            // Implement delete functionality here
-            // You can use this.products[index] to access the product data for deletion
-            array.splice(index, 1); // Remove the product from the products array
-        },
+        // Fetching data from Firestore
+        const pq = query(collection(db, "products"), where("uid", "==", this.user.uid));
+        const pqSnapshot = await getDocs(pq);
+        
+        // Process fetched data
+        pqSnapshot.forEach((doc) => {
+            const product = doc.data();
+            this.products.push(product);
+
+            // Categorize product by type
+            if (product.type === "New") {
+                this.products_new.push(product);
+            } else if (product.type === "Pre-loved") {
+                this.products_used.push(product);
+            } else if (product.type === "Rental") {
+                this.products_rental.push(product);
+            }
+        });
+    },
+        async deleteProduct(index, array) {
+        // Check if the product has an id
+        const product = array[index]
+
+        // First, let's delete from Firestore
+        try {
+            await deleteDoc(doc(db, "products", product.name)); // Make sure the 'products' path is correct
+            console.log('Product deleted from database with ID:', product.name);
+        } catch (error) {
+            console.error("Error removing product from database:", error);
+            return;
+        }
+
+        // Now remove from local array
+        array.splice(index, 1); // Remove the product from the local state array
+        console.log('Product removed from local array');
+    },
         toggleModal() {
             this.showModal = !this.showModal;
         },

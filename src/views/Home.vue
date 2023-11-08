@@ -240,11 +240,7 @@ export default {
             .then(() => {
                 return this.fetchLocations(this.products);
             });
-<<<<<<< HEAD
         this.fetchCampaigns();
-=======
-
->>>>>>> 7cbe2e4a8f990519d0514a42c8d4e6f1814945c7
     },
 
     methods: {
