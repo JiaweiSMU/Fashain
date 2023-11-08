@@ -12,9 +12,6 @@
                 <div class="carousel-item">
                     <img src="../assets/carousel/5.png" class="d-block w-100" alt="..." @click="scrollToSection()" />
                 </div>
-                <div class="carousel-item">
-                    <img src="../assets/carousel/6.png" class="d-block w-100" alt="..." @click="scrollToSection()" />
-                </div>
                 <div class="carousel-item" v-for="campaign in this.campaigns" :key="campaign">
                     <img
                         :src="campaign.listOfCampaign[0].campaignImage"
