@@ -68,14 +68,9 @@
                                 <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-center">
-<<<<<<< HEAD
-                                <a @click="toggleModal" class="btn btn-custom-outline btn-sm">Organise Upcycling
-                                    Drive</a>
-=======
                                 <a v-if="user.userType == 'business'" @click="toggleModal"
                                     class="btn btn-custom-outline btn-sm">Organise Upcycling
-                                    Campaign</a>
->>>>>>> e81e42a968fba707a8471284774a8d43020ad4e6
+                                    Drive</a>
 
                                 <!-- Modal -->
                                 <div v-if="showModal" class="modal" tabindex="-1" role="dialog" style="display: block;">
@@ -102,12 +97,8 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-outline-danger"
                                                             @click="toggleModal">Close</button>
-<<<<<<< HEAD
-                                                        <button type="submit" class="btn btn-primary">Launch Drive</button>
-=======
                                                         <button type="submit" class="btn btn-custom-outline">Launch
-                                                            Campaign</button>
->>>>>>> e81e42a968fba707a8471284774a8d43020ad4e6
+                                                            Drive</button>
                                                     </div>
                                                 </form>
                                             </div>
