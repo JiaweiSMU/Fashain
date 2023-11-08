@@ -10,13 +10,13 @@
                     <img src="../assets/carousel/3.png" class="d-block w-100" alt="..." />
                 </div>
                 <div class="carousel-item">
-                    <img src="../assets/carousel/4.png" class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item">
                     <img src="../assets/carousel/5.png" class="d-block w-100" alt="..." />
                 </div>
                 <div class="carousel-item">
                     <img src="../assets/carousel/6.png" class="d-block w-100" alt="..." />
+                </div>
+                <div class="carousel-item" v-for="campaign in this.campaigns" :key="campaign">
+                    <img :src="campaign.listOfCampaign[0].campaignImage" class="d-block w-100" alt="..." />
                 </div>
             </div>
             <button
@@ -218,6 +218,7 @@ export default {
             storeLocations: [],
             storesNearby: [],
             isSortedByRating: true,
+            campaigns: [],
         };
     },
 
@@ -235,6 +236,7 @@ export default {
             .then(() => {
                 return this.fetchLocations(this.products);
             });
+        this.fetchCampaigns();
     },
 
     methods: {
@@ -259,6 +261,21 @@ export default {
                 }
             } catch (error) {
                 console.error("Error fetching products:", error);
+            }
+        },
+        async fetchCampaigns() {
+            try {
+                const q = query(collection(db, "campaigns"));
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        this.campaigns.push(doc.data());
+                    });
+                } else {
+                    console.log("No campaigns found for the given query.");
+                }
+            } catch (error) {
+                console.error("Error fetching campaigns:", error);
             }
         },
         async fetchRating(products) {
