@@ -197,9 +197,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                                    
                                 </div>
                             </div>
                             <!-- New products -->
@@ -237,9 +235,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                              
                                 </div>
                             </div>
                             <!-- used -->
@@ -276,9 +272,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                                
                                 </div>
                             </div>
                             <!-- Rental -->
@@ -316,9 +310,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/add_product">Add Product</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                               
                                 </div>
 
                             </div>
@@ -351,9 +343,7 @@
 
                                     <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
                                         href="/campaign">Create Campaign</a>
-                                    <button type="button" class="btn btn-custom-outline-danger flex-fill ms-1"><span
-                                            class="button-label">Delete</span>
-                                        <span class="button-x">x</span></button>
+                               
                                 </div>
                             </div>
                         </div>

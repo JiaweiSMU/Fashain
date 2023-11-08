@@ -20,7 +20,7 @@
                     <li class="nav-item"></li>
                 </ul>
                 <div class="d-flex">
-                    <a v-if="checkAuth == null" type="button" class="btn btn-outline-success me-2" href="/login"
+                    <a v-if="checkAuth == null" type="button" class="btn btn-custom-outline me-2" href="/login"
                         >Log In</a
                     >
 
