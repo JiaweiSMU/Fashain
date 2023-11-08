@@ -88,7 +88,7 @@
                         aria-labelledby="pills-new-tab">
                         <div class="container">
                             <div class="row d-flex mb-3 justify-content-center">
-                                <a class="btn btn-success" @click="isSortedByRating = !isSortedByRating">
+                                <a class="btn btn-custom-outline" @click="isSortedByRating = !isSortedByRating">
                                     {{ isSortedByRating ? "Unsort" : "Sort by rating (High - low)" }}
                                 </a>
                             </div>
@@ -399,4 +399,11 @@ export default {
     color: #ffffff;
     box-shadow: none;
 }
+.btn-custom-outline {
+  
+    background-color: #665c37;
+    color: white;
+    border: 1px solid #665c37;
+}
 </style>
+
