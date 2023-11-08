@@ -17,7 +17,7 @@
                         <img :src="user.image" class="rounded-circle img-fluid" style="width: 150px;height:150px" />
                         <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
-                        <p class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
+                        <p v-if="user.userType == 'business'" class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
                         <a class="btn btn-custom-outline btn-sm" href="/edit_profile">Edit Profile
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 viewBox="0 2 24 24">
