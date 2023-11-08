@@ -7,9 +7,9 @@
                     <p class="row justify-content-center">Showing stores within {{ dist }}km</p>
                     <div class="row d-flex justify-content-center">
                         <div class="input-group mb-3">
-                            <button class="btn btn-outline-success col-2" @click="dist = Number(dist) + 1">Add</button>
+                            <button class="btn btn-outline-success col-2" @click="increaseDistance()">Add</button>
                             <input class="form-control col-2 align-content-center" v-model="dist" />
-                            <button class="btn btn-outline-success col-2" @click="dist = Number(dist) - 1">
+                            <button class="btn btn-outline-success col-2" @click="decreaseDistance()">
                                 Minus
                             </button>
                         </div>
@@ -108,6 +108,16 @@ export default {
 
             // Find nearby places using the current position
             this.findNearbyPlaces(this.currentPos);
+        },
+
+        increaseDistance() {
+            this.dist = Number(this.dist) + 1;
+        },
+        
+        decreaseDistance() {
+            if (this.dist > 1) {
+                this.dist = Number(this.dist) - 1;
+            }
         },
 
         /**
