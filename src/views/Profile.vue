@@ -5,10 +5,99 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- User profile -->
+    <div class="container py-5" v-if="user.userType == 'user'">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h5 class="my-3">{{ user.name }}</h5>
+                        <img :src="user.image" class="rounded-circle img-fluid" style="width: 150px; height: 150px" />
+                        <h5 class="my-3">{{ user.name }}</h5>
+                        <p class="text-muted mb-1">{{ user.email }}</p>
+                        <p v-if="user.userType == 'business'" class="text-muted mb-4">
+                            Sustainability Rating: {{ rating }}
+                        </p>
+                        <a class="btn btn-custom-outline btn-sm" href="/edit_profile"
+                            >Edit Profile
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                viewBox="0 2 24 24">
+                                <path
+                                    d="M20.548 3.452a1.542 1.542 0 0 1 0 2.182l-7.636 7.636-3.273 1.091 1.091-3.273 7.636-7.636a1.542 1.542 0 0 1 2.182 0zM4 21h15a1 1 0 0 0 1-1v-8a1 1 0 0 0-2 0v7H5V6h7a1 1 0 0 0 0-2H4a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1z" />
+                            </svg>
+                        </a>
 
+                        <ul class="list-group list-group-flush rounded-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    class="bi bi-geo-alt"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0 -6 3 3 0 0 0 0 6z" />
+                                </svg>
+                                <p class="mb-0">
+                                    {{
+                                        `${user.address.route}, ${user.blockNumber},
+                                                                        ${user.postcode}`
+                                    }}
+                                </p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    class="bi bi-telephone"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                </svg>
+                                <p class="mb-0">{{ user.contactno }}</p>
+                            </li>
+                            <li
+                                v-if="user.userType == 'business'"
+                                class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="23"
+                                    height="23"
+                                    fill="currentColor"
+                                    viewBox="6 0 64 64"
+                                    xml:space="preserve"
+                                    style="
+                                        fill-rule: evenodd;
+                                        clip-rule: evenodd;
+                                        stroke-linecap: round;
+                                        stroke-linejoin: round;
+                                        stroke-miterlimit: 2;
+                                    ">
+                                    <path
+                                        d="M16 36v4.642a2.091 2.091 0 0 0 2.545 2.041l29.819-6.64A2.09 2.09 0 0 0 50 34.002v-8.004c0-.98-.68-1.828-1.636-2.041l-29.819-6.64A2.092 2.092 0 0 0 16 19.358V22.5"
+                                        style="fill: none; stroke: #222a33; stroke-width: 3px" />
+                                    <path
+                                        d="M8.069 28.044A1.387 1.387 0 0 1 9.1 26.257c1.933-.352 5.458-.621 8.548 1.164 3.091 1.784 4.621 4.971 5.282 6.821a1.387 1.387 0 0 1-1.032 1.787c-1.933.352-5.457.621-8.548-1.163-3.09-1.785-4.62-4.972-5.281-6.822zM23.154 35.535c.165.285.443.487.766.555 1.619.295 4.572.52 7.16-.975 2.589-1.494 3.87-4.164 4.424-5.713a1.16 1.16 0 0 0-.864-1.497c-1.619-.295-4.571-.52-7.16.974a8.406 8.406 0 0 0-1.594 1.199M23.011 35.402l-8.413-4.871M50 35.046c0 .518.206 1.015.572 1.382.367.366.864.572 1.382.572h2.751C55.42 37 56 36.42 56 35.705v-11.41C56 23.58 55.42 23 54.705 23h-2.751M51 37l1.723 13.787A1.97 1.97 0 0 1 50.769 53h-8.41a1.97 1.97 0 0 1-1.937-2.321L42 42M46 30v.001a3.073 3.073 0 0 1-1.824 2.808L41.5 34"
+                                        style="fill: none; stroke: #222a33; stroke-width: 3px" />
+                                </svg>
+                                <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Business Profile-->
 
-    <div class="container py-5">
+    <div class="container py-5" v-if="user.userType == 'business'">
         <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
@@ -48,8 +137,8 @@
                                 </svg>
                                 <p class="mb-0">
                                     {{
-                                        `${user.address.street_number} ${user.address.route}, ${user.blockNumber},
-                                                                        ${user.address.postal_code}`
+                                        `${user.address.route}, ${user.blockNumber},
+                                                                        ${user.postcode}`
                                     }}
                                 </p>
                             </li>
@@ -163,7 +252,7 @@
                     <!-- 
                         Tabs for businesses products, campaigns
                      -->
-                    <div v-if="user.userType == 'business'">
+                    <div>
                         <!-- <div v-if="user.userType == 'business'"> -->
                         <ul
                             class="nav nav-pills nav-justified"

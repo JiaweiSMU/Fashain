@@ -1,8 +1,8 @@
 # Fashain\_
 
-A sustainability-based e-commerce fashion platform developed in Vue3 and Vite.
+A sustainability-based e-commerce fashion platform developed in Vue3 and Vite. Hosted by Vercel: https://fashain.vercel.app/
 
-## Project Setup
+## Project Setup for localised testing
 
 ```sh
 npm install
@@ -24,10 +24,10 @@ npm install vue-google-maps-ui --save
 
 superfreak@gmail.com <br> blueginger@gmail.com <br> colony@gmail.com <br> pull&bear@gmail.com <br> thesmushop@gmail.com
 
-Password: 123123 (LOL)
+Password: 123123
 
 ### (User Accounts)
 
 asd@asd.com
 
-Same password ^
+Password: 123123
