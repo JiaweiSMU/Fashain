@@ -14,12 +14,19 @@
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <h5 class="my-3">{{ user.name }}</h5>
-                        <img :src="user.image" class="rounded-circle img-fluid" style="width: 150px;height:150px" />
+                        <img :src="user.image" class="rounded-circle img-fluid" style="width: 150px; height: 150px" />
                         <h5 class="my-3">{{ user.name }}</h5>
                         <p class="text-muted mb-1">{{ user.email }}</p>
-                        <p v-if="user.userType == 'business'" class="text-muted mb-4">Sustainability Rating: {{ rating }}</p>
-                        <a class="btn btn-custom-outline btn-sm" href="/edit_profile">Edit Profile
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        <p v-if="user.userType == 'business'" class="text-muted mb-4">
+                            Sustainability Rating: {{ rating }}
+                        </p>
+                        <a class="btn btn-custom-outline btn-sm" href="/edit_profile"
+                            >Edit Profile
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
                                 viewBox="0 2 24 24">
                                 <path
                                     d="M20.548 3.452a1.542 1.542 0 0 1 0 2.182l-7.636 7.636-3.273 1.091 1.091-3.273 7.636-7.636a1.542 1.542 0 0 1 2.182 0zM4 21h15a1 1 0 0 0 1-1v-8a1 1 0 0 0-2 0v7H5V6h7a1 1 0 0 0 0-2H4a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1z" />
@@ -28,8 +35,13 @@
 
                         <ul class="list-group list-group-flush rounded-3">
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    class="bi bi-geo-alt"
+                                    viewBox="0 0 16 16">
                                     <path
                                         d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
                                     <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0 -6 3 3 0 0 0 0 6z" />
@@ -42,16 +54,29 @@
                                 </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-telephone" viewBox="0 0 16 16">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    class="bi bi-telephone"
+                                    viewBox="0 0 16 16">
                                     <path
                                         d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                                 </svg>
                                 <p class="mb-0">{{ user.contactno }}</p>
                             </li>
-                            <li v-if="user.userType == 'business'" class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
-                                    viewBox="6 0 64 64" xml:space="preserve" style="
+                            <li
+                                v-if="user.userType == 'business'"
+                                class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="23"
+                                    height="23"
+                                    fill="currentColor"
+                                    viewBox="6 0 64 64"
+                                    xml:space="preserve"
+                                    style="
                                         fill-rule: evenodd;
                                         clip-rule: evenodd;
                                         stroke-linecap: round;
@@ -68,17 +93,24 @@
                                 <p class="mb-0">Campaigns: {{ user.campaignsCount }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-center">
-                                <a v-if="user.userType == 'business'" @click="toggleModal"
-                                    class="btn btn-custom-outline btn-sm">Organise Upcycling
-                                    Drive</a>
+                                <a
+                                    v-if="user.userType == 'business'"
+                                    @click="toggleModal"
+                                    class="btn btn-custom-outline btn-sm"
+                                    >Organise Upcycling Drive</a
+                                >
 
                                 <!-- Modal -->
-                                <div v-if="showModal" class="modal" tabindex="-1" role="dialog" style="display: block;">
+                                <div v-if="showModal" class="modal" tabindex="-1" role="dialog" style="display: block">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Upcycling Drive Form</h5>
-                                                <button type="button" class="close" @click="toggleModal" aria-label="Close">
+                                                <button
+                                                    type="button"
+                                                    class="close"
+                                                    @click="toggleModal"
+                                                    aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -86,29 +118,39 @@
                                                 <form @submit.prevent="submitForm">
                                                     <div class="form-group">
                                                         <label for="startDate">Start Date:</label>
-                                                        <input type="date" id="startDate" class="form-control"
-                                                            v-model="form.startDate" required>
+                                                        <input
+                                                            type="date"
+                                                            id="startDate"
+                                                            class="form-control"
+                                                            v-model="form.startDate"
+                                                            required />
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="endDate">End Date:</label>
-                                                        <input type="date" id="endDate" class="form-control"
-                                                            v-model="form.endDate" required>
+                                                        <input
+                                                            type="date"
+                                                            id="endDate"
+                                                            class="form-control"
+                                                            v-model="form.endDate"
+                                                            required />
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-outline-danger"
-                                                            @click="toggleModal">Close</button>
-                                                        <button type="submit" class="btn btn-custom-outline">Launch
-                                                            Drive</button>
+                                                        <button
+                                                            type="button"
+                                                            class="btn btn-outline-danger"
+                                                            @click="toggleModal">
+                                                            Close
+                                                        </button>
+                                                        <button type="submit" class="btn btn-custom-outline">
+                                                            Launch Drive
+                                                        </button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </li>
-
-
                         </ul>
                     </div>
                 </div>
@@ -123,53 +165,110 @@
                      -->
                     <div v-if="user.userType == 'business'">
                         <!-- <div v-if="user.userType == 'business'"> -->
-                        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist" style="border-radius: 5px">
+                        <ul
+                            class="nav nav-pills nav-justified"
+                            id="pills-tab"
+                            role="tablist"
+                            style="border-radius: 5px">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                <button
+                                    class="nav-link active"
+                                    id="pills-home-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-home"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="pills-home"
                                     aria-selected="true"
-                                    style="min-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:white" @click="fetchData">
+                                    style="
+                                        min-width: 120px;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        color: white;
+                                    "
+                                    @click="fetchData">
                                     All Products
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-new-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
-                                    aria-selected="false" style="color: white" @click="fetchData" >
+                                <button
+                                    class="nav-link"
+                                    id="pills-new-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-new"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="pills-new"
+                                    aria-selected="false"
+                                    style="color: white"
+                                    @click="fetchData">
                                     New
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-used-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-used" type="button" role="tab" aria-controls="pills-used"
-                                    aria-selected="false" style="color: white" @click="fetchData">
+                                <button
+                                    class="nav-link"
+                                    id="pills-used-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-used"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="pills-used"
+                                    aria-selected="false"
+                                    style="color: white"
+                                    @click="fetchData">
                                     Used
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-rental-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-rental" type="button" role="tab" aria-controls="pills-rental"
-                                    aria-selected="false" style="color: white" @click="fetchData">
+                                <button
+                                    class="nav-link"
+                                    id="pills-rental-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-rental"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="pills-rental"
+                                    aria-selected="false"
+                                    style="color: white"
+                                    @click="fetchData">
                                     Rental
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-campaign-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-campaign" type="button" role="tab" aria-controls="pills-campaign"
-                                    aria-selected="false" style="color: white" @click="fetchData">
+                                <button
+                                    class="nav-link"
+                                    id="pills-campaign-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-campaign"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="pills-campaign"
+                                    aria-selected="false"
+                                    style="color: white"
+                                    @click="fetchData">
                                     Campaign
                                 </button>
                             </li>
                         </ul>
                         <!-- All products -->
                         <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                            <div
+                                class="tab-pane fade show active"
+                                id="pills-home"
+                                role="tabpanel"
                                 aria-labelledby="pills-home-tab">
                                 <div class="row me-2 ms-2 mt-2 justify-content-start">
-                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex" v-for="(product, index) in products"
+                                    <div
+                                        class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
+                                        v-for="(product, index) in products"
                                         :key="index">
                                         <div class="card text-black flex-fill">
-                                            <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
+                                            <img
+                                                :src="product.images[0]"
+                                                class="card-img-top w-100"
+                                                :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
                                                     <h4 class="card-title" style="font-size: large">
@@ -183,8 +282,9 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-
-                                                <button @click="deleteProduct(index, products)" type="button"
+                                                <button
+                                                    @click="deleteProduct(index, products)"
+                                                    type="button"
                                                     class="btn btn-custom-outline-danger flex-fill ms-1">
                                                     <span class="button-label">Delete</span>
                                                     <span class="button-x">x</span>
@@ -194,19 +294,26 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row">
-
-                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
-                                        href="/add_product">Add Product</a>
-                                    
+                                    <a
+                                        v-if="user.userType == 'business'"
+                                        class="btn btn-custom-outline flex-fill me-1"
+                                        href="/add_product"
+                                        >Add Product</a
+                                    >
                                 </div>
                             </div>
                             <!-- New products -->
                             <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
                                 <div class="row me-2 ms-2 mt-2 justify-content-start">
-                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
-                                        v-for="(product, index) in products_new" :key="index">
+                                    <div
+                                        class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
+                                        v-for="(product, index) in products_new"
+                                        :key="index">
                                         <div class="card text-black flex-fill">
-                                            <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
+                                            <img
+                                                :src="product.images[0]"
+                                                class="card-img-top w-100"
+                                                :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
                                                     <h4 class="card-title" style="font-size: large">
@@ -220,31 +327,38 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-
-                                                <button @click="deleteProduct(index, products_new)" type="button"
+                                                <button
+                                                    @click="deleteProduct(index, products_new)"
+                                                    type="button"
                                                     class="btn btn-custom-outline-danger flex-fill ms-1">
                                                     <span class="button-label">Delete</span>
                                                     <span class="button-x">x</span>
                                                 </button>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row">
-
-                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
-                                        href="/add_product">Add Product</a>
-                              
+                                    <a
+                                        v-if="user.userType == 'business'"
+                                        class="btn btn-custom-outline flex-fill me-1"
+                                        href="/add_product"
+                                        >Add Product</a
+                                    >
                                 </div>
                             </div>
                             <!-- used -->
                             <div class="tab-pane fade" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
                                 <div class="row me-2 ms-2 mt-2 justify-content-start">
-                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
-                                        v-for="(product, index) in products_used" :key="index">
+                                    <div
+                                        class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
+                                        v-for="(product, index) in products_used"
+                                        :key="index">
                                         <div class="card text-black flex-fill">
-                                            <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
+                                            <img
+                                                :src="product.images[0]"
+                                                class="card-img-top w-100"
+                                                :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
                                                     <h4 class="card-title" style="font-size: large">
@@ -258,8 +372,9 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-
-                                                <button @click="deleteProduct(index, products_used)" type="button"
+                                                <button
+                                                    @click="deleteProduct(index, products_used)"
+                                                    type="button"
                                                     class="btn btn-custom-outline-danger flex-fill ms-1">
                                                     <span class="button-label">Delete</span>
                                                     <span class="button-x">x</span>
@@ -269,19 +384,30 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row">
-
-                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
-                                        href="/add_product">Add Product</a>
-                                
+                                    <a
+                                        v-if="user.userType == 'business'"
+                                        class="btn btn-custom-outline flex-fill me-1"
+                                        href="/add_product"
+                                        >Add Product</a
+                                    >
                                 </div>
                             </div>
                             <!-- Rental -->
-                            <div class="tab-pane fade" id="pills-rental" role="tabpanel" aria-labelledby="pills-rental-tab">
+                            <div
+                                class="tab-pane fade"
+                                id="pills-rental"
+                                role="tabpanel"
+                                aria-labelledby="pills-rental-tab">
                                 <div class="row me-2 ms-2 mt-2 justify-content-start">
-                                    <div class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
-                                        v-for="(product, index) in products_rental" :key="index">
+                                    <div
+                                        class="col-md-4 col-lg-4 col-xl-4 mb-3 d-flex"
+                                        v-for="(product, index) in products_rental"
+                                        :key="index">
                                         <div class="card text-black flex-fill">
-                                            <img :src="product.images[0]" class="card-img-top w-100" :alt="product.name" />
+                                            <img
+                                                :src="product.images[0]"
+                                                class="card-img-top w-100"
+                                                :alt="product.name" />
                                             <div class="card-body">
                                                 <div class="text-center mt-1">
                                                     <h4 class="card-title" style="font-size: large">
@@ -295,60 +421,71 @@
                                             </div>
 
                                             <div class="card-footer d-flex flex-row mb-0">
-
-                                                <button @click="deleteProduct(index, products_rental)" type="button"
+                                                <button
+                                                    @click="deleteProduct(index, products_rental)"
+                                                    type="button"
                                                     class="btn btn-custom-outline-danger flex-fill ms-1">
                                                     <span class="button-label">Delete</span>
                                                     <span class="button-x">x</span>
                                                 </button>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row">
-
-                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
-                                        href="/add_product">Add Product</a>
-                               
+                                    <a
+                                        v-if="user.userType == 'business'"
+                                        class="btn btn-custom-outline flex-fill me-1"
+                                        href="/add_product"
+                                        >Add Product</a
+                                    >
                                 </div>
-
                             </div>
                             <!-- Campagins -->
-                            <div class="tab-pane fade" id="pills-campaign" role="tabpanel"
+                            <div
+                                class="tab-pane fade"
+                                id="pills-campaign"
+                                role="tabpanel"
                                 aria-labelledby="pills-campaign-tab">
                                 <div class="card mb-3 mx-2 mt-2" v-for="(campaign, index) in campaigns" :key="index">
                                     <div class="image-container">
-                                        <img class="card-img-top" :src="campaign.campaignImage" alt="Campaign Image"
+                                        <img
+                                            class="card-img-top"
+                                            :src="campaign.campaignImage"
+                                            alt="Campaign Image"
                                             style="max-height: 200px; object-fit: contain" />
                                     </div>
                                     <div class="card-body">
                                         <h4 class="card-title">{{ campaign.campaignName }}</h4>
                                         <p class="card-text">{{ campaign.campaignDesc }}</p>
                                         <p class="card-text">
-                                            <small class="text-muted">Campaign Start Date: {{ campaign.campaignStartDate
-                                            }}</small>
+                                            <small class="text-muted"
+                                                >Campaign Start Date: {{ campaign.campaignStartDate }}</small
+                                            >
                                             <br />
-                                            <small class="text-muted">Campaign End Date: {{ campaign.campaignEndDate
-                                            }}</small>
+                                            <small class="text-muted"
+                                                >Campaign End Date: {{ campaign.campaignEndDate }}</small
+                                            >
                                         </p>
                                         <p class="card-text">
-                                            <small class="text-muted">Campaign Address: {{ campaign.campaignAddress
-                                            }}</small>
+                                            <small class="text-muted"
+                                                >Campaign Address: {{ campaign.campaignAddress }}</small
+                                            >
                                         </p>
                                     </div>
                                 </div>
-                                <br>
+                                <br />
                                 <div class="d-flex flex-row">
-
-                                    <a v-if="user.userType == 'business'" class="btn btn-custom-outline flex-fill me-1"
-                                        href="/campaign">Create Campaign</a>
-                               
+                                    <a
+                                        v-if="user.userType == 'business'"
+                                        class="btn btn-custom-outline flex-fill me-1"
+                                        href="/campaign"
+                                        >Create Campaign</a
+                                    >
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -362,7 +499,19 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc, onSnapshot, setDoc, Timestamp, deleteDoc} from "firebase/firestore";
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    getDoc,
+    onSnapshot,
+    setDoc,
+    Timestamp,
+    deleteDoc,
+} from "firebase/firestore";
 import { auth } from "../firebase/init.js";
 import { watch } from "vue";
 import router from "../router";
@@ -380,7 +529,7 @@ export default {
             --- Business ---
             userType: "business",
             just to pull
-            
+
             */
 
             user: {
@@ -407,9 +556,9 @@ export default {
             // upcycling
             showModal: false,
             form: {
-                startDate: '',
-                endDate: ''
-            }
+                startDate: "",
+                endDate: "",
+            },
         };
     },
     // sLMohi7AUYxO8Xw45FRh
@@ -485,65 +634,65 @@ export default {
         // To display stars
         rating() {
             let x = "⭐";
-            return x.repeat(Number(this.user.rating));
+            let y = "☆";
+            return x.repeat(Number(this.user.rating)) + y.repeat(Number(5 - this.user.rating));
         },
     },
     methods: {
         async fetchData() {
-        // Clear previous data before fetching new data
-        this.products = [];
-        this.products_new = [];
-        this.products_used = [];
-        this.products_rental = [];
+            // Clear previous data before fetching new data
+            this.products = [];
+            this.products_new = [];
+            this.products_used = [];
+            this.products_rental = [];
 
-        // Fetching data from Firestore
-        const pq = query(collection(db, "products"), where("uid", "==", this.user.uid));
-        const pqSnapshot = await getDocs(pq);
-        
-        // Process fetched data
-        pqSnapshot.forEach((doc) => {
-            const product = doc.data();
-            this.products.push(product);
+            // Fetching data from Firestore
+            const pq = query(collection(db, "products"), where("uid", "==", this.user.uid));
+            const pqSnapshot = await getDocs(pq);
 
-            // Categorize product by type
-            if (product.type === "New") {
-                this.products_new.push(product);
-            } else if (product.type === "Pre-loved") {
-                this.products_used.push(product);
-            } else if (product.type === "Rental") {
-                this.products_rental.push(product);
-            }
-        });
-    },
+            // Process fetched data
+            pqSnapshot.forEach((doc) => {
+                const product = doc.data();
+                this.products.push(product);
+
+                // Categorize product by type
+                if (product.type === "New") {
+                    this.products_new.push(product);
+                } else if (product.type === "Pre-loved") {
+                    this.products_used.push(product);
+                } else if (product.type === "Rental") {
+                    this.products_rental.push(product);
+                }
+            });
+        },
         async deleteProduct(index, array) {
-        // Check if the product has an id
-        const product = array[index]
+            // Check if the product has an id
+            const product = array[index];
 
-        // First, let's delete from Firestore
-        try {
-            await deleteDoc(doc(db, "products", product.name)); // Make sure the 'products' path is correct
-            console.log('Product deleted from database with ID:', product.name);
-        } catch (error) {
-            console.error("Error removing product from database:", error);
-            return;
-        }
+            // First, let's delete from Firestore
+            try {
+                await deleteDoc(doc(db, "products", product.name)); // Make sure the 'products' path is correct
+                console.log("Product deleted from database with ID:", product.name);
+            } catch (error) {
+                console.error("Error removing product from database:", error);
+                return;
+            }
 
-        // Now remove from local array
-        array.splice(index, 1); // Remove the product from the local state array
-        console.log('Product removed from local array');
-    },
+            // Now remove from local array
+            array.splice(index, 1); // Remove the product from the local state array
+            console.log("Product removed from local array");
+        },
         toggleModal() {
             this.showModal = !this.showModal;
         },
         async submitForm() {
             try {
-                const docRef = collection(db, 'upcycling');
-
+                const docRef = collection(db, "upcycling");
 
                 // Create a new document with a unique ID based on the user's UID
                 const docData = {
                     startdate: this.form.startDate ? Timestamp.fromDate(new Date(this.form.startDate)) : null,
-                    enddate: this.form.endDate ? Timestamp.fromDate(new Date(this.form.endDate)) : null
+                    enddate: this.form.endDate ? Timestamp.fromDate(new Date(this.form.endDate)) : null,
                 };
 
                 const docId = this.user.uid; // Document ID is based on the user's UID
@@ -551,16 +700,16 @@ export default {
                 // Set the document data using doc() and set() functions
                 await setDoc(doc(docRef, docId), docData);
 
-                console.log('Document written with ID: ', docId);
+                console.log("Document written with ID: ", docId);
                 this.toggleModal(); // close the modal on submit
             } catch (error) {
-                console.error('Error adding document: ', error);
+                console.error("Error adding document: ", error);
             }
-        }
-
-
+        },
     },
 };
 </script>
 <!-- Style sheet -->
-<style>@import "../assets/profile.css";</style>
+<style>
+@import "../assets/profile.css";
+</style>

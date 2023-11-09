@@ -12,12 +12,8 @@
                 <div class="carousel-item">
                     <img src="../assets/carousel/5.png" class="d-block w-100" alt="..." @click="scrollToSection()" />
                 </div>
-                <div class="carousel-item" v-for="campaign in this.campaigns" :key="campaign">
-                    <img
-                        :src="campaign.listOfCampaign[0].campaignImage"
-                        class="d-block w-100"
-                        alt="..."
-                        @click="scrollToSection()" />
+                <div class="carousel-item" v-for="campaign in this.campaign_images" :key="campaign">
+                    <img :src="campaign" class="d-block w-100" alt="..." @click="scrollToSection()" />
                 </div>
             </div>
             <button
@@ -220,6 +216,7 @@ export default {
             storesNearby: [],
             isSortedByRating: true,
             campaigns: [],
+            campaign_images: [],
         };
     },
 
@@ -237,15 +234,20 @@ export default {
             .then(() => {
                 return this.fetchLocations(this.products);
             });
-        this.fetchCampaigns();
+        this.fetchCampaigns().then(() => {
+            this.campaigns.forEach((campaign) => {
+                campaign.listOfCampaign.forEach((campaign) => {
+                    this.campaign_images.push(campaign);
+                });
+            });
+        });
     },
 
     methods: {
-
         scrollToSection() {
             this.$nextTick(() => {
-                const element = document.getElementById('pills-tab');
-                element.scrollIntoView({ behavior: 'smooth' });
+                const element = document.getElementById("pills-tab");
+                element.scrollIntoView({ behavior: "smooth" });
             });
         },
 
