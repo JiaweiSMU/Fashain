@@ -237,7 +237,8 @@ export default {
         this.fetchCampaigns().then(() => {
             this.campaigns.forEach((campaign) => {
                 campaign.listOfCampaign.forEach((campaign) => {
-                    this.campaign_images.push(campaign);
+                    this.campaign_images.push(campaign.campaignImage);
+                    console.log(campaign.campaignImage);
                 });
             });
         });
