@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import SignupForm from "../views/SignupForm.vue";
 import LoginForm from "../views/LoginForm.vue";
 import Home from "../views/Home.vue";
-import Questionaire from "../views/Questionaire.vue";
 import Map from "../views/Map.vue";
 import ProductPage from "../views/ProductPage.vue";
 import Upcycling from "../views/Upcycling.vue";
@@ -49,11 +48,7 @@ const router = createRouter({
             name: "Cart",
             component: () => import("../views/Cart.vue"),
         },
-        {
-            path: "/Questionaire",
-            name: "Questionaire",
-            component: Questionaire,
-        },
+
         {
             path: "/map",
             name: "Map",
