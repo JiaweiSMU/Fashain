@@ -28,6 +28,6 @@ Password: 123123
 
 ### (User Accounts)
 
-asd@asd.com
+testrun@gmail.com
 
 Password: 123123
