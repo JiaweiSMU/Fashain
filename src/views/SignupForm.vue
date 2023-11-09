@@ -155,7 +155,6 @@ export default {
                     this.errors.push("Please fill in all fields");
                 }
                 if (this.errors.length == 0) {
-                    this.errors = [];
                     this.currentStep++;
                 }
             } else if (this.currentStep == 5) {
@@ -163,15 +162,15 @@ export default {
                     this.errors.push("Please fill in all fields");
                 }
                 if (this.errors.length == 0) {
-                    this.errors = [];
                     this.currentStep++;
                 }
-            } else if (
-                this.currentStep == 6 &&
-                this.formData.sustainabilityCommitmentRating &&
-                this.formData.verificationImage
-            ) {
-                this.currentStep++;
+            } else if (this.currentStep == 6) {
+                if (!this.formData.sustainabilityCommitmentRating || !this.formData.verificationImage) {
+                    this.errors.push("Please fill in all fields");
+                }
+                if (this.errors.length == 0) {
+                    this.currentStep++;
+                }
             }
 
             if (this.errors.length > 0) {
